@@ -46,7 +46,6 @@ services:
     links:
     - wordpress
     environment:
-      TZ: Asia/Tokyo
       LANG: C.UTF-8
     volumes:
     - '~/Caddyfile:/etc/Caddyfile'
