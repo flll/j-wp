@@ -8,7 +8,7 @@ services:
       - "/j-wp/mariadb-persistence:/var/lib/mysql"
       - '/etc/localtime:/etc/localtime:ro'
     environment:
-      MYSQL_ROOT_PASSWORD: $(cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1)
+      MYSQL_ROOT_PASSWORD: $ROOTPASSWD
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: $DBPASSWD
