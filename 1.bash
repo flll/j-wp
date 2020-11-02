@@ -27,7 +27,7 @@ rewrite {
 }
 errors stderr
 output file /log/Caddy.log {
-	rotate_size 100 # rotate after 100MB
-    rotate_age 14
+  rotate_size 100
+  rotate_age 14
 }
 EOF
