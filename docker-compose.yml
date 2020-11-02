@@ -8,7 +8,7 @@ services:
       - "/j-wp/mariadb-persistence:/var/lib/mysql"
       - '/etc/localtime:/etc/localtime:ro'
     environment:
-      MYSQL_ROOT_PASSWORD: $ROOTPASSWD
+      MYSQL_ROOT_PASSWORD: $(cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1)
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: $DBPASSWD
@@ -32,7 +32,7 @@ services:
         define('DB_COLLATE',       'utf8_general_ci')
       LANG: C.UTF-8
     volumes:
-    - "/usr/src/wordpress"
+    - "/j-wp/src:/usr/src/wordpress"
     - "./php.ini:/usr/local/etc/php/conf.d/custom.ini"
     - '/etc/localtime:/etc/localtime:ro'
     - '/j-wp/log:/log'
@@ -51,11 +51,9 @@ services:
       LANG: C.UTF-8
     volumes:
     - './Caddyfile:/etc/Caddyfile'
-    - '/j-wp/wordpress-persistence:/srv'
+    - '/j-wp/src:/src'
     - '/j-wp/caddy-persistence/data:/data'
     - '/j-wp/caddy-persistence/config:/config'
     - '/j-wp/caddy-persistence/.caddy:/root/.caddy'
     - '/etc/localtime:/etc/localtime:ro'
     - '/j-wp/log:/log'
-    volumes_from:
-    - wordpress
