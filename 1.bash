@@ -2,7 +2,7 @@
 set -o pipefail
 cd `dirname $0`
 
-if [ ! -e ./Caddyfile ]; then
+if [ ! -e ~/Caddyfile ]; then
 read -p "ドメイン名を入力してください > " DOMAINNAME
 mouichido="を入力してください。もう一度やり直してください。"
 [[ -z "$DOMAINNAME" ]] && echo "ドメイン名$mouichido" && exit 1
@@ -16,7 +16,7 @@ regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-
 [[ ! $MAILADD =~ $regex ]] && echo "メールアドレスの構文が間違っています。" && echo "ドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください" && exit 1
 echo thankyou
 
-cat << EOF > Caddyfile
+cat << EOF > ~/Caddyfile
 $DOMAINNAME
 tls $MAILADD
 :80
