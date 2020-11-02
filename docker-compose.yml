@@ -47,7 +47,6 @@ services:
     - wordpress
     environment:
       TZ: Asia/Tokyo
-      ACME_AGREE: true
       LANG: C.UTF-8
     volumes:
     - '~/Caddyfile:/etc/Caddyfile'
