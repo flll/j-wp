@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash -e
+set -o pipefail
+cd `dirname $0`
+
 if [ ! -e ./Caddyfile ]; then
 read -p "ドメイン名を入力してください > " DOMAINNAME
 mouichido="を入力してください。もう一度やり直してください。"
