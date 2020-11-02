@@ -50,7 +50,7 @@ services:
       ACME_AGREE: true
       LANG: C.UTF-8
     volumes:
-    - './Caddyfile:/etc/Caddyfile'
+    - '~/Caddyfile:/etc/Caddyfile'
     - '/j-wp/src:/src'
     - '/j-wp/caddy-persistence/data:/data'
     - '/j-wp/caddy-persistence/config:/config'
