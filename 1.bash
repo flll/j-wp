@@ -7,7 +7,6 @@ mouichido="を入力してください。もう一度やり直してください
 read -p "メールアドレスを入力してください > " MAILADD
 [[ -z "$MAILADD" ]] && echo "メールアドレス$mouichido" && exit 1
 
-#$DBPASSWD
 
 regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
 
@@ -35,3 +34,5 @@ fi
 
 export ROOTPASSWD=`cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1`
 export DBPASSWD=`cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1`
+
+docker-compose up -d
