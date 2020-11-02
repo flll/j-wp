@@ -1,0 +1,61 @@
+version: '3.8'
+services:
+  db:
+    image: 'docker.io/yobasystems/alpine-maria'
+    container_name: mysql
+    entrypoint: /scripts/run.sh --default-time-zone='Asia/Tokyo'
+    volumes:
+      - "/j-wp/mariadb-persistence:/var/lib/mysql"
+      - '/etc/localtime:/etc/localtime:ro'
+    environment:
+      MYSQL_ROOT_PASSWORD: $(cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1)
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: $DBPASSWD
+      MYSQL_CHARSET: utf8
+      MYSQL_COLLATION: utf8_general_ci
+      LANG: C.UTF-8
+
+  wordpress:
+    depends_on:
+      - db
+    image: docker.io/wordpress:php7.4-fpm-alpine
+    container_name: wordpress
+    links:
+      - db
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_PASSWORD: $DBPASSWD
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WPLANG',           'ja');
+        define('DB_CHARSET',       'utf8');
+        define('DB_COLLATE',       'utf8_general_ci')
+      LANG: C.UTF-8
+    volumes:
+    - "/usr/src/wordpress"
+    - "./php.ini:/usr/local/etc/php/conf.d/custom.ini"
+    - '/etc/localtime:/etc/localtime:ro'
+    - '/j-wp/log:/log'
+
+  server:
+    image: yobasystems/alpine-caddy
+    container_name: caddy
+    ports:
+    - "80:80"
+    - "443:443"
+    links:
+    - wordpress
+    environment:
+      TZ: Asia/Tokyo
+      ACME_AGREE: true
+      LANG: C.UTF-8
+    volumes:
+    - './Caddyfile:/etc/Caddyfile'
+    - '/j-wp/wordpress-persistence:/srv'
+    - '/j-wp/caddy-persistence/data:/data'
+    - '/j-wp/caddy-persistence/config:/config'
+    - '/j-wp/caddy-persistence/.caddy:/root/.caddy'
+    - '/etc/localtime:/etc/localtime:ro'
+    - '/j-wp/log:/log'
+    volumes_from:
+    - wordpress
