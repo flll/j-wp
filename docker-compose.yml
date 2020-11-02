@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   db:
-    image: 'docker.io/yobasystems/alpine-maria'
+    image: 'yobasystems/alpine-mariadb'
     container_name: mysql
     entrypoint: /scripts/run.sh --default-time-zone='Asia/Tokyo'
     volumes:
