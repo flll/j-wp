@@ -18,7 +18,7 @@ cat << EOF > Caddyfile
 $DOMAINNAME
 tls $MAILADD
 :80
-root /usr/src/wordpress
+root /src
 gzip
 fastcgi / wordpress:9000 php
 rewrite {
