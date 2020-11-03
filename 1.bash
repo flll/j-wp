@@ -15,6 +15,8 @@ if [ ! -f ~/.env/DATA ]; then
     echo -n ${MAILADD} > ~/.env/DATA
 fi
 
+export `cat ~/.env/DATA | (read aaaa bbbb; echo "MAILADD=$aaaa DOMAINNAME=$bbbb")`
+
 cat << EOF > ~/Caddyfile
 $DOMAINNAME
 tls $MAILADD
