@@ -15,6 +15,7 @@ services:
       MYSQL_CHARSET: utf8
       MYSQL_COLLATION: utf8_general_ci
       LANG: C.UTF-8
+    restart: always
 
   wordpress:
     depends_on:
@@ -32,26 +33,28 @@ services:
         define('DB_COLLATE',       'utf8_general_ci')
       LANG: C.UTF-8
     volumes:
-    - "/j-wp/src:/usr/src/wordpress"
-    - "./php.ini:/usr/local/etc/php/conf.d/custom.ini"
-    - '/etc/localtime:/etc/localtime:ro'
-    - '/j-wp/log:/log'
+      - "/j-wp/src:/usr/src/wordpress"
+      - "./php.ini:/usr/local/etc/php/conf.d/custom.ini"
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/j-wp/log:/log'
+    restart: always
 
   server:
     image: yobasystems/alpine-caddy
     container_name: caddy
     ports:
-    - "80:80"
-    - "443:443"
+      - "80:80"
+      - "443:443"
     links:
     - wordpress
     environment:
       LANG: C.UTF-8
     volumes:
-    - '~/Caddyfile:/etc/Caddyfile'
-    - '/j-wp/src:/src'
-    - '/j-wp/caddy-persistence/data:/data'
-    - '/j-wp/caddy-persistence/config:/config'
-    - '/j-wp/caddy-persistence/.caddy:/root/.caddy'
-    - '/etc/localtime:/etc/localtime:ro'
-    - '/j-wp/log:/log'
+      - '~/Caddyfile:/etc/Caddyfile'
+      - '/j-wp/src:/src'
+      - '/j-wp/caddy-persistence/data:/data'
+      - '/j-wp/caddy-persistence/config:/config'
+      - '/j-wp/caddy-persistence/.caddy:/root/.caddy'
+      - '/etc/localtime:/etc/localtime:ro'
+      - '/j-wp/log:/log'
+    restart: always
