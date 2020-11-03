@@ -2,19 +2,18 @@
 set -o pipefail
 cd `dirname $0`
 
-if [ ! -e ~/Caddyfile ]; then
-read -p "ドメイン名を入力してください > " DOMAINNAME
-mouichido="を入力してください。もう一度やり直してください。"
-[[ -z "$DOMAINNAME" ]] && echo "ドメイン名$mouichido" && exit 1
+if [ ! -f ~/.env/DATA ]; then
+    read -p "ドメイン名を入力してください > " DOMAINNAME
+    [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
+    echo -n "${DOMAINNAME} " > ~/.env/DATA
 
-read -p "メールアドレスを入力してください > " MAILADD
-[[ -z "$MAILADD" ]] && echo "メールアドレス$mouichido" && exit 1
-
-
-regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
-
-[[ ! $MAILADD =~ $regex ]] && echo "メールアドレスの構文が間違っています。" && echo "ドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください" && exit 1
-echo thankyou
+    read -p "メールアドレスを入力してください > " MAILADD
+    [[ -z "${MAILADD}" ]] && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
+    #https://www.regular-expressions.info/email.html
+    regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
+    [[ ! ${MAILADD} =~ ${regex} ]] && echo "メールアドレスの構文が間違っています。" && echo "ドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください" && exit 1
+    echo -n ${MAILADD} > ~/.env/DATA
+fi
 
 cat << EOF > ~/Caddyfile
 $DOMAINNAME
