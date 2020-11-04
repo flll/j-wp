@@ -3,10 +3,11 @@ services:
   db:
     image: 'yobasystems/alpine-mariadb'
     container_name: mysql
-    entrypoint: /scripts/run.sh --default-time-zone='Asia/Tokyo'
+    entrypoint: >
+      /scripts/run.sh 
+      --default-time-zone='Asia/Tokyo'
     volumes:
-      - "/j-wp/mariadb-persistence:/var/lib/mysql"
-      - '/etc/localtime:/etc/localtime:ro'
+      - "~/mariadb-persistence:/var/lib/mysql"
     environment:
       MYSQL_ROOT_PASSWORD: $ROOTPASSWD
       MYSQL_DATABASE: wordpress
@@ -33,15 +34,15 @@ services:
         define('DB_COLLATE',       'utf8_general_ci')
       LANG: C.UTF-8
     volumes:
-      - "/j-wp/src:/usr/src/wordpress"
+      - "~/nginx-persistence/src:/usr/src/wordpress"
       - "./php.ini:/usr/local/etc/php/conf.d/custom.ini"
       - '/etc/localtime:/etc/localtime:ro'
-      - '/j-wp/log:/log'
+      - '~/log:/log'
     restart: always
 
   server:
-    image: yobasystems/alpine-caddy
-    container_name: caddy
+    image: nginx:1.19.3-alpine
+    container_name: nginx
     ports:
       - "80:80"
       - "443:443"
@@ -50,11 +51,8 @@ services:
     environment:
       LANG: C.UTF-8
     volumes:
-      - '~/Caddyfile:/etc/Caddyfile'
-      - '/j-wp/src:/src'
-      - '/j-wp/caddy-persistence/data:/data'
-      - '/j-wp/caddy-persistence/config:/config'
-      - '/j-wp/caddy-persistence/.caddy:/root/.caddy'
+      - '~/nginx-persistence/src:/src'
+      - '~/nginx-persistence/lego:/lego'
+      - '~/log:/log'
       - '/etc/localtime:/etc/localtime:ro'
-      - '/j-wp/log:/log'
     restart: always

@@ -1,0 +1,15 @@
+wp.lll.fish
+tls no.5@outlook.jp
+:80
+root /src
+gzip
+fastcgi / wordpress:9000 php
+rewrite {
+    if {path} not_match ^\/wp-admin
+    to {path} {path}/ /index.php?_url={uri}
+}
+errors stderr
+output file /log/Caddy.log {
+  rotate_size 100
+  rotate_age 14
+}
