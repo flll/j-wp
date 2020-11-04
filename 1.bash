@@ -13,7 +13,7 @@ if [ ! -f ~/.envi/DATA ]; then
     #https://www.regular-expressions.info/email.html
     regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
     [[ ! ${MAILADD} =~ ${regex} ]] && echo "メールアドレスの構文が間違っています。" && echo "ドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください" && exit 1
-    echo -n ${MAILADD} > ~/.envi/DATA
+    echo -n ${MAILADD} >> ~/.envi/DATA
 fi
 
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
