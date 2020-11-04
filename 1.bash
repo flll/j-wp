@@ -31,8 +31,7 @@ docker run \
         --key-type ec384 \
         --http \
         --filename "server" \
-        renew \
-            --days 75
+        run \
             --must-staple
 
 fi
