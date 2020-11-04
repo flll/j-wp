@@ -15,28 +15,31 @@ if [ ! -f ~/.env/DATA ]; then
     echo -n ${MAILADD} > ~/.env/DATA
 fi
 
-export `cat ~/.env/DATA | (read aaaa bbbb; echo "MAILADD=$aaaa DOMAINNAME=$bbbb")`
+export `cat ~/.env/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
-cat << EOF > ~/Caddyfile
-$DOMAINNAME
-tls $MAILADD
-:80
-root /src
-gzip
-fastcgi / wordpress:9000 php
-rewrite {
-    if {path} not_match ^\/wp-admin
-    to {path} {path}/ /index.php?_url={uri}
-}
-errors stderr
-output file /log/Caddy.log {
-  rotate_size 100
-  rotate_age 14
-}
-EOF
+if [ ! -f ~/nginx-persistence/cert/server.key ]; then
+docker run \
+    --rm \
+    -p "80:80" \
+    -v ~/nginx-persistence/cert:/cert \
+    -e LEGO_PATH="/cert" \
+    goacme/lego \
+        --email "$MAILADD" \
+        --domains "$DOMAINNAME" \
+        --accept-tos \
+        --key-type ec384 \
+        --http \
+        --filename "server" \
+        renew \
+            --days 75
+            --must-staple
+
 fi
 
-export ROOTPASSWD=`cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1`
-export DBPASSWD=`cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 100 | head -n 1`
+exit 0
+
+export ROOTPASSWD=`cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 20 | head -n 1`
+export DBPASSWD=`cat /dev/urandom | tr -dc '1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,.+\-!' | fold -w 20 | head -n 1`
+export COMPOSE_PROJECT_NAME=$DOMAINNAME
 
 docker-compose up
