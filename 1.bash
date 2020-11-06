@@ -29,12 +29,13 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 cat << EOF > ~/.envi/default.conf
 server {
     listen      80 default_server;
+    listen [::]:80 default_server;
     server_name _;
     return      444;
 }
 server {
-    listen      80 ;
-    listen [::]:80 ;
+    listen      80;
+    listen [::]:80;
     server_name  ${DOMAINNAME};
 
     location / {
@@ -43,6 +44,9 @@ server {
 
     if (\$host != "${DOMAINNAME}") {
         return 444;
+    }
+    location / {
+        index     index.html;
     }
 }
 EOF
