@@ -61,9 +61,10 @@ EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
-mkdir ~/.envi/src
+[[ ! -d ~/.envi/src ]] && mkdir ~/.envi/src
 chown $(id -u $USER):$(id -g $USER) ~/.envi/src
 chmod 7777 ~/.envi/src
+
 echo run nginx
 docker run \
     --name cert-nginx \
