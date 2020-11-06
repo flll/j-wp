@@ -27,12 +27,13 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 #即消される
 #
 cat << EOF > ~/.envi/cert-nginx.conf
+http {
+    server_tokens off;
+}
 server {
     listen      80 default_server;
     listen [::]:80 default_server;
     server_name  ${DOMAINNAME};
-
-    server_tokens off;
 
     location / {
         root   /src;
