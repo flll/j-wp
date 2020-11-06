@@ -21,7 +21,6 @@ export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb
 if [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
 #cert取得専用のwebサーバの起動
 #即消される
-#/src webroot
 #
 cat << EOF > ./cert-nginx.conf
 worker_processes auto;
@@ -32,7 +31,9 @@ server {
     root         /src;
 }
 EOF
-
+#nginx alpine
+#証明書認証専用のnginxを起動する
+#証明書認証を終わったら消される
 docker run \
     --rm \
     --name cert-nginx \
@@ -43,8 +44,8 @@ docker run \
         nginx:1.19.3-alpine
 
 sleep 3
-#lego
-#
+#lego alpine 
+#volume from:cert-nginx:/src
 docker run \
     --rm \
     -v ~/nginx-persistence/lego:/lego \
@@ -61,7 +62,7 @@ docker run \
             run \
             --must-staple
 
-docker stop `docker ps -q`
+docker stop `docker ps -q -a`
 
 docker system prune --force
 
