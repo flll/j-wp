@@ -61,14 +61,15 @@ EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
-[[ ! -d ~/.envi/src ]] && mkdir ~/.envi/src
-sudo chown $(id -u $USER):$(id -g $USER) ~/.envi/src
-chmod 7777 -R ~/.envi/src
+[[ ! -d ~/.envi/lego/webroot ]] && mkdir -p ~/.envi/lego/webroot
+[[ ! -d ~/.envi/lego/certification ]] && mkdir -p ~/.envi/lego/certification
+[[ ! -d ~/.envi/lego/accounts ]] && mkdir -p ~/.envi/lego/accounts
+sudo chown -R $(id -u $USER):$(id -g $USER) ~/.envi/lego
+chmod 7777 -R ~/.envi/lego
 
 echo run nginx
 docker run \
     --name cert-nginx \
-    --rm \
     -p "80:80" \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
@@ -89,7 +90,7 @@ docker run \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
-    -e LEGO_PATH="/lego" \
+    -e LEGO_PATH="/lego" \ 
         goacme/lego:latest \
         --email "${MAILADD}" \
         --domains "${DOMAINNAME}" \
