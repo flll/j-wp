@@ -68,6 +68,7 @@ http {
     default_type  application/octet-stream;
 
     include /etc/nginx/conf.d/*.conf;
+    server_tokens off;
 }
 EOF
 #nginx alpine
