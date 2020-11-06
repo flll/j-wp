@@ -83,7 +83,7 @@ sleep 5
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
-    -v ~/.envi/src:/lego/webroot
+    -v ~/.envi/src:/lego/webroot \
     -v ~/lego-persistence:/lego/certification \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
