@@ -73,10 +73,7 @@ docker run \
     -p "80:80" \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
-    -v /etc/passwd:/etc/passwd:ro \
-    -v /etc/group:/etc/group:ro \
     -v ~/.envi/lego:/lego \
-    -u "$(id -u $USER):$(id -g $USER)" \
         nginx:1.19.3-alpine
 sleep 5
 #lego alpine
