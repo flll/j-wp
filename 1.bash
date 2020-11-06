@@ -43,7 +43,7 @@ server {
 EOF
 
 cat << EOF > ~/.envi/nginx.conf
-user $USER;
+user nginx;
 worker_processes  auto;
 
 events {
