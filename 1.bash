@@ -61,6 +61,9 @@ EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
+mkdir ~/.envi/src
+chown $(id -u $USER):$(id -g $USER) ~/.envi/src
+chmod 7777 ~/.envi/src
 echo run nginx
 docker run \
     --name cert-nginx \
@@ -75,8 +78,6 @@ docker run \
     -u nginx \
     -d \
         nginx:1.19.3-alpine
-
-chmod 7777 ~/.envi/src
 sleep 5
 #lego alpine
 #volume from:cert-nginx:/src
