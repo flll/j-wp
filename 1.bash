@@ -18,7 +18,7 @@ fi
 
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
-if [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
+if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
 #cert取得専用のwebサーバの起動
 #即消される
 #
