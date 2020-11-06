@@ -53,7 +53,8 @@ docker run \
     -p "80:80" \
     -v /src \
     -v ~/.envi/cert-nginx.conf:/etc/nginx/default.conf \
-        nginx:1.19.3-alpine cat /etc/nginx/default.conf
+    -d \
+        nginx:1.19.3-alpine
 
 sleep 5
 #lego alpine 
