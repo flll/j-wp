@@ -22,7 +22,7 @@ fi
 
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
-if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
+if [ ! -f ~/nginx-persistence/lego/certificates/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
 #cert取得専用のwebサーバの起動
 #即消される
 #
@@ -62,13 +62,14 @@ EOF
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
 [[ ! -d ~/.envi/lego/webroot ]] && mkdir -p ~/.envi/lego/webroot
-[[ ! -d ~/.envi/lego/certification ]] && mkdir -p ~/.envi/lego/certification
+[[ ! -d ~/.envi/lego/certificates ]] && mkdir -p ~/.envi/lego/certificates
 [[ ! -d ~/.envi/lego/accounts ]] && mkdir -p ~/.envi/lego/accounts
 sudo chown -R $(id -u $USER):$(id -g $USER) ~/.envi/lego
 chmod 7777 -R ~/.envi/lego
 
 echo run nginx
 docker run \
+    --rm \
     -p "80:80" \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
@@ -83,6 +84,8 @@ sleep 5
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
+    --rm \
+    -p "80:80" \
     -v ~/.envi/lego:/lego \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
@@ -94,6 +97,7 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --http \
+        --http.port 81 \
             run \
             --must-staple
 
