@@ -26,21 +26,7 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 #cert取得専用のwebサーバの起動
 #即消される
 #
-
-cat << EOF > ~/.envi/nginx.conf
-user  nginx;
-worker_processes auto;
-
-events {
-    worker_connections 1024;
-}
-
-http {
-    include       /etc/nginx/mime.types;
-    default_type  application/octet-stream;
-
-    server_tokens off;
-}
+cat << EOF > ~/.envi/default.conf
 server {
     listen      80 default_server;
     listen [::]:80 default_server;
@@ -55,6 +41,23 @@ server {
     }
 }
 EOF
+
+cat << EOF > ~/.envi/nginx.conf
+user  nginx;
+worker_processes  auto;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       /etc/nginx/mime.types;
+    default_type  application/octet-stream;
+
+    include /etc/nginx/conf.d/*.conf;
+    server_tokens off;
+}
+EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
@@ -64,6 +67,7 @@ docker run \
     --name cert-nginx \
     -p "80:80" \
     -v /src \
+    -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
         nginx:1.19.3-alpine
 
