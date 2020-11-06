@@ -19,23 +19,51 @@ fi
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
 if [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
+#cert取得専用のwebサーバの起動
+#即消される
+#/src webroot
+#
+cat << EOF > ./cert-nginx.conf
+worker_processes auto;
+server {
+    listen       80 default_server;
+    listen       [::]:80 default_server;
+    server_name  ${DOMAINNAME};
+    root         /src;
+}
+EOF
+
 docker run \
     --rm \
+    --name cert-nginx \
     -p "80:80" \
-    -v ~/nginx-persistence/src-cert:/src-cert \
+    -v /src \
+    -v ./cert-nginx.conf:/etc/nginx/nginx.conf:ro \
+    -d \
+        nginx:1.19.3-alpine
+
+sleep 3
+#lego
+#
+docker run \
+    --rm \
     -v ~/nginx-persistence/lego:/lego \
+    --volumes-from cert-nginx\
     -e LEGO_PATH="/lego" \
-    goacme/lego \
+        goacme/lego:latest \
         --email "${MAILADD}" \
         --domains "${DOMAINNAME}" \
         --accept-tos \
         --key-type ec384 \
-        --
         --http \
+        --http.webroot /src \
         --filename "server" \
-        run \
+            run \
             --must-staple
 
+docker stop `docker ps -q`
+
+docker system prune --force
 
 fi
 
