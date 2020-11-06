@@ -30,13 +30,7 @@ cat << EOF > ~/.envi/default.conf
 server {
     listen      80 default_server;
     listen [::]:80 default_server;
-    server_name _;
-    return      444;
-}
-server {
-    listen      80;
-    listen [::]:80;
-    server_name  ${DOMAINNAME};
+    server_name ${DOMAINNAME};
 
     location / {
         root /src;
@@ -44,9 +38,6 @@ server {
 
     if (\$host != "${DOMAINNAME}") {
         return 444;
-    }
-    location / {
-        index     index.html;
     }
 }
 EOF
@@ -76,6 +67,7 @@ docker run \
     --name cert-nginx \
     -p "80:80" \
     -v /src \
+    -d \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
         nginx:1.19.3-alpine
@@ -100,7 +92,7 @@ docker run \
             run \
             --must-staple
 
-docker stop -t4 `docker ps -q -a`
+docker stop -t4 `docker ps -q`
 
 docker system prune -a --force
 
