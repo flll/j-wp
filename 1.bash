@@ -41,6 +41,7 @@ server {
     if (\$host != "${DOMAINNAME}") {
         return 444;
     }
+    
 }
 EOF
 #nginx alpine
@@ -56,14 +57,14 @@ docker run \
     -d \
         nginx:1.19.3-alpine
 
-sleep 5
+sleep 10
 #lego alpine 
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
     --rm \
     -v ~/nginx-persistence/lego:/lego \
-    --volumes-from cert-nginx\
+    --volumes-from cert-nginx \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
