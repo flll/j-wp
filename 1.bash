@@ -77,7 +77,6 @@ sleep 5
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
-    --rm \
     -v ~/lego-persistence:/lego \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
