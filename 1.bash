@@ -66,7 +66,6 @@ EOF
 [[ ! -d ~/.envi/lego/accounts ]] && mkdir -p ~/.envi/lego/accounts
 sudo chown -R $(id -u $USER):$(id -g $USER) ~/.envi/lego
 chmod 7777 -R ~/.envi/lego
-docker stop -t4 `docker ps -q`
 echo run nginx
 docker run \
     --rm \
