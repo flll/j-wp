@@ -29,7 +29,6 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 cat << EOF > ~/.envi/cert-nginx.conf
 worker_processes auto;
 server {
-    server_name  ${DOMAINNAME};
     root         /src;
 }
 EOF
