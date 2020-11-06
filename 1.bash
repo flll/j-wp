@@ -69,6 +69,9 @@ docker run \
     -v ~/lego-persistence/webroot:/src \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
+    -u "$(id -u $USER):$(id -g $USER)" \
     -d \
         nginx:1.19.3-alpine
 
@@ -78,6 +81,9 @@ sleep 5
 echo run lego
 docker run \
     -v ~/lego-persistence:/lego \
+    -v /etc/passwd:/etc/passwd:ro \
+    -v /etc/group:/etc/group:ro \
+    -u "$(id -u $USER):$(id -g $USER)" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
