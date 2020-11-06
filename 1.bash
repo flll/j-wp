@@ -77,7 +77,6 @@ docker run \
     -v /etc/group:/etc/group:ro \
     -v ~/.envi/lego:/lego \
     -u "$(id -u $USER):$(id -g $USER)" \
-    -d \
         nginx:1.19.3-alpine
 sleep 5
 #lego alpine
