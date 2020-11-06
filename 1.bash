@@ -33,7 +33,7 @@ server {
     server_name ${DOMAINNAME};
 
     location /.well-known/acme-challenge/ {
-    root /lego/webroot;
+    root /src;
     }
 
     if (\$host != "${DOMAINNAME}") {
@@ -66,7 +66,6 @@ docker run \
     --name cert-nginx \
     --rm \
     -p "80:80" \
-    -v web-cert:/lego/webroot \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v /etc/passwd:/etc/passwd:ro \
