@@ -28,7 +28,8 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 #
 cat << EOF > ~/.envi/cert-nginx.conf
 server {
-    listen       80 default_server;
+    listen      80 default_server;
+    listen [::]:80 default_server;
     server_name  ${DOMAINNAME};
 
     server_tokens off;
@@ -52,7 +53,7 @@ docker run \
     -p "80:80" \
     -v /src \
     -v ~/.envi/cert-nginx.conf:/etc/nginx/default.conf \
-        nginx:1.19.3-alpine
+        nginx:1.19.3-alpine cat /etc/nginx/default.conf
 
 sleep 5
 #lego alpine 
