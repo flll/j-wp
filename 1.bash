@@ -63,17 +63,16 @@ EOF
 #証明書認証を終わったら消される
 echo run nginx
 docker run \
-    --rm \
     --name cert-nginx \
+    --rm \
     -p "80:80" \
-    -v ~/lego-persistence/webroot:/src
-    -d \
+    -v ~/lego-persistence/webroot:/src \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
         nginx:1.19.3-alpine
 
 sleep 5
-#lego alpine 
+#lego alpine
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
