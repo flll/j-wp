@@ -77,7 +77,6 @@ docker run \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
     -v ~/.envi/src:/src \
-    -u nginx \
     -d \
         nginx:1.19.3-alpine
 sleep 5
@@ -85,8 +84,9 @@ sleep 5
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
-    -v ~/.envi/src:/lego/webroot \
-    -v ~/lego-persistence:/lego/certification \
+    -v ~/.envi/lego/webroot:/lego/webroot \
+    -v ~/.envi/lego/certification:/lego/certification \
+    -v ~/.envi/lego/accounts:/lego/accounts \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
