@@ -62,8 +62,8 @@ EOF
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
 [[ ! -d ~/.envi/src ]] && mkdir ~/.envi/src
-chown $(id -u $USER):$(id -g $USER) ~/.envi/src
-chmod 7777 ~/.envi/src
+sudo chown $(id -u $USER):$(id -g $USER) ~/.envi/src
+chmod 7777 -R ~/.envi/src
 
 echo run nginx
 docker run \
