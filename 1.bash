@@ -69,7 +69,6 @@ chmod 7777 -R ~/.envi/lego
 
 echo run nginx
 docker run \
-    --name cert-nginx \
     -p "80:80" \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
