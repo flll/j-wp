@@ -41,7 +41,6 @@ server {
     if (\$host != "${DOMAINNAME}") {
         return 444;
     }
-    
 }
 EOF
 #nginx alpine
@@ -54,10 +53,9 @@ docker run \
     -p "80:80" \
     -v /src \
     -v ~/.envi/cert-nginx.conf:/etc/nginx/default.conf \
-    -d \
         nginx:1.19.3-alpine
 
-sleep 10
+sleep 5
 #lego alpine 
 #volume from:cert-nginx:/src
 echo run lego
