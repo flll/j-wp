@@ -94,7 +94,6 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --http \
-        --http.port :81 \
             run \
             --must-staple
 
