@@ -28,7 +28,7 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 #
 cat << EOF > ~/.envi/cert-nginx.conf
 server {
-    listen       80;
+    listen       80 default_server;
     server_name  ${DOMAINNAME};
 
     location / {
@@ -36,10 +36,9 @@ server {
     }
 
     if ($host != "${DOMAINNAME}") {
-        return 444;
+        return 404;
     }
 }
-
 EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
