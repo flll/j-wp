@@ -84,13 +84,11 @@ sleep 5
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
-    -v ~/.envi/lego/webroot:/lego/webroot \
-    -v ~/.envi/lego/certification:/lego/certification \
-    -v ~/.envi/lego/accounts:/lego/accounts \
+    -v ~/.envi/lego:/lego \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
-    -e LEGO_PATH="/lego" \ 
+    -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
         --domains "${DOMAINNAME}" \
