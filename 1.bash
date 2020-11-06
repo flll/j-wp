@@ -28,16 +28,15 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 #
 cat << EOF > ~/.envi/cert-nginx.conf
 server {
-    listen       80  default_server;
-    server_name  _;
-    return       444;
-}
-server {
     listen       80;
     server_name  ${DOMAINNAME};
 
     location / {
         root   /src;
+    }
+
+    if ($host != "${DOMAINNAME}") {
+        return 444;
     }
 }
 
