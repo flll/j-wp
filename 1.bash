@@ -43,7 +43,7 @@ server {
 EOF
 
 cat << EOF > ~/.envi/nginx.conf
-user $USER;
+user nginx;
 worker_processes  auto;
 
 events {
@@ -69,9 +69,7 @@ docker run \
     -v web-cert:/lego/webroot \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
-    -v /etc/passwd:/etc/passwd:ro \
-    -v /etc/group:/etc/group:ro \
-    -u "$(id -u $USER):$(id -g $USER)" \
+    -u nginx \
     -d \
         nginx:1.19.3-alpine
 
@@ -81,7 +79,7 @@ sleep 5
 echo run lego
 docker run \
     -v web-cert:/lego/webroot \
-    -v ~/lego-persistence \
+    -v ~/lego-persistence:/lego/certification \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
