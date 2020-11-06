@@ -71,7 +71,7 @@ docker run \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
-    -v ~/.envi/src:/src
+    -v ~/.envi/src:/src \
     -u nginx \
     -d \
         nginx:1.19.3-alpine
