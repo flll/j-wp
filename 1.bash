@@ -33,7 +33,20 @@ http {
 server {
     listen      80 default_server;
     listen [::]:80 default_server;
+    server_name _;
+
+    server_tokens off;
+
+    if (\$host != "${DOMAINNAME}") {
+        return 444;
+    }
+}
+server {
+    listen      80 default_server;
+    listen [::]:80 default_server;
     server_name  ${DOMAINNAME};
+
+    server_tokens off;
 
     location / {
         root   /src;
@@ -76,7 +89,7 @@ docker run \
             run \
             --must-staple
 
-docker stop `docker ps -q -a`
+docker stop -t4 `docker ps -q -a`
 
 docker system prune -a --force
 
