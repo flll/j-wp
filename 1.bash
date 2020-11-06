@@ -20,7 +20,6 @@ if [ ! -f ~/.envi/DATA ]; then
     echo "thank you"
 fi
 
-exit 0
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
 if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
