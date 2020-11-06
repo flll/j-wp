@@ -46,7 +46,7 @@ docker run \
     --name cert-nginx \
     -p "80:80" \
     -v /src \
-    -v ~/.envi/cert-nginx.conf:/etc/nginx/nginx.conf \
+    -v ~/.envi/cert-nginx.conf:/etc/nginx/default.conf \
         nginx:1.19.3-alpine
 
 sleep 5
