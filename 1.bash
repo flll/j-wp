@@ -38,7 +38,7 @@ server {
         root   /src;
     }
 
-    if ($host != "${DOMAINNAME}") {
+    if (\$host != "${DOMAINNAME}") {
         return 444;
     }
 }
