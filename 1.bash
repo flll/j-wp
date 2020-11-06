@@ -43,7 +43,7 @@ server {
 EOF
 
 cat << EOF > ~/.envi/nginx.conf
-user  root;
+user $USER;
 worker_processes  auto;
 
 events {
@@ -71,6 +71,7 @@ docker run \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
+    -u "$(id -u $USER):$(id -g $USER)" \
     -d \
         nginx:1.19.3-alpine
 
@@ -83,6 +84,7 @@ docker run \
     -v ~/lego-persistence \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
+    -u "$(id -u $USER):$(id -g $USER)" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
