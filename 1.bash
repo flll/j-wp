@@ -38,6 +38,7 @@ EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
 #証明書認証を終わったら消される
+echo run nginx
 docker run \
     --rm \
     --name cert-nginx \
@@ -50,6 +51,7 @@ docker run \
 sleep 5
 #lego alpine 
 #volume from:cert-nginx:/src
+echo run lego
 docker run \
     --rm \
     -v ~/nginx-persistence/lego:/lego \
