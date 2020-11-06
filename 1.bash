@@ -66,7 +66,7 @@ docker run \
     --rm \
     --name cert-nginx \
     -p "80:80" \
-    -v /src \
+    -v ~/lego-persistence/webroot:/src
     -d \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
@@ -78,8 +78,7 @@ sleep 5
 echo run lego
 docker run \
     --rm \
-    -v ~/nginx-persistence/lego:/lego \
-    --volumes-from cert-nginx \
+    -v ~/lego-persistence:/lego \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
@@ -87,8 +86,6 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --http \
-        --http.webroot /src \
-        --filename "server" \
             run \
             --must-staple
 
