@@ -33,7 +33,7 @@ server {
     server_name ${DOMAINNAME};
 
     location /.well-known/acme-challenge/ {
-    root /src;
+    root /lego/webroot;
     }
 
     if (\$host != "${DOMAINNAME}") {
@@ -75,8 +75,8 @@ docker run \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
+    -v ~/.envi/lego:/lego \
     -u "$(id -u $USER):$(id -g $USER)" \
-    -v ~/.envi/src:/src \
     -d \
         nginx:1.19.3-alpine
 sleep 5
