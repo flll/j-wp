@@ -31,12 +31,14 @@ server {
     listen       80 default_server;
     server_name  ${DOMAINNAME};
 
+    server_tokens off;
+
     location / {
         root   /src;
     }
 
     if ($host != "${DOMAINNAME}") {
-        return 404;
+        return 444;
     }
 }
 EOF
