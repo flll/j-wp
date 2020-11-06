@@ -4,25 +4,30 @@ cd `dirname $0`
 
 if [ ! -f ~/.envi/DATA ]; then
     [[ ! -d ~/.envi ]] && mkdir ~/.envi
-    read -p "ドメイン名を入力してください > " DOMAINNAME
+    echo "ドメイン名を入力してください。例)example.com"
+    echo -e -n "サブドメインを設定している場合、含めてください。例)◯◯◯◯.example.com\n >"
+    read DOMAINNAME
     [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
-    echo -n "${DOMAINNAME} " > ~/.envi/DATA
 
     read -p "メールアドレスを入力してください > " MAILADD
     [[ -z "${MAILADD}" ]] && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
     #https://www.regular-expressions.info/email.html
     regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
-    [[ ! ${MAILADD} =~ ${regex} ]] && echo "メールアドレスの構文が間違っています。" && echo "ドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください" && exit 1
-    echo -n ${MAILADD} >> ~/.envi/DATA
+    MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
+    [[ ! ${MAILADD} =~ ${regex} ]] && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
+    echo -n "${DOMAINNAME} " > ~/.envi/DATA
+    echo -n "${MAILADD}" >> ~/.envi/DATA
+    echo "thank you"
 fi
 
+exit 0
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
 if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
 #cert取得専用のwebサーバの起動
 #即消される
 #
-cat << EOF > ./cert-nginx.conf
+cat << EOF > ~/.envi/cert-nginx.conf
 worker_processes auto;
 server {
     listen       80 default_server;
@@ -39,11 +44,11 @@ docker run \
     --name cert-nginx \
     -p "80:80" \
     -v /src \
-    -v ./cert-nginx.conf:/etc/nginx/nginx.conf:ro \
+    -v ~/.envi/cert-nginx.conf:/etc/nginx/nginx.conf:ro \
     -d \
         nginx:1.19.3-alpine
 
-sleep 3
+sleep 5
 #lego alpine 
 #volume from:cert-nginx:/src
 docker run \
