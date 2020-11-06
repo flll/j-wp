@@ -66,7 +66,7 @@ docker run \
     --name cert-nginx \
     --rm \
     -p "80:80" \
-    -v web:/lego-persistence/webroot:/src \
+    -v web-cert:/lego-persistence/webroot:/src \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v /etc/passwd:/etc/passwd:ro \
@@ -80,7 +80,7 @@ sleep 5
 #volume from:cert-nginx:/src
 echo run lego
 docker run \
-    -v web:/lego-persistence/webroot:/lego/webroot \
+    -v web-cert:/lego-persistence/webroot:/lego/webroot \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
     -u "$(id -u $USER):$(id -g $USER)" \
