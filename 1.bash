@@ -45,7 +45,7 @@ docker run \
     -p "80:80" \
     -v /src \
     -v ~/.envi/cert-nginx.conf:/etc/nginx/nginx.conf:ro \
-    -d \
+     \
         nginx:1.19.3-alpine
 
 sleep 5
@@ -70,7 +70,7 @@ docker run \
 
 docker stop `docker ps -q -a`
 
-docker system prune --force
+docker system prune -a --force
 
 fi
 
