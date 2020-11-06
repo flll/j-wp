@@ -27,10 +27,15 @@ if [ ! -f ~/nginx-persistence/lego/certification/${DOMAINNAME}.key ] || [ ! -f ~
 #即消される
 #
 cat << EOF > ~/.envi/cert-nginx.conf
-worker_processes auto;
 server {
-    root         /src;
+    listen       80;
+    server_name  localhost;
+
+    location / {
+        root   /src;
+    }
 }
+
 EOF
 #nginx alpine
 #証明書認証専用のnginxを起動する
