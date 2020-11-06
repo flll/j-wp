@@ -67,7 +67,15 @@ EOF
 sudo chown -R $(id -u $USER):$(id -g $USER) ~/.envi/lego
 chmod 7777 -R ~/.envi/lego
 echo run nginx
-
+docker run \
+    --rm \
+    -p "80:80" \
+    -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
+    -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
+    -v ~/.envi/lego:/lego \
+    -d \
+        nginx:1.19.3-alpine
+sleep 5
 #lego alpine
 #volume from:cert-nginx:/src
 echo run lego
