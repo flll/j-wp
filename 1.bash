@@ -22,7 +22,7 @@ fi
 
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
-if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ] || [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
+# if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ] || [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 
 echo atart
 echo run lego
@@ -43,7 +43,7 @@ docker run \
 echo end
 sudo chown `echo $USER` -R ~/lego-persistence
 
-fi
+# fi
 
 exit 0
 
