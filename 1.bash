@@ -93,8 +93,7 @@ docker run \
         --key-type ec384 \
         --http \
         --http.port localhost:80 \
-            run \
-            --must-staple
+            run
 
 docker stop -t4 `docker ps -q`
 
