@@ -29,7 +29,7 @@ echo run lego
 docker run \
     --rm \
     -v ~/lego-persistence:/lego \
-    -p "9999:9999" \
+    -p "443:443" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
@@ -38,7 +38,6 @@ docker run \
         --key-type ec384 \
         --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --tls \
-        --tls.port :9999 \
             run \
             --must-staple
 echo end
