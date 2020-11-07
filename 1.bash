@@ -83,15 +83,13 @@ docker run \
     --rm \
     -p "80:80" \
     -v ~/.envi/lego:/lego \
-    -v /etc/passwd:/etc/passwd:ro \
-    -v /etc/group:/etc/group:ro \
-    -u "$(id -u $USER):$(id -g $USER)" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
         --domains "${DOMAINNAME}" \
         --accept-tos \
         --key-type ec384 \
+        --http \
             run
 
 docker stop -t4 `docker ps -q`
