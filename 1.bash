@@ -22,59 +22,25 @@ fi
 
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
-if [ ! -f ~/nginx-persistence/lego/certificates/${DOMAINNAME}.key ] || [ ! -f ~/nginx-persistence/cert/${DOMAINNAME}.key ]; then
-#cert取得専用のwebサーバの起動
-#即消される
-#
-cat << EOF > ~/.envi/default.conf
-server {
-    listen      81 default_server;
-    listen [::]:81 default_server;
-    server_name ${DOMAINNAME};
+if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ] || [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 
-    location /.well-known/acme-challenge/ {
-    root /lego/webroot;
-    }
-
-    if (\$host != "${DOMAINNAME}") {
-        return 444;
-    }
-}
-EOF
-
-cat << EOF > ~/.envi/nginx.conf
-user nginx;
-worker_processes  auto;
-
-events {
-    worker_connections  1024;
-}
-
-http {
-    include       /etc/nginx/mime.types;
-    default_type  application/octet-stream;
-
-    include /etc/nginx/conf.d/*.conf;
-    server_tokens off;
-}
-EOF
-
-#lego alpine
-#volume from:cert-nginx:/src
 echo run lego
 docker run \
     --rm \
-    -p "80:80" \
-    -v ~/.envi/lego:/lego \
+    -p "443:443" \
+    -v ~/lego-persistence:/lego \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
         --domains "${DOMAINNAME}" \
         --accept-tos \
         --key-type ec384 \
-        --http \
+        --server=https://acme-staging-v02.api.letsencrypt.org/directory \
+        --tls \
             run \
             --must-staple
+
+sudo chown `echo $USER` -R ~/lego-persistence
 
 fi
 
