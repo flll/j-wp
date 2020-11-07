@@ -24,6 +24,7 @@ export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb
 
 if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ] || [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 
+
 echo run lego
 docker run \
     --rm \
@@ -36,7 +37,7 @@ docker run \
         --key-type ec384 \
         --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --tls \
-        --tls.port :$LEGO_TLS_PORTS
+        --tls.port :9999
             run \
             --must-staple
 
