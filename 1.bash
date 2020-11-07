@@ -69,7 +69,7 @@ chmod 7777 -R ~/.envi/lego
 echo run nginx
 docker run \
     --rm \
-    -p "80:81" \
+    -p "81:81" \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v ~/.envi/lego:/lego \
@@ -81,6 +81,7 @@ sleep 5
 echo run lego
 docker run \
     --rm \
+    -p "80:80" \
     -v ~/.envi/lego:/lego \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
@@ -92,7 +93,6 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --http \
-        --http.port localhost:80 \
             run
 
 docker stop -t4 `docker ps -q`
