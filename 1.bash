@@ -92,7 +92,6 @@ docker run \
         --domains "${DOMAINNAME}" \
         --accept-tos \
         --key-type ec384 \
-        --http \
             run
 
 docker stop -t4 `docker ps -q`
