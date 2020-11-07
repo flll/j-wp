@@ -29,7 +29,6 @@ echo run lego
 docker run \
     --rm \
     -v ~/lego-persistence:/lego \
-    -p "443:443" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
