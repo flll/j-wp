@@ -90,7 +90,9 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --http \
-            run
+            run \
+            --must-staple
+
 
 docker stop -t4 `docker ps -q`
 
