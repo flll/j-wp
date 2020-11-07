@@ -37,7 +37,7 @@ docker run \
         --key-type ec384 \
         --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --tls \
-        --tls.port :9999
+        --tls.port :9999 \
             run \
             --must-staple
 
