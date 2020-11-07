@@ -81,7 +81,6 @@ sleep 5
 echo run lego
 docker run \
     --rm \
-    -p "81:81" \
     -v ~/.envi/lego:/lego \
     -v /etc/passwd:/etc/passwd:ro \
     -v /etc/group:/etc/group:ro \
