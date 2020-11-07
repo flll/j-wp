@@ -27,7 +27,6 @@ if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ] || [ ! -f ~/lego-p
 echo run lego
 docker run \
     --rm \
-    -p "443:443" \
     -v ~/lego-persistence:/lego \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
@@ -37,6 +36,7 @@ docker run \
         --key-type ec384 \
         --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --tls \
+        --tls.port :$LEGO_TLS_PORTS
             run \
             --must-staple
 
