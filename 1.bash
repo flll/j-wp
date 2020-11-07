@@ -28,8 +28,8 @@ if [ ! -f ~/nginx-persistence/lego/certificates/${DOMAINNAME}.key ] || [ ! -f ~/
 #
 cat << EOF > ~/.envi/default.conf
 server {
-    listen      80 default_server;
-    listen [::]:80 default_server;
+    listen      81 default_server;
+    listen [::]:81 default_server;
     server_name ${DOMAINNAME};
 
     location /.well-known/acme-challenge/ {
@@ -69,7 +69,7 @@ chmod 7777 -R ~/.envi/lego
 echo run nginx
 docker run \
     --rm \
-    -p "80:80" \
+    -p "80:81" \
     -v ~/.envi/default.conf:/etc/nginx/default.conf:ro \
     -v ~/.envi/nginx.conf:/etc/nginx/nginx.conf:ro \
     -v ~/.envi/lego:/lego \
