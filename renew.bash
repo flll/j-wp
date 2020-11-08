@@ -1,7 +1,7 @@
 #!/bin/bash -e
 set -o pipefail
 
-#メールアドレス　ドメインが未定義の場合実行されません
+#ドメイン メアドが未定義の場合実行されません
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
 docker run \

@@ -50,6 +50,7 @@ fi
 #crontabが認識するディレクトリに./renewシンボリックを追加する
 #権限を付与することを忘れずに
 
+crontab ./crontab
 
 
 exit 0
