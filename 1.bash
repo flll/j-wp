@@ -31,7 +31,7 @@ if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 docker run \
     --rm \
     -v ~/lego-persistence:/lego \
-    -p "440:443" \
+    -p "443:443" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
