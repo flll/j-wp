@@ -31,7 +31,7 @@ if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 docker run \
     --rm \
     -v ~/lego-persistence:/lego \
-    -p "443:443" \
+    -p "440:80" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
@@ -39,7 +39,7 @@ docker run \
         --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --accept-tos \
         --key-type ec384 \
-        --tls \
+        --http \
             run \
             --must-staple
 
