@@ -45,13 +45,13 @@ docker run \
 
 sudo chown `echo $USER` -R ~/lego-persistence
 fi
-#TODO cronで定期的にrenewを行う
-# cron → ./renew
-#crontabが認識するディレクトリに./renewシンボリックを追加する
+#TODO cronで定期的にlego renewを行う
+# cronたｂ → /renew
 #権限を付与することを忘れずに
+#環境別の対策としてrenewはシンボリックを導入
 
-crontab ./crontab
-
+ln -s ./renew.sh /renew.sh
+crontab -u $USER ./crontab
 
 exit 0
 
