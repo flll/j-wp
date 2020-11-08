@@ -1,13 +1,11 @@
 version: '3.3'
 services:
   db:
-    image: 'yobasystems/alpine-mariadb'
+    image: 'jbergstroem/mariadb-alpine'
     container_name: mysql
-    entrypoint: >
-      /scripts/run.sh 
-      --default-time-zone='Asia/Tokyo'
     volumes:
       - "~/mariadb-persistence:/var/lib/mysql"
+      - '/etc/localtime:/etc/localtime:ro'
     environment:
       MYSQL_ROOT_PASSWORD: $ROOTPASSWD
       MYSQL_DATABASE: wordpress
