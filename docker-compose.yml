@@ -4,10 +4,10 @@ services:
     image: 'jbergstroem/mariadb-alpine'
     container_name: mysql
     volumes:
-      - "~/mariadb-persistence:/var/lib/mysql"
+      - "~/mariadb-persistence:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
     environment:
-      MYSQL_ROOT_PASSWORD: $ROOTPASSWD
+      MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
       MYSQL_PASSWORD: $DBPASSWD
@@ -32,8 +32,8 @@ services:
         define('DB_COLLATE',       'utf8_general_ci')
       LANG: C.UTF-8
     volumes:
-      - "~/nginx-persistence/src:/usr/src/wordpress"
-      - "./php.ini:/usr/local/etc/php/conf.d/custom.ini"
+      - "~/nginx-persistence/src:/usr/src/wordpress:cached"
+      - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
       - '/etc/localtime:/etc/localtime:ro'
       - '~/log:/log'
     restart: always
@@ -50,7 +50,7 @@ services:
       LANG: C.UTF-8
     volumes:
       - '~/nginx-persistence/src:/src'
-      - '~/nginx-persistence/lego:/lego'
-      - '~/log:/log'
+      - '~/nginx-persistence/lego:/lego:cached'
+      - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
     restart: always
