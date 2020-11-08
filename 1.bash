@@ -31,7 +31,7 @@ if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 docker run \
     --rm \
     -v ~/lego-persistence:/lego \
-    -p "440:440" \
+    -p "440:443" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
@@ -40,7 +40,6 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --tls \
-        --tls.port 127.0.0.1:440 \
             run \
             --must-staple
 
