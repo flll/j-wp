@@ -10,7 +10,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
-      MYSQL_PASSWORD: $DBPASSWD
+      MYSQL_PASSWORD: ${DBPASSWD}
       MYSQL_CHARSET: utf8
       MYSQL_COLLATION: utf8_general_ci
       LANG: C.UTF-8
@@ -25,14 +25,14 @@ services:
       - db
     environment:
       WORDPRESS_DB_HOST: db:3306
-      WORDPRESS_DB_PASSWORD: $DBPASSWD
+      WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_CONFIG_EXTRA: |
         define('WPLANG',           'ja');
         define('DB_CHARSET',       'utf8');
         define('DB_COLLATE',       'utf8_general_ci')
       LANG: C.UTF-8
     volumes:
-      - "~/nginx-persistence/src:/usr/src/wordpress:cached"
+      - "~/nginx-persistence/src:/usr/src/wordpress"
       - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
       - '/etc/localtime:/etc/localtime:ro'
       - '~/log:/log'
