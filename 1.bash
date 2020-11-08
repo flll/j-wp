@@ -40,7 +40,7 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --tls \
-        --tls.port :440 \
+        --tls.port 127.0.0.1:440 \
             run \
             --must-staple
 
