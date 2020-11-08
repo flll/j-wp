@@ -24,9 +24,9 @@ fi
 # ~/.envi/DATA から読み取り、変数にする
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
-# 証明書の作成 
-# port440を使う FWの設定を忘れずに
-# ~/lego-persistence にlego必要な設定を保存している
+# ～証明書の作成～
+# cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
+# ~/lego-persistence にlego必要な設定を保存
 if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 docker run \
     --rm \
