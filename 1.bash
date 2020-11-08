@@ -36,6 +36,7 @@ docker run \
         goacme/lego:latest \
         --email "${MAILADD}" \
         --domains "${DOMAINNAME}" \
+        --server=https://acme-staging-v02.api.letsencrypt.org/directory \
         --accept-tos \
         --key-type ec384 \
         --tls \
