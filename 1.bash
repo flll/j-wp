@@ -1,6 +1,8 @@
 #!/bin/bash -e
 set -o pipefail
 cd `dirname $0`
+####################################
+#ファイアウォールを忘れるな
 
 if [ ! -f ~/.envi/DATA ]; then
     [[ ! -d ~/.envi ]] && mkdir ~/.envi
@@ -26,7 +28,7 @@ if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 docker run \
     --rm \
     -v ~/lego-persistence:/lego \
-    -p "443:443" \
+    -p "440:440" \
     -e LEGO_PATH="/lego" \
         goacme/lego:latest \
         --email "${MAILADD}" \
@@ -34,12 +36,18 @@ docker run \
         --accept-tos \
         --key-type ec384 \
         --tls \
-            run
+        --tls.port :440 \
+            run \
+            --must-staple
 
 sudo chown `echo $USER` -R ~/lego-persistence
 fi
+#TODO ./crontabファイルを２日に一回行う設定をする
+#/etcにてcrontabのシンボリックを追加して、cronがcrontabの内容を理解できるように設定する
+#権限
+#crontabのシンボリック追加
 
-#シンボリック追加
+
 
 exit 0
 
