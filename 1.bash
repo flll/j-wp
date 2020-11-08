@@ -1,9 +1,8 @@
 #!/bin/bash -e
 set -o pipefail
 cd `dirname $0`
-####################################
-#ファイアウォールを忘れるな
 
+# ～入力項目～ ~/.envi/DATAに、[domain] [メアド]という順番の文字列で保存される
 if [ ! -f ~/.envi/DATA ]; then
     [[ ! -d ~/.envi ]] && mkdir ~/.envi
     echo "ドメイン名を入力してください。例)example.com"
@@ -22,8 +21,12 @@ if [ ! -f ~/.envi/DATA ]; then
     echo "thank you"
 fi
 
+# ~/.envi/DATA から読み取り、変数にする
 export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
+# 証明書の作成 
+# port440を使う FWの設定を忘れずに
+# ~/lego-persistence にlego必要な設定を保存している
 if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
 docker run \
     --rm \
@@ -42,10 +45,10 @@ docker run \
 
 sudo chown `echo $USER` -R ~/lego-persistence
 fi
-#TODO ./crontabファイルを２日に一回行う設定をする
-#/etcにてcrontabのシンボリックを追加して、cronがcrontabの内容を理解できるように設定する
-#権限
-#crontabのシンボリック追加
+#TODO cronで定期的にrenewを行う
+# cron → ./renew
+#crontabが認識するディレクトリに./renewシンボリックを追加する
+#権限を付与することを忘れずに
 
 
 
