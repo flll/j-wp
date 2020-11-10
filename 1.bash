@@ -2,11 +2,15 @@
 set -o pipefail
 cd `dirname $0`
 
-# ～入力項目～ ./.DOMAINNAMEに、"[domain] [メアド]"という順番の文字列で保存される
-if [ ! -f ./.DOMAINNAME ]; then
-    echo "ドメイン名を入力してください 例)example.com"
+echo "※半角英数字のスペースなしでお願いします。"
+echo "入力の間違えがないようご留意ください。"
+echo "サイト名 を決めてください 例)wordpress 例)myblog"
+read -p "サイト名> "
+# ～入力項目～ ./.${SITE_NAME}_DATAに、"[domain] [メアド]"という順番の文字列で保存される
+if [ ! -f ./.${SITE_NAME}_DATA ]; then
+    echo "新規サイトを作成します。"
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
-    echo -e -n "ドメインが複数ある場合カンマで区切ってください 例)example.jp,www.example.jp\n > "
+    echo -e -n "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp\n ドメイン名> "
     read DOMAINNAME
     [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
     #############################################
@@ -17,13 +21,14 @@ if [ ! -f ./.DOMAINNAME ]; then
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
     [[ ! ${MAILADD} =~ $regex ]] && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
     #############################################
-    echo -n "${DOMAINNAME} " > ./.DOMAINNAME
-    echo -n "${MAILADD}" >> ./.DOMAINNAME
+    echo -n "${DOMAINNAME} " > ./.${SITE_NAME}_DATA
+    echo -n "${MAILADD}" >> ./.${SITE_NAME}_DATA
     echo "thank you"
 fi
 
-# ./.DOMAINNAME から読み取り、変数にする
-export `cat ./.DOMAINNAME | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
+# ./.${SITE_NAME}_DATA から読み取り、変数にする
+export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
+export COMPOSE_PROJECT_NAME=${SITE_NAME}
 
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
@@ -40,11 +45,16 @@ docker run -it --rm --name certbot \
             --keep \
             --standalone \
             --http-01-port 440
+            # stagingのアレ付き
 
 sudo chown `echo $USER` -R ~/certbot-persistence
 fi
 
-exit 0
+exit 0 # staging付き
+
+# ～nginx コンフィグ設定～
+cat template-server-block.conf > block_${SITE_NAME}.conf
+
 # ～cronしょり～
 if [ ! -f ./.crontab ]; then #./.crontabが存在しない場合、作成とcrontabの認識をさせる
     ln -s ./certbot-renew.bash /certbot-renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
@@ -54,7 +64,6 @@ EOF
     crontab -u $USER ./.crontab
 fi
 
-
 exit 0
 
 openssl dhparam -out ~/certbot-persistence/letsencrypt/live/${DOMAIN}/dhparam 2048
@@ -62,6 +71,5 @@ openssl dhparam -out ~/certbot-persistence/letsencrypt/live/${DOMAIN}/dhparam 20
 passleng=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 export ROOTPASSWD=`cat /dev/urandom | tr -dc '$passleng' | fold -w 80 | head -n 1`
 export DBPASSWD=`cat /dev/urandom | tr -dc '$passleng' | fold -w 50 | head -n 1`
-export COMPOSE_PROJECT_NAME=${DOMAINNAME}
 
 docker-compose up
