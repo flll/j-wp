@@ -5,8 +5,9 @@ cd `dirname $0`
 # ～入力項目～ ~/.envi/DATAに、[domain] [メアド]という順番の文字列で保存される
 if [ ! -f ~/.envi/DATA ]; then
     [[ ! -d ~/.envi ]] && mkdir ~/.envi
-    echo "ドメイン名を入力してください。例)example.com"
-    echo -e -n "サブドメインを設定している場合、含めてください。例)○○○○.example.com\n > "
+    echo "ドメイン名を入力してください 例)example.com"
+    echo "入力をやり直したい場合ctrl+cで強制終了してください。"
+    echo -e -n "ドメインが複数ある場合カンマで区切ってください 例)example.jp,www.example.jp\n > "
     read DOMAINNAME
     [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
 
@@ -26,32 +27,35 @@ export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb
 
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
-# ~/lego-persistence にlego必要な設定を保存
-if [ ! -f ~/lego-persistence/certificates/${DOMAINNAME}.key ]; then
-docker run \
-    --rm \
-    -v ~/lego-persistence:/lego \
-    -p "440:80" \
-    -e LEGO_PATH="/lego" \
-        goacme/lego:latest \
-        --email "${MAILADD}" \
-        --domains "${DOMAINNAME}" \
-        --server=https://acme-staging-v02.api.letsencrypt.org/directory \
-        --accept-tos \
-        --key-type ec384 \
-        --http \
-            run \
-            --must-staple
+if [ ! -f ~/certbot-persistence/letsencrypt/live/${DOMAINNAME}/.key ]; then
+docker run -it --rm --name certbot \
+    -v "~/certbot-persistence/letsencrypt:/etc/letsencrypt" \
+    -v "~/certbot-persistence/lib/letsencrypt:/var/lib/letsencrypt" \
+        certbot/certbot \
+        -q \
+        --rsa-key-size 4096 \
+        --agree-tos \
+        --break-my-certs \
+            certonly \
+            --keep \
+            --standalone \
+            --http-01-port 440
 
-sudo chown `echo $USER` -R ~/lego-persistence
+sudo chown `echo $USER` -R ~/certbot-persistence
 fi
-#TODO cronで定期的にlego renewを行う
-# cronたｂ → /renew
-#権限を付与することを忘れずに
-#環境別の対策としてrenewはシンボリックを導入
 
-ln -s ./renew.sh /renew.sh
-crontab -u $USER ./crontab
+exit 0
+# ～cronしょり～
+if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
+
+    ln -s ./certbot-renew.bash /certbot-renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
+cat << EOF > ./crontab
+0 0 3 * * /certbot-renew.bash
+EOF
+    crontab -u $USER ./crontab
+
+fi
+
 
 exit 0
 
