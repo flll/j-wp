@@ -50,7 +50,8 @@ services:
       LANG: C.UTF-8
     volumes:
       - '~/nginx-persistence/src:/src'
-      - '~/nginx-persistence/lego:/lego:cached'
+      - '~/certbot-persistence:~/certbot-persistence:cached'
+      - './block_${SITE_NAME}.conf:/etc/nginx/conf.d/default.conf:cached'
       - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
     restart: unless-stopped
