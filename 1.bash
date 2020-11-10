@@ -2,28 +2,28 @@
 set -o pipefail
 cd `dirname $0`
 
-# ～入力項目～ ~/.envi/DATAに、[domain] [メアド]という順番の文字列で保存される
-if [ ! -f ~/.envi/DATA ]; then
-    [[ ! -d ~/.envi ]] && mkdir ~/.envi
+# ～入力項目～ ./DOMAINNAMEに、"[domain] [メアド]"という順番の文字列で保存される
+if [ ! -f ./DOMAINNAME ]; then
     echo "ドメイン名を入力してください 例)example.com"
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
     echo -e -n "ドメインが複数ある場合カンマで区切ってください 例)example.jp,www.example.jp\n > "
     read DOMAINNAME
     [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
-
+    #############################################
     read -p "メールアドレスを入力してください > " MAILADD
     [[ -z "${MAILADD}" ]] && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
     #https://www.regular-expressions.info/email.html
     regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
     [[ ! ${MAILADD} =~ $regex ]] && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
-    echo -n "${DOMAINNAME} " > ~/.envi/DATA
-    echo -n "${MAILADD}" >> ~/.envi/DATA
+    #############################################
+    echo -n "${DOMAINNAME} " > ./DOMAINNAME
+    echo -n "${MAILADD}" >> ./DOMAINNAME
     echo "thank you"
 fi
 
-# ~/.envi/DATA から読み取り、変数にする
-export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
+# ./DOMAINNAME から読み取り、変数にする
+export `cat ./DOMAINNAME | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
 
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
