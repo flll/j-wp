@@ -50,8 +50,9 @@ if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcronta
 
     ln -s ./certbot-renew.bash /certbot-renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
 cat << EOF > ./crontab
-0 0 3 * * /certbot-renew.bash
+0 0 */3 * * /certbot-renew.bash
 EOF
+# ３日ごと↑
     crontab -u $USER ./crontab
 
 fi
