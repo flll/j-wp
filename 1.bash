@@ -35,13 +35,12 @@ export COMPOSE_PROJECT_NAME=${SITE_NAME}
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
 if [ ! -f ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAINNAME}/.key ]; then
-mkdir -p ~/certbot-${SITE_NAME}/lib/letsencrypt & \
-mkdir -p ~/certbot-${SITE_NAME}/letsencrypt
 docker run -it --rm --name certbot \
     -v ~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt \
     -v ~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt \
         certbot/certbot \
         -q \
+
         --rsa-key-size 4096 \
         --agree-tos \
         --break-my-certs \
