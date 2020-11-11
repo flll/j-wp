@@ -6,7 +6,7 @@ echo "半角英数字のスペースなしでお願いします。"
 echo "入力の間違えがないようご留意ください。"
 echo "サイト名 を決めてください 例)wordpress 例)myblog"
 read -p "サイト名> " SITE_NAME
-# ～入力項目～ ./.${SITE_NAME}_DATAに、"[domain] [メアド]"という順番の文字列で保存される
+# ～入力項目～ ./.${SITE_NAME}_DATAに、"[domain] [メアド] [http port] [https port]"という順番の文字列で保存される
 if [ ! -f ./.${SITE_NAME}_DATA ]; then
     echo "新規サイトを作成します。"
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
@@ -21,13 +21,15 @@ if [ ! -f ./.${SITE_NAME}_DATA ]; then
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
     [[ ! ${MAILADD} =~ $regex ]] && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
     #############################################
-    echo -n "${DOMAINNAME} " > ./.${SITE_NAME}_DATA
-    echo -n "${MAILADD}" >> ./.${SITE_NAME}_DATA
-    echo "thank you"
+    echo "※↓任意項目です。わからない場合はそのままエンターキーを入力してください"
+    read -p "※ HTTPで使用するport番号を入力してください > " HTTP_PORTS
+    read -p "※ HTTPSで使用するport番号を入力してください > " HTTPS_PORTS
+    echo -n "${DOMAINNAME} ${MAILADD} ${HTTPS_PORTS:-80} ${HTTPS_PORTS:-443}" > ./.${SITE_NAME}_DATA
+    echo "サイト名: ${SITE_NAME} の情報を保存しました"
 fi
 
 # ./.${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
+export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd; echo "DOMAINNAME=${aaaa} MAILADD=${bbbb} HTTP_PORTS=${cccc} HTTPS_PORTS=${dddd}")`
 export COMPOSE_PROJECT_NAME=${SITE_NAME}
 
 # ～証明書の作成～
@@ -49,8 +51,6 @@ docker run -it --rm --name certbot \
 
 sudo chown `echo $USER` -R ~/certbot-${SITE_NAME}
 fi
-
-exit 0 # staging付き
 
 # ～nginx コンフィグ設定～
 cat template-server-block.conf > block_${SITE_NAME}.conf
