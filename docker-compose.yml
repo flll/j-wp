@@ -19,7 +19,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: docker.io/wordpress:php7.4-fpm-alpine
+    image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
     container_name: wordpress
     links:
       - db
