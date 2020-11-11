@@ -45,6 +45,7 @@ docker run -it --rm --name certbot \
         --break-my-certs \
         --keep \
         --standalone \
+        --dry-run \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
 

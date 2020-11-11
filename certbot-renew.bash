@@ -14,6 +14,7 @@ docker run -it --rm --name certbot \
         --break-my-certs \
         --keep \
         --standalone \
+        --dry-run \
         −−preferred-challenges tls-alpn-01 \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
