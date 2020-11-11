@@ -2,10 +2,10 @@
 set -o pipefail
 cd `dirname $0`
 
-echo "※半角英数字のスペースなしでお願いします。"
+echo "半角英数字のスペースなしでお願いします。"
 echo "入力の間違えがないようご留意ください。"
 echo "サイト名 を決めてください 例)wordpress 例)myblog"
-read -p "サイト名> "
+read -p "サイト名> " SITE_NAME
 # ～入力項目～ ./.${SITE_NAME}_DATAに、"[domain] [メアド]"という順番の文字列で保存される
 if [ ! -f ./.${SITE_NAME}_DATA ]; then
     echo "新規サイトを作成します。"
@@ -32,10 +32,10 @@ export COMPOSE_PROJECT_NAME=${SITE_NAME}
 
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
-if [ ! -f ~/certbot-persistence/letsencrypt/live/${DOMAINNAME}/.key ]; then
+if [ ! -f ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAINNAME}/.key ]; then
 docker run -it --rm --name certbot \
-    -v "~/certbot-persistence/letsencrypt:/etc/letsencrypt" \
-    -v "~/certbot-persistence/lib/letsencrypt:/var/lib/letsencrypt" \
+    -v "~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt" \
+    -v "~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt" \
         certbot/certbot \
         -q \
         --rsa-key-size 4096 \
@@ -47,7 +47,7 @@ docker run -it --rm --name certbot \
             --http-01-port 440
             # stagingのアレ付き
 
-sudo chown `echo $USER` -R ~/certbot-persistence
+sudo chown `echo $USER` -R ~/certbot-${SITE_NAME}
 fi
 
 exit 0 # staging付き
@@ -66,7 +66,7 @@ fi
 
 exit 0
 
-openssl dhparam -out ~/certbot-persistence/letsencrypt/live/${DOMAIN}/dhparam 2048
+openssl dhparam -out ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAIN}/dhparam 2048
 
 passleng=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 export ROOTPASSWD=`cat /dev/urandom | tr -dc '$passleng' | fold -w 80 | head -n 1`

@@ -4,7 +4,7 @@ services:
     image: 'jbergstroem/mariadb-alpine'
     container_name: mysql
     volumes:
-      - "~/mariadb-persistence:/var/lib/mysql:cached"
+      - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
@@ -26,13 +26,15 @@ services:
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
+      WORDPRESS_DB_NAME: wordpress
       WORDPRESS_CONFIG_EXTRA: |
         define('WPLANG',           'ja');
         define('DB_CHARSET',       'utf8');
-        define('DB_COLLATE',       'utf8_general_ci')
+        define('DB_COLLATE',       'utf8_general_ci');
+        define('FORCE_SSL_ADMIN', true);
       LANG: C.UTF-8
     volumes:
-      - "~/nginx-persistence/src:/usr/src/wordpress"
+      - "~/nginx-${SITE_NAME}/src:/usr/src/wordpress"
       - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
       - '/etc/localtime:/etc/localtime:ro'
       - '~/log:/log'
@@ -49,8 +51,8 @@ services:
     environment:
       LANG: C.UTF-8
     volumes:
-      - '~/nginx-persistence/src:/src'
-      - '~/certbot-persistence:~/certbot-persistence:cached'
+      - '~/nginx-${SITE_NAME}/src:/src'
+      - '~/certbot:~/certbot:cached'
       - './block_${SITE_NAME}.conf:/etc/nginx/conf.d/default.conf:cached'
       - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
