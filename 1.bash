@@ -57,7 +57,7 @@ cat template-server-block.conf > block_${SITE_NAME}.conf
 
 # ～cronしょり～
 if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
-    ln -s ./certbot-renew.bash /certbot-renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
+    ln -s ./certbot-renew.bash /usr/local/bin/certbot-renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
 cat << EOF > ./crontab
 0 0 */3 * * /certbot-renew.bash #３日ごと
 EOF
