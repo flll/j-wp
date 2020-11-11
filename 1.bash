@@ -46,8 +46,8 @@ docker run -it --rm --name certbot \
         --keep \
         --standalone \
         --http-01-port 440 \
-        "${DOMAINNAME}" \
-        "${MAILADD}"
+        -d "${DOMAINNAME}" \
+        -m "${MAILADD}"
 
 sudo chown `echo $USER` -R ~/certbot-${SITE_NAME}
 fi
