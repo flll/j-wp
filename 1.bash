@@ -38,6 +38,7 @@ if [ ! -f ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAINNAME}/.key ]; then
 docker run -it --rm --name certbot \
     -v ~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt \
     -v ~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt \
+    -p 440:440 \
         certbot/certbot certonly \
         --rsa-key-size 4096 \
         --agree-tos \
