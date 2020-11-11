@@ -4,7 +4,7 @@ cd `dirname $0`
 
 echo "半角英数字のスペースなしでお願いします。"
 echo "入力の間違えがないようご留意ください。"
-echo "サイト名 を決めてください 例)wordpress 例)myblog"
+echo "サイト名 を入力してください 例)wordpress 例)myblog"
 read -p "サイト名> " SITE_NAME
 # ～入力項目～ ./.${SITE_NAME}_DATAに、"[domain] [メアド] [http port] [https port]"という順番の文字列で保存される
 if [ ! -f ./.${SITE_NAME}_DATA ]; then
@@ -39,7 +39,6 @@ docker run -it --rm --name certbot \
     -v ~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt \
     -v ~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt \
         certbot/certbot certonly \
-        -q \
         --rsa-key-size 4096 \
         --agree-tos \
         --break-my-certs \
