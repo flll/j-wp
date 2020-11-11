@@ -38,17 +38,16 @@ if [ ! -f ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAINNAME}/.key ]; then
 docker run -it --rm --name certbot \
     -v ~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt \
     -v ~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt \
-        certbot/certbot \
+        certbot/certbot certonly\
         -q \
-
         --rsa-key-size 4096 \
         --agree-tos \
         --break-my-certs \
-            certonly \
-            --keep \
-            --standalone \
-            --http-01-port 440
-            # stagingのアレ付き
+        --keep \
+        --standalone \
+        --http-01-port 440 \
+        "${DOMAINNAME}" \
+        "${MAILADD}"
 
 sudo chown `echo $USER` -R ~/certbot-${SITE_NAME}
 fi
