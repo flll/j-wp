@@ -38,8 +38,8 @@ if [ ! -f ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAINNAME}/.key ]; then
 mkdir -p ~/certbot-${SITE_NAME}/lib/letsencrypt & \
 mkdir -p ~/certbot-${SITE_NAME}/letsencrypt
 docker run -it --rm --name certbot \
-    -v "~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt" \
-    -v "~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt" \
+    -v ~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt \
+    -v ~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt \
         certbot/certbot \
         -q \
         --rsa-key-size 4096 \
