@@ -34,10 +34,10 @@ export COMPOSE_PROJECT_NAME=${SITE_NAME}
 
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
-if [ ! -f ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAINNAME}/.key ]; then
+if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/.key ]; then
 docker run -it --rm --name certbot \
-    -v ~/certbot-${SITE_NAME}/letsencrypt:/etc/letsencrypt \
-    -v ~/certbot-${SITE_NAME}/lib/letsencrypt:/var/lib/letsencrypt \
+    -v ~/certbot/letsencrypt:/etc/letsencrypt \
+    -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
     -p 80:80 \
         certbot/certbot certonly \
         --rsa-key-size 4096 \
@@ -49,7 +49,7 @@ docker run -it --rm --name certbot \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
 
-sudo chown `echo $USER` -R ~/certbot-${SITE_NAME}
+sudo chown `echo $USER` -R ~/certbot
 fi
 
 # ～nginx コンフィグ設定～
@@ -66,7 +66,7 @@ fi
 
 exit 0
 
-openssl dhparam -out ~/certbot-${SITE_NAME}/letsencrypt/live/${DOMAIN}/dhparam 2048
+openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAIN}/dhparam 2048
 
 passleng=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
 export ROOTPASSWD=`cat /dev/urandom | tr -dc '$passleng' | fold -w 80 | head -n 1`
