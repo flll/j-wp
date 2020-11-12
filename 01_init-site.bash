@@ -11,30 +11,39 @@ cd `dirname $0`
 # サイト名を複数作成する場合、
 # ※サイトの作成、編集を行った場合Nginxを再起動してください。
 #
+##既存のサイト名の表示
+aiueo=`echo .*_DATA`; [[ ! $aiueo == ".*_DATA" ]] \
+    && echo "現在存在するサイト:" \
+    && echo `ls .*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'`
+
 #############################################
 echo "半角英数字のスペースなしでお願いします。"
-echo "サイト名 を入力してください 例)wordpress 例)myblog"
+echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_-.のみです\n例)wordpress 例)myblog 例)lll_fish 例)wp_lll_fish"
 read -p "サイト名> " SITE_NAME
-ls *_DATA #←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←未実装
+SITE_NAME=${SITE_NAME,,}
+[[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && exit 1
+[[ "${SITE_NAME}"   == *" "* ]]       && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
+[[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && exit 1
 
 ## サイトが存在する場合、”編集”
-# サイトが存在しない場合、”新規作成”
-[[ -f ./.${SITE_NAME}_DATA ]]   && echo -e "===サイトが存在しました。編集を行います===\n"
-[[ ! -f ./.${SITE_NAME}_DATA ]] && echo -e "===サイトを新規作成します===\n"
+#  サイトが存在しない場合、”新規作成”
+[[ -f ./.${SITE_NAME}_DATA ]]       && echo -e "===サイトが存在しました。編集を行います===\n"
+[[ ! -f ./.${SITE_NAME}_DATA ]]     && echo -e "===サイトを新規作成します===\n"
 
 ## ～入力項目～ ./.${SITE_NAME}_DATAに、
 #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
     echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
     read -p "ドメイン名> " DOMAINNAME
-    [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
+    [[ -z "${DOMAINNAME}" ]]        && echo -e "ドメイン名を入力してください\nもう一度やり直してください。" && exit 1
+    [[ "${DOMAINNAME}" == *" "* ]]  && echo -e "スペースを含めないでください\nドット、アンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
     #############################################
     read -p "メールアドレスを入力してください > " MAILADD
-    [[ -z "${MAILADD}" ]] && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
+    [[ -z "${MAILADD}" ]]           && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
     #https://www.regular-expressions.info/email.html
     regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
-    [[ ! ${MAILADD} =~ $regex ]] && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
+    [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
     #############################################
     echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ./.${SITE_NAME}_DATA
     echo "サイト名: ${SITE_NAME} の情報を保存しました"
