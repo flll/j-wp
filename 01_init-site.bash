@@ -24,22 +24,26 @@ echo -e "サイト名 を入力してください\n使用できる文字列は[a
 read -p "サイト名> " SITE_NAME
 SITE_NAME=${SITE_NAME,,}
 [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && exit 1
-[[ "${SITE_NAME}"   == *" "* ]]       && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
+[[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
 [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && exit 1
 for i in {1..20};do echo "";done
 ## サイトが存在する場合、”編集”
 #  サイトが存在しない場合、”新規作成”
-[[ -f ./.${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n"
+[[ -f ./.${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
+    && export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")` \
+
 [[ ! -f ./.${SITE_NAME}_DATA ]]     && echo -e "===\"${SITE_NAME}\" サイトを新規作成します===\n"
 
 ## ～入力項目～ ./.${SITE_NAME}_DATAに、
 #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
     echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
+    [[ -z ${DOMAINNAME} ]] && echo "現在のドメイン名: ${DOMAINNAME}"
     read -p "ドメイン名> " DOMAINNAME
     [[ -z "${DOMAINNAME}" ]]        && echo -e "ドメイン名を入力してください\nもう一度やり直してください。" && exit 1
     [[ "${DOMAINNAME}" == *" "* ]]  && echo -e "スペースを含めないでください\nドット、アンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
     #############################################
+    [[ -z ${MAILADD} ]] && echo "現在のメールアドレス: ${MAILADD}"
     read -p "メールアドレスを入力してください > " MAILADD
     [[ -z "${MAILADD}" ]]           && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
     #https://www.regular-expressions.info/email.html
