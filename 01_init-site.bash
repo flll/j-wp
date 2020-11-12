@@ -40,12 +40,12 @@ for i in {1..20};do echo "";done
     echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
     [[ -z ${DOMAINNAME} ]] && echo "現在のドメイン名: ${DOMAINNAME}"
     read -p "ドメイン名> " DOMAINNAME
-    [[ -z "${DOMAINNAME}" ]]        && echo -e "ドメイン名を入力してください\nもう一度やり直してください。" && exit 1
+    [[ ! -z "${DOMAINNAME}" ]]        && echo -e "ドメイン名を入力してください\nもう一度やり直してください。" && exit 1
     [[ "${DOMAINNAME}" == *" "* ]]  && echo -e "スペースを含めないでください\nドット、アンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
     #############################################
     [[ -z ${MAILADD} ]] && echo "現在のメールアドレス: ${MAILADD}"
     read -p "メールアドレスを入力してください > " MAILADD
-    [[ -z "${MAILADD}" ]]           && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
+    [[ ! -z "${MAILADD}" ]]           && echo "メールアドレスを入力してください。もう一度やり直してください。" && exit 1
     #https://www.regular-expressions.info/email.html
     regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
