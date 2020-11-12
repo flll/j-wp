@@ -2,13 +2,27 @@
 set -o pipefail
 cd `dirname $0`
 
+
+## 
+# サイト名とは複数のwebページを同じIPで、別々のwebサイトを表示させる”任意機能”です
+# サイト名は複数作成することができます。
+# サイト名を複数作成することによってNginxのvirtualhost
+# SSLの証明書はホスト別で作成を行います。
+# サイト名を複数作成する場合、
+# ※サイトの作成、編集を行った場合Nginxを再起動してください。
+#
+#############################################
 echo "半角英数字のスペースなしでお願いします。"
-echo "入力の間違えがないようご留意ください。"
 echo "サイト名 を入力してください 例)wordpress 例)myblog"
 read -p "サイト名> " SITE_NAME
+ls *_DATA
+
+#サイトが存在する場合、”編集”
+#サイトが存在しない場合、”新規作成”
+[ -f ./.${SITE_NAME}_DATA ] &&   echo "===サイトが存在しました。編集を行います==="
+[ ! -f ./.${SITE_NAME}_DATA ] && echo "===サイトを新規作成します==="
+
 # ～入力項目～ ./.${SITE_NAME}_DATAに、"[サイト名] [domain] [メアド] [http port] [https port]"という順番の文字列で保存される
-if [ ! -f ./.${SITE_NAME}_DATA ]; then
-    echo "新規サイトを作成します。"
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
     echo -e -n "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp\n ドメイン名> "
     read DOMAINNAME
@@ -26,11 +40,10 @@ if [ ! -f ./.${SITE_NAME}_DATA ]; then
     read -p "※ HTTPSで使用するport番号を入力してください > " HTTPS_PORTS
     echo -n "${DOMAINNAME} ${MAILADD} ${HTTPS_PORTS:-80} ${HTTPS_PORTS:-443}" > ./.${SITE_NAME}_DATA
     echo "サイト名: ${SITE_NAME} の情報を保存しました"
-fi
+
 
 # ./.${SITE_NAME}_DATA から読み取り、変数にする
 export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd eeee; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc} HTTP_PORTS=${dddd} HTTPS_PORTS=${eeee}")`
-export COMPOSE_PROJECT_NAME=${SITE_NAME}
 
 # ～証明書の作成～
 # cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
@@ -53,7 +66,7 @@ sudo chown `echo $USER` -R ~/certbot
 fi
 
 # ～nginx コンフィグ設定～
-cat template-server-block.conf > block_${SITE_NAME}.conf
+cat template-server-block.conf > /block_${SITE_NAME}.conf
 
 # ～cronしょり～
 if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
