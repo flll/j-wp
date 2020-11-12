@@ -55,7 +55,7 @@ export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa}
 ## ～証明書の作成～
 #  FWの設定を忘れずに 443
 #  
-docker stop `docker ps -f name=nginx` #起動してない場合の処理を追加するTODOTODO
+docker stop `docker ps -f name=nginx -q` || echo ""
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
