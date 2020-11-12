@@ -1,8 +1,8 @@
 #!/bin/bash -e
 set -o pipefail
 
-#ドメイン メアドが未定義の場合実行されません
-export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb")`
+## ./.${SITE_NAME}_DATA から読み取り、変数にする
+export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
