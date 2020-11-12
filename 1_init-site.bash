@@ -52,7 +52,6 @@ docker run -it --rm --name certbot \
         certbot/certbot certonly \
         --rsa-key-size 4096 \
         --agree-tos \
-        --break-my-certs \
         --keep \
         --standalone \
         --dry-run \
