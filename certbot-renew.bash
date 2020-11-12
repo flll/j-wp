@@ -13,6 +13,5 @@ docker run -it --rm --name certbot \
         --agree-tos \
         --keep \
         --standalone \
-        --dry-run \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
