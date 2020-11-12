@@ -6,7 +6,7 @@ echo "半角英数字のスペースなしでお願いします。"
 echo "入力の間違えがないようご留意ください。"
 echo "サイト名 を入力してください 例)wordpress 例)myblog"
 read -p "サイト名> " SITE_NAME
-# ～入力項目～ ./.${SITE_NAME}_DATAに、"[domain] [メアド] [http port] [https port]"という順番の文字列で保存される
+# ～入力項目～ ./.${SITE_NAME}_DATAに、"[サイト名] [domain] [メアド] [http port] [https port]"という順番の文字列で保存される
 if [ ! -f ./.${SITE_NAME}_DATA ]; then
     echo "新規サイトを作成します。"
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
@@ -29,7 +29,7 @@ if [ ! -f ./.${SITE_NAME}_DATA ]; then
 fi
 
 # ./.${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd; echo "DOMAINNAME=${aaaa} MAILADD=${bbbb} HTTP_PORTS=${cccc} HTTPS_PORTS=${dddd}")`
+export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd eeee; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc} HTTP_PORTS=${dddd} HTTPS_PORTS=${eeee}")`
 export COMPOSE_PROJECT_NAME=${SITE_NAME}
 
 # ～証明書の作成～
@@ -57,19 +57,14 @@ cat template-server-block.conf > block_${SITE_NAME}.conf
 
 # ～cronしょり～
 if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
-    ln -s ./certbot-renew.bash /usr/local/bin/certbot-renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
+    ln -s ./certbot-renew.bash /usr/local/bin/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
+## ./crontabファイルを作成する
 cat << EOF > ./crontab
-0 0 */3 * * /certbot-renew.bash #３日ごと
+0 0 */3 * * /usr/local/bin/renew.bash #３日ごとに
 EOF
+## crontabが./crontabファイルを認識させる
     crontab -u $USER ./crontab
 fi
 
-exit 0
 
-openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAIN}/dhparam 2048
-
-passleng=1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
-export ROOTPASSWD=`cat /dev/urandom | tr -dc '$passleng' | fold -w 80 | head -n 1`
-export DBPASSWD=`cat /dev/urandom | tr -dc '$passleng' | fold -w 50 | head -n 1`
-
-docker-compose up
+echo "ウェルダン"
