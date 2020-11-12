@@ -18,3 +18,8 @@ docker run -it --rm --name certbot \
         −−preferred-challenges tls-alpn-01 \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
+
+        dockercompose upを単独で起動させる
+        サイト名を２つ以上作るk遠出nginxのバーチャルserverで同じportで
+        複数のホストを管理することができるようにする
+        
