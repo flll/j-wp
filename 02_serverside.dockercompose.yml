@@ -41,20 +41,4 @@ services:
       - '~/log:/log:cached'
     restart: unless-stopped
 
-  server:
-    image: nginx:1.19.4-alpine
-    container_name: nginx
-    ports:
-      - "80:80"
-      - "443:443"
-    links:
-    - wordpress
-    environment:
-      LANG: C.UTF-8
-    volumes:
-      - '~/nginx-${SITE_NAME}/src:/src'
-      - '~/certbot:~/certbot:cached'
-      - './conf.d:/etc/nginx/conf.d:cached'
-      - '~/log:/log:cached'
-      - '/etc/localtime:/etc/localtime:ro'
-    restart: unless-stopped
+

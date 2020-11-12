@@ -45,6 +45,7 @@ export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa}
 ## ～証明書の作成～
 #  FWの設定を忘れずに 443
 #  
+docker stop `docker ps -f name=nginx` #起動してない場合の処理を追加するTODOTODO
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
@@ -73,7 +74,7 @@ if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcronta
     ln -s ./certbot-renew.bash /usr/local/bin/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
 ## ./crontabファイルを作成する
 cat << EOF > ./crontab
-0 0 */3 * * /usr/local/bin/renew.bash #３日ごとに
+0 2 */3 * * /usr/local/bin/renew.bash #深夜２時且つ３日ごとに更新を行う
 EOF
 ## crontabにて./crontabファイルを認識させる
     crontab -u $USER ./crontab
