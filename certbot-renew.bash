@@ -7,7 +7,7 @@ export `cat ~/.envi/DATA | (read aaaa bbbb; echo "DOMAINNAME=$aaaa MAILADD=$bbbb
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
-    -p 80:80 \
+    -p 443:443 \
         certbot/certbot renew \
         --rsa-key-size 4096 \
         --agree-tos \

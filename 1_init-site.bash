@@ -40,15 +40,15 @@ ls *_DATA #←←←←←←←←←←←←←←←←←←←←←←←
     echo "サイト名: ${SITE_NAME} の情報を保存しました"
 
 ## ./.${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd eeee; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
 ## ～証明書の作成～
-#  cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
-if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/.key ]; then
+#  FWの設定を忘れずに 443
+#  
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
-    -p 80:80 \
+    -p 443:443 \
         certbot/certbot certonly \
         --rsa-key-size 4096 \
         --agree-tos \
@@ -59,7 +59,6 @@ docker run -it --rm --name certbot \
         -m "${MAILADD}"
 
 sudo chown `echo $USER` -R ~/certbot
-fi
 openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAIN}/dhparam 2048
 
 ## ～コンフィグtemplate記述～
