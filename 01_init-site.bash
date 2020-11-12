@@ -64,8 +64,8 @@ openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAIN}/dhparam 2048
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
-envsubst '$arg $uri $1 $request_filename $fastcgi_script_name  $document_root' \
-    < ./server-block.conf.temp > ./conf.d/block_${SITE_NAME}.conf
+envsubst '${SITE_NAME} ${DOMAINNAME}' \
+        < ./server-block.conf.temp > ./conf.d/block_${SITE_NAME}.conf
 
 exit 0
 

@@ -2,14 +2,13 @@ version: '3.3'
 services:
   db:
     image: 'jbergstroem/mariadb-alpine'
-    container_name: mysql
     volumes:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
+      MYSQL_DATABASE: wp
+      MYSQL_USER: wp
       MYSQL_PASSWORD: ${DBPASSWD}
       MYSQL_CHARSET: utf8
       MYSQL_COLLATION: utf8_general_ci
@@ -20,14 +19,11 @@ services:
     depends_on:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
-    container_name: wordpress
-    links:
-      - db
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
-      WORDPRESS_DB_NAME: wordpress
-      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_NAME: wp
+      WORDPRESS_DB_USER: wp
       WORDPRESS_CONFIG_EXTRA: |
         define('WPLANG',           'ja');
         define('DB_CHARSET',       'utf8');
