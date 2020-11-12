@@ -2,6 +2,16 @@
 set -o pipefail
 cd `dirname $0`
 
+##既存のサイト名の表示
+for i in {1..20};do echo "";done
+aiueo=`echo .*_DATA`; if [ ! $aiueo == ".*_DATA" ]; then
+    echo "現在存在するサイト:" \
+    echo `ls .*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'`
+else
+    echo "サイトが存在しません。init-siteをやり直してください。"
+    exit 1
+fi
+
 echo サイト名に基づいてwordpressを起動させます。
 read -p "サイト名> " SITE_NAME
 ## ./.${SITE_NAME}_DATA から読み取り、変数にする
