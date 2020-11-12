@@ -15,7 +15,8 @@ cd `dirname $0`
 for i in {1..20};do echo "";done
 aiueo=`echo .*_DATA`; [[ ! $aiueo == ".*_DATA" ]] \
     && echo "現在存在するサイト:" \
-    && echo `ls .*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'`
+    && echo `ls .*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'` \
+    && for i in {1..2};do echo "";done
 
 #############################################
 echo "半角英数字のスペースなしでお願いします。"
@@ -25,11 +26,11 @@ SITE_NAME=${SITE_NAME,,}
 [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && exit 1
 [[ "${SITE_NAME}"   == *" "* ]]       && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
 [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && exit 1
-
+for i in {1..20};do echo "";done
 ## サイトが存在する場合、”編集”
 #  サイトが存在しない場合、”新規作成”
-[[ -f ./.${SITE_NAME}_DATA ]]       && echo -e "===サイトが存在しました。編集を行います===\n"
-[[ ! -f ./.${SITE_NAME}_DATA ]]     && echo -e "===サイトを新規作成します===\n"
+[[ -f ./.${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n"
+[[ ! -f ./.${SITE_NAME}_DATA ]]     && echo -e "===\"${SITE_NAME}\" サイトを新規作成します===\n"
 
 ## ～入力項目～ ./.${SITE_NAME}_DATAに、
 #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
