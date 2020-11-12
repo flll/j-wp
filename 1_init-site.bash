@@ -61,6 +61,7 @@ docker run -it --rm --name certbot \
 
 sudo chown `echo $USER` -R ~/certbot
 fi
+openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAIN}/dhparam 2048
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
