@@ -60,11 +60,12 @@ export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa}
 ## ～証明書の作成～
 #  FWの設定を忘れずに 443
 #  
+docker pull certbot/certbot
 docker stop `docker ps -f name=nginx -q` || echo ""
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
-    -p 443:443 \
+    -p 80:80 \
         certbot/certbot certonly \
         --rsa-key-size 4096 \
         --agree-tos \

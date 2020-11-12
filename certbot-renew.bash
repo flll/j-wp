@@ -7,13 +7,12 @@ export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa}
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
-    -p 443:443 \
+    -p 80:80 \
         certbot/certbot renew \
         --rsa-key-size 4096 \
         --agree-tos \
         --keep \
         --standalone \
         --dry-run \
-        −−preferred-challenges tls-alpn-01 \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
