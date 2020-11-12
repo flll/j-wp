@@ -78,7 +78,7 @@ docker run -it --rm --name certbot \
         -m "${MAILADD}"
 
 sudo chown `echo $USER` -R ~/certbot
-openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAIN}/dhparam 2048
+openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAINNAME}/dhparam 2048
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
