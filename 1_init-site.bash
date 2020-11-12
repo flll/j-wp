@@ -15,17 +15,18 @@ cd `dirname $0`
 echo "半角英数字のスペースなしでお願いします。"
 echo "サイト名 を入力してください 例)wordpress 例)myblog"
 read -p "サイト名> " SITE_NAME
-ls *_DATA
+ls *_DATA #←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←未実装
 
-#サイトが存在する場合、”編集”
-#サイトが存在しない場合、”新規作成”
-[ -f ./.${SITE_NAME}_DATA ] &&   echo "===サイトが存在しました。編集を行います==="
-[ ! -f ./.${SITE_NAME}_DATA ] && echo "===サイトを新規作成します==="
+## サイトが存在する場合、”編集”
+# サイトが存在しない場合、”新規作成”
+[[ -f ./.${SITE_NAME}_DATA ]]   && echo -e "===サイトが存在しました。編集を行います===\n"
+[[ ! -f ./.${SITE_NAME}_DATA ]] && echo -e "===サイトを新規作成します===\n"
 
-# ～入力項目～ ./.${SITE_NAME}_DATAに、"[サイト名] [domain] [メアド] [http port] [https port]"という順番の文字列で保存される
+## ～入力項目～ ./.${SITE_NAME}_DATAに、
+#  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
-    echo -e -n "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp\n ドメイン名> "
-    read DOMAINNAME
+    echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
+    read -p "ドメイン名> " DOMAINNAME
     [[ -z "${DOMAINNAME}" ]] && echo "ドメイン名を入力してください。もう一度やり直してください。" && exit 1
     #############################################
     read -p "メールアドレスを入力してください > " MAILADD
@@ -35,18 +36,14 @@ ls *_DATA
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
     [[ ! ${MAILADD} =~ $regex ]] && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
     #############################################
-    echo "※↓任意項目です。わからない場合はそのままエンターキーを入力してください"
-    read -p "※ HTTPで使用するport番号を入力してください > " HTTP_PORTS
-    read -p "※ HTTPSで使用するport番号を入力してください > " HTTPS_PORTS
-    echo -n "${DOMAINNAME} ${MAILADD} ${HTTPS_PORTS:-80} ${HTTPS_PORTS:-443}" > ./.${SITE_NAME}_DATA
+    echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ./.${SITE_NAME}_DATA
     echo "サイト名: ${SITE_NAME} の情報を保存しました"
 
+## ./.${SITE_NAME}_DATA から読み取り、変数にする
+export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd eeee; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
-# ./.${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc dddd eeee; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc} HTTP_PORTS=${dddd} HTTPS_PORTS=${eeee}")`
-
-# ～証明書の作成～
-# cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
+## ～証明書の作成～
+#  cronにて定期的に証明書更新処理を行うためport440を使う。FWの設定を忘れずに
 if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/.key ]; then
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
@@ -65,17 +62,21 @@ docker run -it --rm --name certbot \
 sudo chown `echo $USER` -R ~/certbot
 fi
 
-# ～nginx コンフィグ設定～
-cat template-server-block.conf > /block_${SITE_NAME}.conf
+## ～コンフィグtemplate記述～
+#  nginx conf
+envsubst '$arg $uri $1 $request_filename $fastcgi_script_name  $document_root' \
+    < ./server-block.conf.temp > ./conf.d/block_${SITE_NAME}.conf
 
-# ～cronしょり～
+exit 0
+
+## ～cronしょり～
 if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
     ln -s ./certbot-renew.bash /usr/local/bin/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
 ## ./crontabファイルを作成する
 cat << EOF > ./crontab
 0 0 */3 * * /usr/local/bin/renew.bash #３日ごとに
 EOF
-## crontabが./crontabファイルを認識させる
+## crontabにて./crontabファイルを認識させる
     crontab -u $USER ./crontab
 fi
 
