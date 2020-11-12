@@ -38,7 +38,7 @@ services:
       - "~/nginx-${SITE_NAME}/src:/usr/src/wordpress"
       - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
       - '/etc/localtime:/etc/localtime:ro'
-      - '~/log:/log'
+      - '~/log:/log:cached'
     restart: unless-stopped
 
   server:
