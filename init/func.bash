@@ -21,13 +21,11 @@ function pgen () {
 }
 
 function site-type () {
-echo a
     ## 既存のサイト名の表示
     aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \
         && echo "現在存在するサイト:" \
         && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/.site\///'` \
         && for i in {1..4};do echo "";done
-echo a
     #############################################
     echo "半角英数字のスペースなしでお願いします。"
     echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_-.のみです\n例)wordpress 例)myblog 例)lll_fish 例)wp_lll_fish"
