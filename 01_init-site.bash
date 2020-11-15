@@ -13,12 +13,12 @@ cd `dirname $0`
 #  ※サイトの作成、編集を行った場合Nginxを再起動してください。
 ##
 next-lf
-REF=1; while [ $REF = 1 ] ;do
+REF=1; while [[ -z "${SITE_NAME}" ]] ;do
     site-type
     next-lf
 done
 
-REF=1; while [ "$REF" = 1 ] ;do
+REF=1; while [ $REF = 1 ] ;do
     site-edit
     next-lf
 done

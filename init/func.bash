@@ -1,5 +1,4 @@
-#!/bin/bash -e
-set -o pipefail
+#!/bin/bash
 
 ## ～cronしょり～
 function add-cron () {
@@ -34,6 +33,7 @@ function site-type () {
     SITE_NAME=${SITE_NAME,,}
     [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
     [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && REF=1 && return;
+    REF=0
 }
 
 function site-edit () {
