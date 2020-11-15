@@ -48,7 +48,7 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAIN}/fullchain.pem ]; then
             --standalone \
             -d "${DOMAINNAME}" \
             -m "${MAILADD}" \
-                echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
+                || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 fi
 
 sudo chown `echo $USER` -R ~/certbot
