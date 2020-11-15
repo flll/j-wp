@@ -14,8 +14,8 @@ fi
 
 echo サイト名に基づいてwordpressを起動させます。
 read -p "サイト名> " SITE_NAME
-## ./.${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
+export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
 pgen () {
     cat /dev/urandom | tr -dc [A-Za-z0-9] | fold -w $1 | head -n 1;

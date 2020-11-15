@@ -2,7 +2,7 @@
 set -o pipefail
 cd `dirname $0`
 
-
+. init/func.bash
 ## 
 # サイト名とは複数のwebページを同じインスタンス、IPアドレスで、
 # 別々のwebサイトを表示させる”任意機能”です
@@ -29,12 +29,12 @@ SITE_NAME=${SITE_NAME,,}
 for i in {1..20};do echo "";done
 ## サイトが存在する場合、”編集”
 #  サイトが存在しない場合、”新規作成”
-[[ -f ./.${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
-    && export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")` \
+[[ -f ~/.site/${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
+    && export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
-[[ ! -f ./.${SITE_NAME}_DATA ]]     && echo -e "===\"${SITE_NAME}\" サイトを新規作成します===\n"
+[[ ! -f ~/.site/${SITE_NAME}_DATA ]]     && echo -e "===\"${SITE_NAME}\" サイトを新規作成します===\n"
 
-## ～入力項目～ ./.${SITE_NAME}_DATAに、
+## ～入力項目～ ~/.site/${SITE_NAME}_DATAに、
 #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
     echo "入力をやり直したい場合ctrl+cで強制終了してください。"
     echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
@@ -53,11 +53,11 @@ for i in {1..20};do echo "";done
     MAIL_SYNTAXERR_MESSAGE="メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
     [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && exit 1
     #############################################
-    echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ./.${SITE_NAME}_DATA
+    echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
     echo "サイト名: ${SITE_NAME} の情報を保存しました"
 
-## ./.${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ./.${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
+export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
 ## ～証明書の作成～
 #  FWの設定を忘れずに 443
@@ -86,16 +86,8 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 
 exit 0
 
-## ～cronしょり～
-if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
-    ln -s ./certbot-renew.bash /usr/local/bin/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
-## ./crontabファイルを作成する
-cat << EOF > ./crontab
-0 2 */3 * * /usr/local/bin/renew.bash #深夜２時且つ３日ごとに更新を行う
-EOF
-## crontabにて./crontabファイルを認識させる
-    crontab -u $USER ./crontab
-fi
+# クロン処理を行う.
+add-cron
 
 
 echo "ウェルダン"
