@@ -34,7 +34,7 @@ site-data-export
 #  FWの設定を忘れずに 443 80
 #
 
-if [ ! -f ~/certbot/letsencrypt/live/${DOMAIN}/fullchain.pem ]; then
+if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     docker pull -q certbot/certbot
     docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
     docker run -it --rm --name certbot \
