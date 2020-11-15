@@ -17,14 +17,14 @@ cd `dirname $0`
 next-lf
 REF=1; while [ $REF = 1 ] ;do
     site-type
-    for i in {1..10};do echo -n "|";done;echo ""
+    for i in {1..30};do echo -n "|";done;echo ""
 done
 next-lf
 
 ## site-edit
 REF=1; while [ $REF = 1 ] ;do
     site-edit
-    for i in {1..10};do echo -n "|";done;echo ""
+    for i in {1..30};do echo -n "|";done;echo ""
 done
 next-lf
 
@@ -48,7 +48,7 @@ docker run -it --rm --name certbot \
         -m "${MAILADD}"
 
 sudo chown `echo $USER` -R ~/certbot
-openssl dhparam -out ~/certbot/letsencrypt/live/${DOMAINNAME}/dhparam 2048
+openssl dhparam -out ~/certbot/dhparam 2048
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
