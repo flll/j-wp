@@ -13,5 +13,5 @@ services:
       - '~/certbot:~/certbot:cached'
       - '~/.site/conf.d:/etc/nginx/conf.d:cached'
       - '~/log:/log:delegated'
-      - '/etc/localtime:/etc/localtime:ro:delegated'
+      - '/etc/localtime:/etc/localtime:ro'
     restart: always
