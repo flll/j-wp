@@ -24,7 +24,7 @@ function site-type () {
     ## 既存のサイト名の表示
     aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \
         && echo "現在存在するサイト:" \
-        && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'` \
+        && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^*/.site//'` \
         && for i in {1..2};do echo "";done
 
     #############################################
