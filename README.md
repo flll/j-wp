@@ -6,7 +6,7 @@ cat << 'EOF' > ~/jj.bash
 [[ ! -d j-wp/ ]] && git clone https://github.com/flll/j-wp.git
 cd j-wp
 git fetch && git reset --hard origin/main
-chmod +x -R *
+chmod 755 -R *
 ./01_init-site.bash
 EOF
 ```
