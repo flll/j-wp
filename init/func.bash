@@ -46,7 +46,7 @@ function site-edit () {
 
     ## ～入力項目～ ~/.site/${SITE_NAME}_DATAに、
     #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
-        echo "入力をやり直したい場合ctrl+cで強制終了してください。"
+        echo "※入力をやり直したい場合ctrl+cで強制終了してください。"
         echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
         [[ ! -z ${DOMAINNAME} ]]        && echo -e "!!! 現在のドメイン名: ${DOMAINNAME} \nそのままエンターキーを入力すると変更されません。"
         read -p "ドメイン名> " DOMAINNAME_BUFF
@@ -54,6 +54,7 @@ function site-edit () {
         [[ -z "${DOMAINNAME}" ]]        && echo -e "!!! ドメイン名を入力してください\nもう一度やり直してください。" && REF=1 && return;
         [[ "${DOMAINNAME}" == *" "* ]]  && echo -e "!!! スペースを含めないでください\nドット、アンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
         #############################################
+        echo ""
         [[ ! -z ${MAILADD} ]]           && echo -e "現在のメールアドレス: ${MAILADD} \nそのままエンターキーを入力すると変更されません。"
         read -p "メールアドレスを入力してください > " MAILADD_BUFF
         [[ ! -z ${MAILADD_BUFF} ]]      && MAILADD=${MAILADD_BUFF}
