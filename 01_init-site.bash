@@ -14,6 +14,7 @@ cd `dirname $0`
 ##
 next-lf
 REF=1; while [ "$REF" = "0" ] ;do
+echo a
     site-type
     next-lf
 done
