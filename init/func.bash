@@ -6,7 +6,7 @@ function add-cron () {
     if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
     echo -n "add-cron..."
     mkdir -p /usr/local/bin/lll && chmod 755 /usr/local/bin/lll
-    ln -s init/certbot-renew.bash /usr/local/bin/lll/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
+    ln init/certbot-renew.bash /usr/local/bin/lll/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
     ## ./crontabファイルを作成する ※TABインデントを変更しないこと
 	cat <<-EOF > ./crontab
 	0 2 */3 * * /usr/local/bin/lll/renew.bash #深夜２時且つ３日ごとに更新を行う
