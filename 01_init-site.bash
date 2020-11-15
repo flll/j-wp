@@ -12,16 +12,20 @@ cd `dirname $0`
 #  サイト名を複数作成する場合、
 #  ※サイトの作成、編集を行った場合Nginxを再起動してください。
 ##
-next-lf
-REF=1; while [[ -z "${SITE_NAME}" ]] ;do
-    site-type
-    next-lf
-done
 
+## site-type
+next-lf
+REF=1; while [ $REF = 1 ] ;do
+    site-type
+done
+next-lf
+
+## site-edit
 REF=1; while [ $REF = 1 ] ;do
     site-edit
-    next-lf
 done
+next-lf
+
 site-data-export
 
 ## ～証明書の作成～
