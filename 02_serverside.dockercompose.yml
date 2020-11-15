@@ -4,7 +4,7 @@ services:
     image: 'jbergstroem/mariadb-alpine'
     volumes:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
-      - '/etc/localtime:/etc/localtime:ro'
+      - '/etc/localtime:/etc/localtime:ro:delegated'
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -33,8 +33,8 @@ services:
     volumes:
       - "~/nginx-${SITE_NAME}/src:/usr/src/wordpress"
       - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
-      - '/etc/localtime:/etc/localtime:ro'
-      - '~/log:/log:cached'
+      - '~/log:/log:delegated'
+      - '/etc/localtime:/etc/localtime:ro:delegated'
     restart: unless-stopped
 
 

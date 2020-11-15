@@ -8,9 +8,9 @@ services:
     environment:
       LANG: C.UTF-8
     volumes:
-      - '~/nginx-${SITE_NAME}/src:/src'
+      - '~/nginx-${SITE_NAME}/src:/src:cached'
       - '~/certbot:~/certbot:cached'
-      - './conf.d:/etc/nginx/conf.d:cached'
-      - '~/log:/log:cached'
-      - '/etc/localtime:/etc/localtime:ro'
+      - '~/site/conf.d:/etc/nginx/conf.d:cached'
+      - '~/log:/log:delegated'
+      - '/etc/localtime:/etc/localtime:ro:delegated'
     restart: always
