@@ -34,7 +34,7 @@ site-data-export
 #  FWの設定を忘れずに 443 80
 #  
 docker pull certbot/certbot
-docker stop `docker ps -f name=nginx -q` || echo "" # nginxコンテナが存在しない場合stopは行えない
+docker stop `docker ps -f name=nginx -q` 2> /dev/null # nginxコンテナが存在しない場合stopは行えない
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
