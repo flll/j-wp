@@ -50,13 +50,13 @@ function site-edit () {
         echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
         [[ ! -z ${DOMAINNAME} ]]        && echo -e "現在のドメイン名: ${DOMAINNAME} \nそのままエンターキーを入力すると変更されません。"
         read -p "ドメイン名> " DOMAINNAME_BUFF
-        [[ ! -z ${DOMAINNAME_BUFF} ]]   && DOMAINNAME=${DOMAINNAME_BUFF} && echo "設定を変更しました"
+        [[ ! -z ${DOMAINNAME_BUFF} ]]   && DOMAINNAME=${DOMAINNAME_BUFF}
         [[ -z "${DOMAINNAME}" ]]        && echo -e "ドメイン名を入力してください\nもう一度やり直してください。" && REF=1 && return;
         [[ "${DOMAINNAME}" == *" "* ]]  && echo -e "スペースを含めないでください\nドット、アンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
         #############################################
         [[ ! -z ${MAILADD} ]]           && echo -e "現在のメールアドレス: ${MAILADD} \nそのままエンターキーを入力すると変更されません。"
         read -p "メールアドレスを入力してください > " MAILADD_BUFF
-        [[ ! -z ${MAILADD_BUFF} ]]      && DOMAINNAME=${MAILADD_BUFF} && echo "設定を変更しました"
+        [[ ! -z ${MAILADD_BUFF} ]]      && DOMAINNAME=${MAILADD_BUFF}
         [[ -z "${MAILADD}" ]]           && echo "メールアドレスを入力してください。もう一度やり直してください。" && REF=1 && return;
         #https://www.regular-expressions.info/email.html
         regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
@@ -65,7 +65,7 @@ function site-edit () {
         #############################################
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
-        REF=1
+        REF=0
 }
 
 function next-lf () {
