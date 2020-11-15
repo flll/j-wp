@@ -56,9 +56,9 @@ sudo chown `echo $USER` -R ~/certbot
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
-[[ ! -d ~/site/conf.d ]] && mkdir -p ~/site/conf.d && chmod 766 ~/site/conf.d
+[[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 766 ~/.site/conf.d
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
-        < ./template-server-block.conf > ~/site/conf.d/block_${SITE_NAME}.conf
+        < ./template-server-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
 exit 0
 
