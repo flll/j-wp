@@ -11,11 +11,12 @@ cd `dirname $0`
 # サイト名を複数作成する場合、
 # ※サイトの作成、編集を行った場合Nginxを再起動してください。
 #
-##既存のサイト名の表示
+## 20回改行する
 for i in {1..20};do echo "";done
-aiueo=`echo .*_DATA`; [[ ! $aiueo == ".*_DATA" ]] \
+## 既存のサイト名の表示
+aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \ 
     && echo "現在存在するサイト:" \
-    && echo `ls .*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'` \
+    && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'` \
     && for i in {1..2};do echo "";done
 
 #############################################
@@ -26,9 +27,9 @@ SITE_NAME=${SITE_NAME,,}
 [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && exit 1
 [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && exit 1
 [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && exit 1
+## 20回改行する
 for i in {1..20};do echo "";done
-## サイトが存在する場合、”編集”
-#  サイトが存在しない場合、”新規作成”
+## サイトが存在する場合、”編集” サイトが存在しない場合、”新規作成”
 [[ -f ~/.site/${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
     && export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
