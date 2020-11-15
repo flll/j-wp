@@ -13,19 +13,18 @@ cd `dirname $0`
 #  ※サイトの作成、編集を行った場合Nginxを再起動してください。
 ##
 next-lf
-?=1
-while [ ! "$?" = "0" ] ;do
+while [ "$REF" = "0" ] ;do
     site-type
     next-lf
 done
-while [ ! "$?" = "0" ] ;do
+while [ "$REF" = "0" ] ;do
     site-edit
     next-lf
 done
 site-data-export
 
 ## ～証明書の作成～
-#  FWの設定を忘れずに 443
+#  FWの設定を忘れずに 443 80
 #  
 docker pull certbot/certbot
 docker stop `docker ps -f name=nginx -q` || echo "" # nginxコンテナが存在しない場合stopは行えない
