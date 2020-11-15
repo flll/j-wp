@@ -1,5 +1,5 @@
 services:
-  web:
+  nginx:
     image: nginx:1.19.4-alpine
     container_name: nginx
     ports:
