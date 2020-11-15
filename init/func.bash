@@ -38,11 +38,11 @@ function site-type () {
 
 function site-edit () {
     ## サイトが存在する場合、”編集” サイトが存在しない場合、”新規作成”
-    [[ -f ~/.site/${SITE_NAME}_DATA ]]    \
+    [[ -f ~/.site/${SITE_NAME}_DATA ]] \
         && echo -e "=== \"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
-        && site-data-export \
-        || echo -e "データがありませんでした\n\n"
-    [[ ! -f ~/.site/${SITE_NAME}_DATA ]]  && echo -e "=== \"${SITE_NAME}\" サイトを新規作成します===\n"
+        && site-data-export
+    [[ ! -f ~/.site/${SITE_NAME}_DATA ]] \
+        && echo -e "=== \"${SITE_NAME}\" サイトを新規作成します===\n"
 
     ## ～入力項目～ ~/.site/${SITE_NAME}_DATAに、
     #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
@@ -65,6 +65,7 @@ function site-edit () {
         #############################################
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
+        REF=1
 }
 
 function next-lf () {
