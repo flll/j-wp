@@ -63,5 +63,6 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 ## クロン処理を行う.
 add-cron
 
-docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
+docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo "nginxは起動していません。続行します"
+
 docker-compose -f 01_webserver.dockercompose.yml up 
