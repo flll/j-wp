@@ -34,20 +34,22 @@ site-data-export
 #  FWの設定を忘れずに 443 80
 #
 
-docker pull certbot/certbot
-docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
-docker run -it --rm --name certbot \
-    -v ~/certbot/letsencrypt:/etc/letsencrypt \
-    -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
-    -p 80:80 \
-        certbot/certbot certonly \
-        --rsa-key-size 4096 \
-        --agree-tos \
-        --keep \
-        --standalone \
-        -d "${DOMAINNAME}" \
-        -m "${MAILADD}" \
-            || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
+if [ ! -f ~/certbot/letsencrypt/live/${DOMAIN}/fullchain.pem ]; then
+    docker pull -q certbot/certbot
+    docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
+    docker run -it --rm --name certbot \
+        -v ~/certbot/letsencrypt:/etc/letsencrypt:cached \
+        -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
+        -p 80:80 \
+            certbot/certbot certonly \
+            --rsa-key-size 4096 \
+            --agree-tos \
+            --keep \
+            --standalone \
+            -d "${DOMAINNAME}" \
+            -m "${MAILADD}" \
+                echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
+fi
 
 sudo chown `echo $USER` -R ~/certbot
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
