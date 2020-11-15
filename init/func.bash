@@ -76,5 +76,6 @@ function next-lf () {
 
 function site-data-export () {
     ## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
+    #  depend side-edit()
     export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 }
