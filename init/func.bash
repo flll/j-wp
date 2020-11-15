@@ -2,7 +2,7 @@
 
 ## ～cronしょり～
 function add-cron () {
-    echo `dirname $0`
+    pwd
     if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
     echo -n "add-cron..."
     mkdir -p /usr/local/bin/lll && chmod 755 /usr/local/bin/lll
