@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
+set -o pipefail
 
 ## ～cronしょり～
 function add-cron () {
@@ -16,7 +17,7 @@ function add-cron () {
 }
 
 function pgen () {
-    cat /dev/urandom | tr -dc [A-Za-z0-9] | fold -w $1 | head -n 1;
+    cat /dev/urandom | tr -dc [A-Za-z0-9] | fold -w 1 | head -n 1;
 }
 
 function site-type () {
@@ -39,10 +40,10 @@ function site-type () {
 
 function site-edit () {
     ## サイトが存在する場合、”編集” サイトが存在しない場合、”新規作成”
-    [[ -f ~/.site/${SITE_NAME}_DATA ]]       && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
+    [[ -f ~/.site/${SITE_NAME}_DATA ]]    && echo -e "===\"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
         && site-data-export
 
-    [[ ! -f ~/.site/${SITE_NAME}_DATA ]]     && echo -e "===\"${SITE_NAME}\" サイトを新規作成します===\n"
+    [[ ! -f ~/.site/${SITE_NAME}_DATA ]]  && echo -e "===\"${SITE_NAME}\" サイトを新規作成します===\n"
 
     ## ～入力項目～ ~/.site/${SITE_NAME}_DATAに、
     #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
