@@ -14,7 +14,7 @@ cd `dirname $0`
 ## 20回改行する
 for i in {1..20};do echo "";done
 ## 既存のサイト名の表示
-aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \ 
+aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \
     && echo "現在存在するサイト:" \
     && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^[.]//'` \
     && for i in {1..2};do echo "";done
