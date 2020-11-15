@@ -32,9 +32,10 @@ site-data-export
 
 ## ～証明書の作成～
 #  FWの設定を忘れずに 443 80
-#  
+#
+
 docker pull certbot/certbot
-docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません" # nginxコンテナが存在しない場合stopは行えない
+docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
 docker run -it --rm --name certbot \
     -v ~/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt \
@@ -45,7 +46,8 @@ docker run -it --rm --name certbot \
         --keep \
         --standalone \
         -d "${DOMAINNAME}" \
-        -m "${MAILADD}"
+        -m "${MAILADD}" \
+            || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 
 sudo chown `echo $USER` -R ~/certbot
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
