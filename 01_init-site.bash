@@ -17,14 +17,14 @@ cd `dirname $0`
 next-lf
 REF=1; while [ $REF = 1 ] ;do
     site-type
-    for i in {1..10};do echo -e "|";done;echo ""
+    for i in {1..10};do echo -n "|";done;echo ""
 done
 next-lf
 
 ## site-edit
 REF=1; while [ $REF = 1 ] ;do
     site-edit
-    for i in {1..10};do echo -e "|";done;echo ""
+    for i in {1..10};do echo -n "|";done;echo ""
 done
 next-lf
 
