@@ -25,16 +25,18 @@ function site-type () {
     aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \
         && echo "現在存在するサイト:" \
         && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/.site\///'` \
-        && for i in {1..2};do echo "";done
+        && for i in {1..4};do echo "";done
 
     #############################################
     echo "半角英数字のスペースなしでお願いします。"
     echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_-.のみです\n例)wordpress 例)myblog 例)lll_fish 例)wp_lll_fish"
     read -p "サイト名> " SITE_NAME
-    SITE_NAME=${SITE_NAME,,}
     [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && return 1;
+    SITE_NAME=${SITE_NAME,,}
     [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && return 1;
     [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && return 1;
+
+    return 0;
 }
 
 function site-edit () {
@@ -65,11 +67,13 @@ function site-edit () {
         #############################################
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
+
+        return 0;
 }
 
 function next-lf () {
-    ## 見やすくするために20回改行します
-    for i in {1..20};do echo "";done
+    ## 見やすくするために改行します
+    for i in {1..10};do echo "";done
 }
 
 function site-data-export () {
