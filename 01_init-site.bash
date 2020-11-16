@@ -61,6 +61,9 @@ chmod 0700 -R ~/certbot/*
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./template-server-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
+## 必要なフォルダを作成
+[[ ! -d ~/log ]] && mkdir -p ~/log && chmod 666 ~/log
+
 ## クロン処理を行う.
 add-cron
 
