@@ -3,6 +3,7 @@ services:
   nginx:
     image: nginx:1.19.4-alpine
     container_name: nginx
+    user: `id -u`:`id -g`
     ports:
       - "80:80"
       - "443:443"
