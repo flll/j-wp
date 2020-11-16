@@ -84,3 +84,7 @@ function site-data-export () {
     #  depend side-edit()
     export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 }
+
+function down-nginx () {
+    docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo "nginxは起動していません。続行します"
+}
