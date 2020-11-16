@@ -4,6 +4,7 @@ cd `dirname $0`
 
 . init/func.bash
 
+export IDUG="`id -u`:`id -g`"
 ## 
 #  サイト名とは複数のwebページを同じインスタンス、IPアドレスで、
 #  別々のwebサイトを表示させる”任意機能”です
@@ -51,7 +52,7 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
                 || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 fi
 
-sudo chown -hR `id -u`:`id -g` ~/certbot
+sudo chown -hR $IDUG ~/certbot
 chmod 0700 -R ~/certbot/*
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
 
@@ -64,7 +65,7 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 ## 必要なフォルダを作成
 [[ ! -d ~/log/${SITE_NAME} ]] \
     && mkdir -p ~/log/${SITE_NAME} \
-    && sudo chown `id -u`:`id -g` \
+    && sudo chown $IDUG \
     && chmod 766 -R ~/log/*
 [[ ! -f ~/log/${SITE_NAME}/nginx-access.log ]] || [[ ! -f ~/log/${SITE_NAME}/nginx-error.log ]] && \
         touch ~/log/${SITE_NAME}/nginx-error.log ~/log/${SITE_NAME}/nginx-access.log
