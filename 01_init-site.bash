@@ -52,6 +52,7 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
 fi
 
 sudo chown `echo $USER` -R ~/certbot
+chmod 666 -R ~/certbot
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
 
 ## ～コンフィグtemplate記述～
