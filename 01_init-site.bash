@@ -51,7 +51,7 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
                 || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 fi
 
-sudo chown `echo $USER` -R ~/certbot/*
+sudo chown -hR `echo $USER` ~/certbot
 chmod 666 -R ~/certbot/*
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
 
