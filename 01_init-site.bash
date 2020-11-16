@@ -63,7 +63,7 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 
 ## 必要なフォルダを作成
 [[ ! -d ~/log ]] && mkdir -p ~/log/${SITE_NAME} && chmod 666 -R ~/log
-:[[ ! -f ~/log/]] 
+#[[ ! -f ~/log/]] 
 
 ## クロン処理を行う.
 add-cron
