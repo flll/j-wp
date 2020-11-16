@@ -68,7 +68,7 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
     && sudo chown $IDUG \
     && chmod 766 -R ~/log/*
 [[ ! -f ~/log/${SITE_NAME}/nginx-access.log ]] || [[ ! -f ~/log/${SITE_NAME}/nginx-error.log ]] && \
-        touch ~/log/${SITE_NAME}/nginx-error.log ~/log/${SITE_NAME}/nginx-access.log
+        touch ~/log/${SITE_NAME}/nginx-error.log ~/log/${SITE_NAME}/nginx-access.log && chmod 766 -R ~/log/*
 
 ## クロン処理を行う.
 add-cron
