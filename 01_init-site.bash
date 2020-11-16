@@ -47,6 +47,7 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
             --agree-tos \
             --keep \
             --standalone \
+            --staple-ocsp \
             -d "${DOMAINNAME}" \
             -m "${MAILADD}" \
                 || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"

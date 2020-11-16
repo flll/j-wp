@@ -13,5 +13,6 @@ docker run -it --rm --name certbot \
         --agree-tos \
         --keep \
         --standalone \
+        --staple-ocsp \
         -d "${DOMAINNAME}" \
         -m "${MAILADD}"
