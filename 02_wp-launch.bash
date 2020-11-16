@@ -12,7 +12,21 @@ REF=1; while [ $REF = 1 ] ;do
 done
 next-lf
 
+config-add-fastcgi=$( << EOF
+location ~ \.php$ {
+    fastcgi_pass ${SITE_NAME}:9000;
+    fastcgi_index index.php;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    include fastcgi_params;
+  }
+EOF
+) && \
+    sed -e 's/^#this-php-block/${config-add-fastcgi}/g' \
+    ~/.site/conf.d/block_${SITE_NAME}.conf
+
 export ROOTPASSWD=`pgen 100`
 export DBPASSWD=`pgen 100`
+
+down-nginx
 
 docker-compose -f 02_serverside.dockercompose.yml up -p ${SITE_NAME}

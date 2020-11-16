@@ -63,6 +63,7 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 ## クロン処理を行う.
 add-cron
 
-docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo "nginxは起動していません。続行します"
+## nginxを落とす
+down-nginx
 
 docker-compose -f 01_webserver.dockercompose.yml up 
