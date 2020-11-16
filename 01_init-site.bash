@@ -62,7 +62,7 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./template-server-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
 ## 必要なフォルダを作成
-[[ ! -d ~/log ]] && mkdir -p ~/log/${SITE_NAME} && chmod 766 -R ~/log
+[[ ! -d ~/log/${SITE_NAME} ]] && mkdir -p ~/log/${SITE_NAME} && chmod 766 -R ~/log/*
 [[ ! -f ~/log/${SITE_NAME}/nginx-access.log ]] || [[ ! -f ~/log/${SITE_NAME}/nginx-error.log ]] && \
         touch ~/log/${SITE_NAME}/nginx-error.log ~/log/${SITE_NAME}/nginx-access.log
 
