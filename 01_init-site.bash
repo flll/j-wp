@@ -63,7 +63,7 @@ chmod 0700 -R ~/certbot/*
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./template-server-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
-## 必要なフォルダを作成
+## 必要なフォルダを作成  必要かどうか不明
 [[ ! -d ~/log/${SITE_NAME} ]] \
     && mkdir -p ~/log/${SITE_NAME} \
     && sudo chown $IDUG \
