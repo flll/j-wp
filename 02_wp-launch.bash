@@ -11,6 +11,7 @@ REF=1; while [ $REF = 1 ] ;do
     for i in {1..30};do echo -n "|";done;echo ""
 done
 next-lf
+site-data-export
 
 config-add-fastcgi=$(envsubst '${SITE_NAME}' << EOF
 location ~ \.php$ {
