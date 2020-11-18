@@ -24,6 +24,17 @@ function pgen () {
     cat /dev/urandom | tr -dc [A-Za-z0-9] | fold -w 1 | head -n 1;
 }
 
+function next-lf () {
+    ## 見やすくするために改行します
+    for i in {1..30};do echo "";done
+}
+
+function site-data-export () {
+    ## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
+    #  depend side-edit()
+    export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+}
+
 function site-type () {
     ## 既存のサイト名の表示
     [[ ! -d ~/.site ]] && mkdir ~/.site
@@ -77,16 +88,7 @@ function site-edit () {
         REF=0
 }
 
-function next-lf () {
-    ## 見やすくするために改行します
-    for i in {1..30};do echo "";done
-}
 
-function site-data-export () {
-    ## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
-    #  depend side-edit()
-    export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
-}
 
 function down-nginx () {
     docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo "startnginx"
