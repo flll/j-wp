@@ -31,7 +31,7 @@ function next-lf () {
 
 function site-data-export () {
     ## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
-    #  depend side-edit()
+    #  depend site-edit() site-type()
     export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 }
 
@@ -50,7 +50,6 @@ function site-type () {
     SITE_NAME=${SITE_NAME,,}
     [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
     [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && REF=1 && return;
-    site-data-export
     REF=0
     next-lf
 }
@@ -58,7 +57,8 @@ function site-type () {
 function site-edit () {
     ## サイトが存在する場合、”編集” サイトが存在しない場合、”新規作成”
     [[ -f ~/.site/${SITE_NAME}_DATA ]] \
-        && echo -e "=== \"${SITE_NAME}\" サイトが存在しました。編集を行います===\n"
+        && echo -e "=== \"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
+        && site-data-export
     [[ ! -f ~/.site/${SITE_NAME}_DATA ]] \
         && echo -e "=== \"${SITE_NAME}\" サイトを新規作成します===\n"
 
