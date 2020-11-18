@@ -12,7 +12,7 @@ REF=1; while [ $REF = 1 ] ;do
 done
 next-lf
 
-config-add-fastcgi=$(envsubst '${SITE_NAME}' < EOF >> cat
+config-add-fastcgi=$(envsubst '${SITE_NAME}' << EOF
 location ~ \.php$ {
     fastcgi_pass ${SITE_NAME}:9000;
     fastcgi_index index.php;
