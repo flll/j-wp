@@ -59,7 +59,7 @@ chmod 0700 -R ~/certbot/*
 ## 必要なフォルダを作成  必要かどうか不明
 [[ ! -d ~/log/${SITE_NAME} ]] \
     && mkdir -p ~/log/${SITE_NAME} \
-    && sudo chown `id -u`:`id -g` \
+    && sudo chown -hR `id -u`:`id -g` ~/log/ \
     && chmod 777 -R ~/log/*
 
 ## クロン処理を行う.

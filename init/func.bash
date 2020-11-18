@@ -88,8 +88,6 @@ function site-edit () {
         REF=0
 }
 
-
-
 function down-nginx () {
-    docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo "startnginx"
+    docker-compose -f 03_webserver.dockercompose.yml down --remove-orphans || echo "startnginx"
 }
