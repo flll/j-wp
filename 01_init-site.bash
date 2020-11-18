@@ -7,15 +7,14 @@ cd `dirname $0`
 ## 
 #  サイト名とは複数のwebページを同じインスタンス、IPアドレスで、
 #  別々のwebサイトを表示させる”任意機能”です
-#  サイト名はドメインホスト別で複数作成することができます。
-#  SSLの証明書はドメインホスト別で作成を行います。
-#  サイト名を複数作成する場合、
-#  ※サイトの作成、編集を行った場合Nginxを再起動してください。
 ##
 
 
 next-lf
-echo "01 サイト名と証明書を発行します。"
+echo "＝＝＝ 01 サイト名と証明書を発行します ＝＝＝"
+echo "サイト名とは、https://wp1.lll.fish や https://wp2.lll.fish などの"
+echo "一つのサーバーで複数のドメイン、ウェブサイトを運営"
+echo "することができます。かならず一つ以上作成してください"
 sleep 3
 ## site-type
 REF=1; while [ $REF = 1 ] ;do
@@ -33,7 +32,8 @@ done
 
 if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     echo "証明書を発行します"
-    echo "nginxを終了させます。忘れずに03を起動させておいてください。"
+    echo "nginxを終了させます。証明書の作成が完了したら"
+    echo "忘れずに03_webを起動させてください"
     sleep 3
     docker pull -q certbot/certbot
     down-nginx

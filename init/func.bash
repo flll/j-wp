@@ -44,7 +44,7 @@ function site-type () {
         && for i in {1..4};do echo "";done
     #############################################
     echo "半角英数字のスペースなしでお願いします。"
-    echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_-.のみです\n例)wordpress 例)myblog 例)lll_fish 例)wp_lll_fish"
+    echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_-のみです\n例)myblog-two 例)wp1 例)wp2"
     read -p "サイト名> " SITE_NAME
     [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && REF=1 && return;
     SITE_NAME=${SITE_NAME,,}
