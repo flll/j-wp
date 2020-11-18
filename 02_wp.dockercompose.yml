@@ -24,11 +24,6 @@ services:
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_DB_NAME: wp
       WORDPRESS_DB_USER: wp
-      WORDPRESS_CONFIG_EXTRA: |
-        define('WPLANG',           'ja');
-        define('DB_CHARSET',       'utf8');
-        define('DB_COLLATE',       'utf8_general_ci');
-        define('FORCE_SSL_ADMIN',   true);
       LANG: C.UTF-8
     volumes:
       - "~/nginx-${SITE_NAME}/src:/var/www/html"
