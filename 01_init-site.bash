@@ -77,4 +77,4 @@ add-cron
 ## nginxを落とす
 down-nginx
 
-docker-compose -f 01_webserver.dockercompose.yml up
+docker-compose -f 01_webserver.dockercompose.yml up -d 
