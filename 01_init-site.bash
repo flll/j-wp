@@ -65,4 +65,4 @@ chmod 0700 -R ~/certbot/*
 ## クロン処理を行う.
 add-cron
 
-echo "サイトの作成に成功しました: \"${SITE_NAME}\""
+echo "サイトと証明書の発行に成功しました: \"${SITE_NAME}\""
