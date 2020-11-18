@@ -4,7 +4,6 @@ cd `dirname $0`
 
 . init/func.bash
 
-export IDUG="`id -u`:`id -g`"
 ## 
 #  サイト名とは複数のwebページを同じインスタンス、IPアドレスで、
 #  別々のwebサイトを表示させる”任意機能”です
@@ -16,6 +15,7 @@ export IDUG="`id -u`:`id -g`"
 
 ## site-type
 next-lf
+echo "00 サイト名と証明書を発行します。"
 REF=1; while [ $REF = 1 ] ;do
     site-type
     for i in {1..30};do echo -n "|";done;echo ""
@@ -53,28 +53,17 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
                 || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 fi
 
-sudo chown -hR $IDUG ~/certbot
+sudo chown -hR `id -u`:`id -g` ~/certbot
 chmod 0700 -R ~/certbot/*
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
-
-## ～コンフィグtemplate記述～
-#  nginx conf
-[[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 777 ~/.site/conf.d
-envsubst '${SITE_NAME} ${DOMAINNAME}' \
-        < ./template-server-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
 ## 必要なフォルダを作成  必要かどうか不明
 [[ ! -d ~/log/${SITE_NAME} ]] \
     && mkdir -p ~/log/${SITE_NAME} \
-    && sudo chown $IDUG \
-    && chmod 766 -R ~/log/*
-[[ ! -f ~/log/${SITE_NAME}/nginx-access.log ]] || [[ ! -f ~/log/${SITE_NAME}/nginx-error.log ]] \
-        && touch ~/log/${SITE_NAME}/nginx-error.log ~/log/${SITE_NAME}/nginx-access.log && chmod 766 -R ~/log/*
+    && sudo chown `id -u`:`id -g` \
+    && chmod 777 -R ~/log/*
 
 ## クロン処理を行う.
 add-cron
 
-## nginxを落とす
-down-nginx
-
-docker-compose -f 01_webserver.dockercompose.yml up -d
+echo "サイトの作成に成功しました: \"${SITE_NAME}\""
