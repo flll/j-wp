@@ -18,24 +18,19 @@ next-lf
 echo "00 サイト名と証明書を発行します。"
 REF=1; while [ $REF = 1 ] ;do
     site-type
-    for i in {1..30};do echo -n "|";done;echo ""
 done
-next-lf
 
 ## site-edit
 REF=1; while [ $REF = 1 ] ;do
     site-edit
-    for i in {1..30};do echo -n "|";done;echo ""
 done
-next-lf
-
-site-data-export
 
 ## ～証明書の作成～
 #  FWの設定を忘れずに 443 80
 #
 
 if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
+    echo "証明書を発行します"
     docker pull -q certbot/certbot
     docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
     docker run -it --rm --name certbot \

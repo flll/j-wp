@@ -39,14 +39,15 @@ function site-type () {
     SITE_NAME=${SITE_NAME,,}
     [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
     [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && REF=1 && return;
+    site-data-export
     REF=0
+    next-lf
 }
 
 function site-edit () {
     ## サイトが存在する場合、”編集” サイトが存在しない場合、”新規作成”
     [[ -f ~/.site/${SITE_NAME}_DATA ]] \
-        && echo -e "=== \"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
-        && site-data-export
+        && echo -e "=== \"${SITE_NAME}\" サイトが存在しました。編集を行います===\n"
     [[ ! -f ~/.site/${SITE_NAME}_DATA ]] \
         && echo -e "=== \"${SITE_NAME}\" サイトを新規作成します===\n"
 
@@ -71,13 +72,14 @@ function site-edit () {
         [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && REF=1 && return;
         #############################################
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
+        next-lf
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
         REF=0
 }
 
 function next-lf () {
     ## 見やすくするために改行します
-    for i in {1..10};do echo "";done
+    for i in {1..30};do echo "";done
 }
 
 function site-data-export () {
