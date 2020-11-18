@@ -31,7 +31,7 @@ services:
         define('FORCE_SSL_ADMIN',   true);
       LANG: C.UTF-8
     volumes:
-      - "~/nginx-${SITE_NAME}/src:/usr/src/wordpress"
+      - "~/nginx-${SITE_NAME}/src:/var/www/html"
       - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
       - '~/log:/log:delegated'
       - '/etc/localtime:/etc/localtime:ro'
