@@ -89,5 +89,5 @@ function site-data-export () {
 }
 
 function down-nginx () {
-    docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo ""
+    docker-compose -f 01_webserver.dockercompose.yml down --remove-orphans || echo "startnginx"
 }
