@@ -5,7 +5,7 @@ cd `dirname $0`
 . init/func.bash
 
 next-lf
-echo "04 Webサーバを起動させます。あらかしめサイト名を作成しておいてください"
+echo "03 Webサーバを起動させます。あらかしめサイト名を作成しておいてください"
 sleep 3
 ## site-type
 REF=1; while [ $REF = 1 ] ;do
