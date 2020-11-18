@@ -5,7 +5,8 @@ cd `dirname $0`
 . init/func.bash
 
 next-lf
-echo "03 Webサーバを起動させます。あらかしめサイト名を作成しておいてください"
+echo "＝＝＝ 03 Webサーバを起動させます ＝＝＝"
+echo "※あらかしめサイト名を作成しておいてください"
 sleep 3
 ## site-type
 REF=1; while [ $REF = 1 ] ;do
@@ -15,4 +16,4 @@ done
 ## nginxを落とす
 down-nginx
 
-docker-compose -f 03_webserver.dockercompose.yml up -d
+docker-compose -f 03_webserver.dockercompose.yml up -d WEB

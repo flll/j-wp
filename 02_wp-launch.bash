@@ -6,6 +6,7 @@ cd `dirname $0`
 
 ##既存のサイト名の表示
 next-lf
+echo "＝＝＝ 02 ワードプレスとデータベースを起動します ＝＝＝"
 REF=1; while [ $REF = 1 ] ;do
     site-type
     for i in {1..30};do echo -n "|";done;echo ""
