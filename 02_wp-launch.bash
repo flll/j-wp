@@ -13,21 +13,16 @@ done
 next-lf
 site-data-export
 
-config-add-fastcgi=$(envsubst '${SITE_NAME}' << EOF
-location ~ \.php$ {
-    fastcgi_pass ${SITE_NAME}:9000;
-    fastcgi_index index.php;
-    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    include fastcgi_params;
-  }
-EOF
-) && \
-    sed -e 's/^#this-php-block/${config-add-fastcgi}/g' \
-    ~/.site/conf.d/block_${SITE_NAME}.conf
+
+## ～コンフィグtemplate記述～
+#  nginx conf
+[[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 777 ~/.site/conf.d
+envsubst '${SITE_NAME} ${DOMAINNAME}' \
+        < ./02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
 export ROOTPASSWD=`pgen 100`
 export DBPASSWD=`pgen 100`
 
 down-nginx
 
-docker-compose -f 02_serverside.dockercompose.yml up -p -d ${SITE_NAME}
+docker-compose -f 02_wp.dockercompose.yml up -p -d ${SITE_NAME}
