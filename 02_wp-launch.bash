@@ -30,4 +30,4 @@ export DBPASSWD=`pgen 100`
 
 down-nginx
 
-docker-compose -f 02_serverside.dockercompose.yml up -p -d ${SITE_NAME}
+docker-compose -f 02_serverside.dockercompose.yml up -p ${SITE_NAME}
