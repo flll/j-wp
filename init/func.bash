@@ -26,6 +26,7 @@ function pgen () {
 
 function site-type () {
     ## 既存のサイト名の表示
+    [[ ! -d ~/.site ]] && mkdir ~/.site
     aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \
         && echo "現在存在するサイト:" \
         && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/.site\///'` \

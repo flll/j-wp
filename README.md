@@ -9,6 +9,8 @@ git fetch && git reset --hard origin/main
 chmod 755 -R *
 ./01_init-site.bash
 EOF
+chmod +x ./jj.bash
+./jj.bash
 ```
 
 ACME 利用規約に同意します
