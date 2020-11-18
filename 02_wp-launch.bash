@@ -11,7 +11,6 @@ REF=1; while [ $REF = 1 ] ;do
     site-type
     for i in {1..30};do echo -n "|";done;echo ""
 done
-next-lf
 site-data-export
 
 
@@ -26,4 +25,4 @@ export DBPASSWD=`pgen 100`
 
 down-nginx
 
-docker-compose -f 02_wp.dockercompose.yml up -p ${SITE_NAME}
+docker-compose --project-name ${SITE_NAME} --file 02_wp.dockercompose.yml up

@@ -16,4 +16,4 @@ done
 ## nginxを落とす
 down-nginx
 
-docker-compose -d -p WEB -f 03_webserver.dockercompose.yml up
+docker-compose -d --project-name web --file 03_webserver.dockercompose.yml up
