@@ -13,9 +13,11 @@ cd `dirname $0`
 #  ※サイトの作成、編集を行った場合Nginxを再起動してください。
 ##
 
-## site-type
+
 next-lf
-echo "00 サイト名と証明書を発行します。"
+echo "01 サイト名と証明書を発行します。"
+sleep 3
+## site-type
 REF=1; while [ $REF = 1 ] ;do
     site-type
 done
@@ -31,8 +33,10 @@ done
 
 if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     echo "証明書を発行します"
+    echo "nginxを終了させます。忘れずに03を起動させておいてください。"
+    sleep 3
     docker pull -q certbot/certbot
-    docker stop `docker ps -f name=nginx -q` 2>/dev/null || echo "nginxは起動していません。続行します" # nginxコンテナが存在しない場合stopは行えない
+    down-nginx
     docker run -it --rm --name certbot \
         -v ~/certbot/letsencrypt:/etc/letsencrypt:cached \
         -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
