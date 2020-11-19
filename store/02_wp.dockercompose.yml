@@ -26,6 +26,7 @@ services:
     networks: 
     - web-net-c
     - wp-db-net-c
+    user: "${UID}:${GID}"
     volumes:
       - ~/nginx.d/${SITE_NAME}/src:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
