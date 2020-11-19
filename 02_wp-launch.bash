@@ -26,4 +26,7 @@ export DBPASSWD=aaa
 
 down-nginx
 
+docker network create web-net
+docker network create wp-db-net
+
 docker-compose -p ${SITE_NAME} --file ./store/02_wp.dockercompose.yml up
