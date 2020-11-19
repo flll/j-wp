@@ -7,6 +7,6 @@ cd `dirname $0`
 ## nginxを落とす
 down-nginx
 
-docker network create web-net
+docker network create web-net || echo ""
 
 docker-compose -p web --file ./store/03_webserver.dockercompose.yml up
