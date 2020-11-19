@@ -6,7 +6,7 @@ services:
     volumes:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
-    network: web_network
+    networks: web-net
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -27,7 +27,8 @@ services:
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - '~/log:/log:delegated'
       - '/etc/localtime:/etc/localtime:ro'
-    network: web_network
+    networks:
+      - web-net
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
@@ -35,5 +36,4 @@ services:
       WORDPRESS_DB_USER: wp
       LANG: C.UTF-8
     restart: unless-stopped
-
 

@@ -3,6 +3,7 @@ services:
   nginx:
     image: nginx:1.19.4-alpine
     container_name: nginx
+    networks: web-net
     ports:
       - "80:80"
       - "443:443"
