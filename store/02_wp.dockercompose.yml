@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  db-${SITE_NAME}:
+  db_${SITE_NAME}:
     image: 'jbergstroem/mariadb-alpine'
     volumes:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
@@ -15,7 +15,7 @@ services:
       LANG: C.UTF-8
     restart: unless-stopped
 
-  wp-${SITE_NAME}:
+  wp_${SITE_NAME}:
     depends_on:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine

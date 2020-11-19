@@ -44,12 +44,12 @@ function site-type () {
         && for i in {1..4};do echo "";done
     #############################################
     echo "半角英数字のスペースなしでお願いします。"
-    echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_-のみです\n例)myblog-two 例)wp1 例)wp2"
+    echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_のみです\n例)myblog-two 例)wp1 例)wp2"
     read -p "サイト名> " SITE_NAME
     [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && REF=1 && return;
     SITE_NAME=${SITE_NAME,,}
     [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
-    [[ "${SITE_NAME}" == *[!a-z0-9_-]* ]] && echo -e "使用できる文字列a-z0-9_-のみです\nもう一度入力をお願いします" && REF=1 && return;
+    [[ "${SITE_NAME}" == *[!a-z0-9_]* ]] && echo -e "使用できる文字列a-z0-9_のみです\nもう一度入力をお願いします" && REF=1 && return;
     REF=0
     next-lf
 }
