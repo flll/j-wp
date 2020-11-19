@@ -18,11 +18,11 @@ site-data-export
 #  nginx conf
 [[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 777 ~/.site/conf.d
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
-        < ./02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
+        < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
 export ROOTPASSWD=`pgen 100`
 export DBPASSWD=`pgen 100`
 
 down-nginx
 
-docker-compose --project-name ${SITE_NAME} --file 02_wp.dockercompose.yml up
+docker-compose --project-name ${SITE_NAME} --file ./store/02_wp.dockercompose.yml up
