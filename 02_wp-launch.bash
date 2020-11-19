@@ -20,8 +20,9 @@ site-data-export
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
-export ROOTPASSWD=`pgen 100`
-export DBPASSWD=`pgen 100`
+# `pgen 100`
+export ROOTPASSWD=aaa
+export DBPASSWD=aaa
 
 down-nginx
 
