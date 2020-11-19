@@ -23,7 +23,6 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 # `pgen 100`
 export ROOTPASSWD=aaa
 export DBPASSWD=aaa
-export USER_ID=`id -u`:www-data
 
 down-nginx
 

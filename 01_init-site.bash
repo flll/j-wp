@@ -56,10 +56,6 @@ sudo chown -hR `id -u`:www-data ~/certbot
 chmod 0700 -R ~/certbot/*
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
 
-## 必要なフォルダを作成  必要かどうか不明
-[[ ! -d ~/log/${SITE_NAME} ]] \
-    && mkdir -p ~/log/${SITE_NAME} \
-    && sudo chown -hR `id -u`:www-data ~/log/
 
 ## クロン処理を行う.
 add-cron

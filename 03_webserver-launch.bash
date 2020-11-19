@@ -5,7 +5,10 @@ cd `dirname $0`
 . init/func.bash
 
 
-export USER_ID=`id -u`:www-data
+## 必要なフォルダを作成  必要かどうか不明
+[[ ! -d ~/log/${SITE_NAME} ]] \
+    && mkdir -p ~/log/${SITE_NAME} \
+    && sudo chown -hR `id -u`:www-data ~/log/
 
 ## nginxを落とす
 down-nginx
