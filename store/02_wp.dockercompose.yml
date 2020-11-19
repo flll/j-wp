@@ -27,8 +27,7 @@ services:
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - '~/log:/log:delegated'
       - '/etc/localtime:/etc/localtime:ro'
-    networks:
-      - web-net
+    networks: web-net
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}

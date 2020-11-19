@@ -15,5 +15,4 @@ services:
       - '~/.site/conf.d:/etc/nginx/conf.d:cached'
       - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
-    network: web_network
     restart: on-failure
