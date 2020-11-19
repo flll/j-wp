@@ -24,8 +24,8 @@ services:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
     networks: 
-    - web-net
-    - wp-db
+    - web-net-c
+    - wp-db-c
     volumes:
       - ~/nginx-${SITE_NAME}/src:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
@@ -40,3 +40,10 @@ services:
       LANG: C.UTF-8
     restart: unless-stopped
 
+networks:
+  web-net-c:
+    external:
+      name: web-net
+  wp-db-c:
+    external:
+      name: wp-db

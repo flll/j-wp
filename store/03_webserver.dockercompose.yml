@@ -7,7 +7,7 @@ services:
       - "80:80"
       - "443:443"
     networks: 
-    - web-net
+    - web-net-c
     environment:
       LANG: C.UTF-8
     volumes:
@@ -17,3 +17,8 @@ services:
       - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
     restart: on-failure
+
+networks:
+  web-net-c:
+    external:
+      name: web-net
