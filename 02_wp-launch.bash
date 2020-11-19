@@ -28,5 +28,5 @@ down-nginx
 
 docker network create web-net || echo ""
 docker network create wp-db-net || echo ""
-
+exit 0
 docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml up
