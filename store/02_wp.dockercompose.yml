@@ -6,6 +6,7 @@ services:
     volumes:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
+    network: web_network
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -21,17 +22,18 @@ services:
     depends_on:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
+    volumes:
+      - "~/nginx-${SITE_NAME}/src:/var/www/html"
+      - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
+      - '~/log:/log:delegated'
+      - '/etc/localtime:/etc/localtime:ro'
+    network: web_network
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_DB_NAME: wp
       WORDPRESS_DB_USER: wp
       LANG: C.UTF-8
-    volumes:
-      - "~/nginx-${SITE_NAME}/src:/var/www/html"
-      - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
-      - '~/log:/log:delegated'
-      - '/etc/localtime:/etc/localtime:ro'
     restart: unless-stopped
 
 
