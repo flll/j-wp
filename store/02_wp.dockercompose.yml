@@ -4,7 +4,7 @@ services:
     container_name: db_${SITE_NAME}
     image: 'jbergstroem/mariadb-alpine'
     volumes:
-      - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
+      - "~/db.d/${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
     networks: 
       - wp-db-net-c
