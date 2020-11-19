@@ -11,7 +11,7 @@ services:
     environment:
       LANG: C.UTF-8
     volumes:
-      - '~/nginx-${SITE_NAME}/src:/src:cached'
+      - '~/nginx.d:/nginx.d:cached'
       - '~/certbot:/certbot:cached'
       - '~/.site/conf.d:/etc/nginx/conf.d:cached'
       - '~/log:/log:cached'
