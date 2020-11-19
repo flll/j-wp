@@ -35,7 +35,3 @@ services:
       WORDPRESS_DB_USER: wp
       LANG: C.UTF-8
     restart: unless-stopped
-
-networks:
-  web-net:
-    driver: nginx-diver
