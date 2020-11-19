@@ -30,7 +30,7 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
     networks:
       - web-net
-      - db_${SITE_NAME}-net
+      - db-net
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
