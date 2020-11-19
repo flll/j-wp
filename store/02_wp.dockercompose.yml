@@ -8,6 +8,7 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
     networks: 
       - wp-db-net-c
+    user: "${UID}"
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -26,7 +27,7 @@ services:
     networks: 
     - web-net-c
     - wp-db-net-c
-    user: "${UID}:${GID}"
+    user: "${UID}"
     volumes:
       - ~/nginx.d/${SITE_NAME}/src:/var/www/html
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
