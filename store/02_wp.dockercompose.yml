@@ -33,7 +33,7 @@ services:
       - '/etc/localtime:/etc/localtime:ro'
     hostname: wp_${SITE_NAME}.host
     environment:
-      WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
+      WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_DB_NAME: wp
       WORDPRESS_DB_USER: wp
