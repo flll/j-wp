@@ -6,7 +6,8 @@ services:
     volumes:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
-    networks: wp-db
+    networks: 
+      - wp-db
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
