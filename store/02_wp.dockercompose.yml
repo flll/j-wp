@@ -7,7 +7,7 @@ services:
       - "~/mariadb-${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
     networks: 
-      - db_${SITE_NAME}-net
+      - db-net
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -41,4 +41,4 @@ services:
 
 networks:
   web-net:
-  db_${SITE_NAME}-net:
+  db-net:
