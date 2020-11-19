@@ -7,4 +7,4 @@ cd `dirname $0`
 ## nginxを落とす
 down-nginx
 
-docker-compose --project-name web --file ./store/03_webserver.dockercompose.yml up
+docker-compose -p web --file ./store/03_webserver.dockercompose.yml up

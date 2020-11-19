@@ -26,4 +26,4 @@ export DBPASSWD=aaa
 
 down-nginx
 
-docker-compose --project-name ${SITE_NAME} --file ./store/02_wp.dockercompose.yml up
+docker-compose -p ${SITE_NAME} --file ./store/02_wp.dockercompose.yml up

@@ -89,5 +89,5 @@ function site-edit () {
 }
 
 function down-nginx () {
-    docker-compose -f ./store/03_webserver.dockercompose.yml down --remove-orphans || echo "startnginx"
+    docker-compose -p web -f ./store/03_webserver.dockercompose.yml down --remove-orphans || echo "startnginx"
 }
