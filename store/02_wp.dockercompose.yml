@@ -23,8 +23,8 @@ services:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
     volumes:
-      - "~/nginx-${SITE_NAME}/src:/var/www/html"
-      - "./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro"
+      - ~/nginx-${SITE_NAME}/src:/var/www/html
+      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - '~/log:/log:delegated'
       - '/etc/localtime:/etc/localtime:ro'
     network: web_network
