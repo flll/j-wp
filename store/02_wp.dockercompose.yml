@@ -31,12 +31,16 @@ services:
       - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - '~/log:/log:delegated'
       - '/etc/localtime:/etc/localtime:ro'
-    hostname: wp_${SITE_NAME}.host
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_DB_NAME: wp
       WORDPRESS_DB_USER: wp
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WPLANG',           'ja');
+        define('DB_CHARSET',       'utf8');
+        define('DB_COLLATE',       'utf8_general_ci');
+        define('FORCE_SSL_ADMIN',   true);
       LANG: C.UTF-8
     restart: unless-stopped
 
