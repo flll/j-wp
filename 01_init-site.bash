@@ -52,14 +52,14 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
                 || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 fi
 
-sudo chown -hR `id -u`:`id -g` ~/certbot
+sudo chown -hR `id -u`:www-data ~/certbot
 chmod 0700 -R ~/certbot/*
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
 
 ## 必要なフォルダを作成  必要かどうか不明
 [[ ! -d ~/log/${SITE_NAME} ]] \
     && mkdir -p ~/log/${SITE_NAME} \
-    && sudo chown -hR `id -u`:`id -g` ~/log/ \
+    && sudo chown -hR `id -u`:www-data ~/log/ \
     && chmod 777 -R ~/log/*
 
 ## クロン処理を行う.
