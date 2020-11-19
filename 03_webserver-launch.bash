@@ -5,7 +5,7 @@ cd `dirname $0`
 . init/func.bash
 
 
-export USER_ID=`id -u`:`id -g`
+export USER_ID=`id -u`
 
 ## nginxを落とす
 down-nginx
