@@ -20,8 +20,6 @@ services:
     container_name: wp_${SITE_NAME}
     depends_on:
       - db
-    ports:
-      - 4000:4000
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
     environment:
       WORDPRESS_DB_HOST: db-${SITE_NAME}:3306
