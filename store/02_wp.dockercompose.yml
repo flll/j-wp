@@ -22,7 +22,7 @@ services:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
     environment:
-      WORDPRESS_DB_HOST: db-${SITE_NAME}:3306
+      WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_DB_NAME: wp
       WORDPRESS_DB_USER: wp
