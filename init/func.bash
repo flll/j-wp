@@ -21,7 +21,7 @@ function add-cron () {
 }
 
 function pgen () {
-    cat /dev/urandom | tr -dc [A-Za-z0-9] | fold -w $1 | head -n 1
+    cat /dev/urandom | tr -dc [A-Za-z0-9@%+] | fold -w 200 | head -n 1
 }
 
 function next-lf () {

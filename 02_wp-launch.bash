@@ -24,9 +24,9 @@ echo 0
 echo 1
 [[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 700 ~/.site/sec
 echo 2
-[[ ! -f ~/.site/sec/db_root_pass.txt ]] && pgen 200 > ~/.site/sec/db_root_pass.txt
+[[ ! -f ~/.site/sec/db_root_pass.txt ]] && pgen > ~/.site/sec/db_root_pass.txt
 echo 3
-[[ ! -f ~/.site/sec/db_wp_pass.txt ]] && pgen 200 > ~/.site/sec/db_wp_pass.txt
+[[ ! -f ~/.site/sec/db_wp_pass.txt ]] && pgen > ~/.site/sec/db_wp_pass.txt
 echo b
 export ROOTPASSWD=`cat ~/.site/sec/db_root_pass.txt`
 export DBPASSWD=`cat ~/.site/sec/db_wp_pass.txt`
