@@ -16,7 +16,7 @@ site-data-export
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
-[[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 640 ~/.site/conf.d
+[[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 770 ~/.site/conf.d
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 echo 0
