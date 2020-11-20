@@ -15,7 +15,6 @@ echo "＝＝＝ 01 サイト名と証明書を発行します ＝＝＝"
 echo "サイト名とは、https://wp1.lll.fish や https://wp2.lll.fish などの"
 echo "一つのサーバーで複数のドメイン、ウェブサイトを運営"
 echo "することができます。かならず一つ以上作成してください"
-sleep 3
 ## site-type
 REF=1; while [ $REF = 1 ] ;do
     site-type
@@ -32,9 +31,7 @@ done
 
 if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     echo "証明書を発行します"
-    echo "nginxを終了させます。証明書の作成が完了したら"
-    echo "忘れずに03_webを起動させてください"
-    sleep 3
+    echo "nginxを終了させます。nginxを起動していた場合、後ほど起動し直してください"
     docker pull -q certbot/certbot
     down-nginx
     docker run -it --rm --name certbot \
