@@ -22,7 +22,7 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR `id -u`:www-data ~/nginx.d
 
-[[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 640 ~/.site/sec
+[[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 700 ~/.site/sec
 [[ ! -f ~/.site/db_root_pass.txt ]] && pwgen 200 > ~/.site/sec/db_root_pass.txt
 [[ ! -f ~/.site/db_wp_pass.txt ]] && pwgen 200 > ~/.site/sec/db_wp_pass.txt
 
