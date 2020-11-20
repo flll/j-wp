@@ -20,7 +20,7 @@ site-data-export
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR `id -u`:www-data ~/nginx.d
-[[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 700 ~/.site/sec
+[[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 770 ~/.site/sec
 [[ ! -f ~/.site/sec/db_root_pass.txt ]] && pgen > ~/.site/sec/db_root_pass.txt
 [[ ! -f ~/.site/sec/db_wp_pass.txt ]] && pgen > ~/.site/sec/db_wp_pass.txt
 export ROOTPASSWD=`cat ~/.site/sec/db_root_pass.txt`
