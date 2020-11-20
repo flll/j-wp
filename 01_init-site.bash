@@ -50,9 +50,8 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
 fi
 
 sudo chown -hR `id -u`:www-data ~/certbot
-chmod 0770 -R ~/certbot/*
 [[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
-
+chmod 0770 -R ~/certbot/*
 
 ## クロン処理を行う.
 add-cron
