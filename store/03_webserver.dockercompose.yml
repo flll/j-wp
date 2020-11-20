@@ -16,8 +16,6 @@ services:
       - '~/.site/conf.d:/etc/nginx/conf.d:cached'
       - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     restart: on-failure
 
 networks:
