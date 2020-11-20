@@ -83,6 +83,7 @@ function site-edit () {
         [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && REF=1 && return;
         #############################################
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
+        sudo chown `id -u`:www-data ~/.site && chmod 770 ~/.site
         next-lf
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
         REF=0
