@@ -28,9 +28,10 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
 
 export ROOTPASSWD=`cat ~/.site/sec/db_root_pass.txt`
 export DBPASSWD=`cat ~/.site/sec/db_wp_pass.txt`
-
+echo a
 down-nginx
-
+echo a
 docker network create web-net || echo ""
 docker network create wp-db-net || echo ""
 docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml up
+echo end
