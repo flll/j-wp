@@ -20,6 +20,8 @@ site-data-export
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 
+[[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && chown www-data:www-data ~/nginx.d
+
 # `pgen 100`
 export ROOTPASSWD=aaa
 export DBPASSWD=aaa
