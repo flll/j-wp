@@ -8,7 +8,6 @@ services:
       - "443:443"
     networks: 
     - web-net-c
-    user: www-data
     environment:
       LANG: C.UTF-8
     volumes:
