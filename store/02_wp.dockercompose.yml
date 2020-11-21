@@ -32,6 +32,9 @@ services:
       - ~/.site/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - '~/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
+      - /etc/passwd:/etc/passwd:ro
+      - /etc/group:/etc/group:ro
+
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
