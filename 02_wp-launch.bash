@@ -28,6 +28,11 @@ server {
 }
 EOF
 
+## 必要なフォルダを作成 log
+[[ ! -d ~/log/${SITE_NAME} ]] \
+    && mkdir -p ~/log/${SITE_NAME} \
+    && sudo chown -hR `id -u`:www-data ~/log/
+
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR `id -u`:www-data ~/nginx.d
 [[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 770 ~/.site/sec
 [[ ! -f ~/.site/sec/db_root_pass.txt ]] && pgen > ~/.site/sec/db_root_pass.txt
