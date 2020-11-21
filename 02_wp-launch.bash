@@ -19,6 +19,15 @@ site-data-export
 [[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 770 ~/.site/conf.d
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
+
+cat << 'EOF' > ~/.site/conf.d/default.conf
+server {
+    listen       80 default_server;
+    server_name  _;
+    return       444;
+}
+EOF
+
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR `id -u`:www-data ~/nginx.d
 [[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 770 ~/.site/sec
 [[ ! -f ~/.site/sec/db_root_pass.txt ]] && pgen > ~/.site/sec/db_root_pass.txt
