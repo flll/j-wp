@@ -38,7 +38,7 @@ EOF
 ## 必要なフォルダを作成 nginx.d
 [[ ! -d ~/nginx.d/wp1/src ]] \
     && mkdir -p ~/nginx.d/wp1/src \
-    && sudo chown -hR 82:82 ~/nginx.d/wp1
+    && sudo chown -hR 82:82 ~/nginx.d
 
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR 82:82 ~/nginx.d
 [[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 770 ~/.site/sec
