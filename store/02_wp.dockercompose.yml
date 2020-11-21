@@ -28,7 +28,7 @@ services:
     - wp-db-net-c
     volumes:
       - ~/nginx.d/${SITE_NAME}/src:/var/www/html
-      - ./php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+      - ~/.site/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - '~/log:/log:delegated'
       - '/etc/localtime:/etc/localtime:ro'
     environment:

@@ -19,6 +19,8 @@ site-data-export
 [[ ! -d ~/.site/conf.d ]] && mkdir -p ~/.site/conf.d && chmod 770 ~/.site/conf.d
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
+envsubst '${SITE_NAME}' \
+        < ./store/php.ini > ~/.site/conf.d/${SITE_NAME}.php.ini
 
 cat << 'EOF' > ~/.site/conf.d/default.conf
 server {
