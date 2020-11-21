@@ -29,7 +29,7 @@ services:
     volumes:
       - ~/nginx.d/${SITE_NAME}/src:/var/www/html
       - ~/.site/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
-      - '~/log:/log:delegated'
+      - '~/log:/log'
       - '/etc/localtime:/etc/localtime:ro'
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
