@@ -35,6 +35,11 @@ EOF
     && mkdir -p ~/log/${SITE_NAME} \
     && sudo chown -hR `id -u`:www-data ~/log/
 
+## 必要なフォルダを作成 nginx.d
+[[ ! -d ~/nginx.d/wp1/src ]] \
+    && mkdir -p ~/nginx.d/wp1/src \
+    && sudo chown -hR `id -u`:www-data ~/nginx.d/wp1
+
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR `id -u`:www-data ~/nginx.d
 [[ ! -d ~/.site/sec ]] && mkdir ~/.site/sec && chmod 770 ~/.site/sec
 [[ ! -f ~/.site/sec/db_root_pass.txt ]] && pgen > ~/.site/sec/db_root_pass.txt
