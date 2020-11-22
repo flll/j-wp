@@ -6,8 +6,6 @@ services:
     volumes:
       - "~/db.d/${SITE_NAME}:/var/lib/mysql:cached"
       - '/etc/localtime:/etc/localtime:ro'
-    networks: 
-      - wp-db-net-c
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -23,9 +21,6 @@ services:
     depends_on:
       - db
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
-    networks: 
-    - web-net-c
-    - wp-db-net-c
     volumes:
       - ~/nginx.d/${SITE_NAME}/src:/var/www/html
       - ~/.site/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
@@ -51,8 +46,6 @@ services:
     ports:
       - "80:80"
       - "443:443"
-    networks: 
-    - web-net-c
     environment:
       LANG: C.UTF-8
     volumes:
@@ -65,12 +58,3 @@ services:
       - /etc/passwd:/etc/passwd:ro
       - /etc/group:/etc/group:ro
     restart: on-failure
-
-
-networks:
-  web-net-c:
-    external:
-      name: web-net
-  wp-db-net-c:
-    external:
-      name: wp-db-net
