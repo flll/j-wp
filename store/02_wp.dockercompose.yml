@@ -22,7 +22,7 @@ services:
     container_name: wp_${SITE_NAME}
     depends_on:
       - mariadb
-    image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
+    image: docker.io/wordpress:5.5-php7.4-alpine
     networks: 
     - web-net-c
     - wp-db-net-c
