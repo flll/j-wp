@@ -29,7 +29,6 @@ cat << 'EOF' > ~/.site/conf.d/default.conf
 server {
     listen       80 default_server;
     server_name  _;
-    return       444;
 }
 EOF
 
