@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  db:
+  mariadb:
     container_name: db_${SITE_NAME}
     image: 'jbergstroem/mariadb-alpine'
     volumes:
@@ -18,10 +18,10 @@ services:
       LANG: C.UTF-8
     restart: unless-stopped
 
-  wp:
+  wordpress:
     container_name: wp_${SITE_NAME}
     depends_on:
-      - db
+      - mariadb
     image: docker.io/wordpress:5.5.3-php7.4-fpm-alpine
     networks: 
     - web-net-c
