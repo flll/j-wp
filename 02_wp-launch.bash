@@ -27,8 +27,7 @@ envsubst '${SITE_NAME}' \
 
 cat << 'EOF' > ~/.site/conf.d/default.conf
 server {
-    listen       80 default_server;
-    server_name  _;
+    
 }
 EOF
 
@@ -38,8 +37,8 @@ EOF
     && sudo chown -hR 82:82 ~/log/
 
 ## 必要なフォルダを作成 nginx.d
-[[ ! -d ~/nginx.d/wp1/src ]] \
-    && mkdir -p ~/nginx.d/wp1/src \
+[[ ! -d ~/nginx.d/${SITE_NAME} ]] \
+    && mkdir -p ~/nginx.d/${SITE_NAME} \
     && sudo chown -hR 82:82 ~/nginx.d
 
 [[ ! -d ~/nginx.d ]] && mkdir ~/nginx.d && sudo chown -hR 82:82 ~/nginx.d

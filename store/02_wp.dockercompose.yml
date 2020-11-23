@@ -27,7 +27,7 @@ services:
     - web-net-c
     - wp-db-net-c
     volumes:
-      - ~/nginx.d/${SITE_NAME}/src:/var/www/html
+      - ~/nginx.d/${SITE_NAME}:/var/www/html
       - ~/.site/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - ~/.site/conf.d/${SITE_NAME}.php-fpm.ini:/usr/local/etc/php-fpm.d/php-fpm.ini
       - '~/log:/log:cached'
