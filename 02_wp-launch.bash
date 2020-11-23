@@ -21,6 +21,9 @@ envsubst '${SITE_NAME} ${DOMAINNAME}' \
         < ./store/02_template-wp-block.conf > ~/.site/conf.d/block_${SITE_NAME}.conf
 envsubst '${SITE_NAME}' \
         < ./store/php.ini > ~/.site/conf.d/${SITE_NAME}.php.ini
+envsubst '${SITE_NAME}' \
+        < ./store/php-fpm.ini > ~/.site/conf.d/${SITE_NAME}.php-fpm.ini
+
 
 cat << 'EOF' > ~/.site/conf.d/default.conf
 server {
