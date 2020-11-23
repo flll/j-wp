@@ -4,8 +4,7 @@ services:
     container_name: db_${SITE_NAME}
     image: 'jbergstroem/mariadb-alpine'
     volumes:
-      - "~/j.d/db.d/${SITE_NAME}:/var/lib/mysql:cached"
-      - '/etc/localtime:/etc/localtime:ro'
+      - ~/j.d/db.d/${SITE_NAME}:/var/lib/mysql:cached
     networks: 
       - wp-db-net-c
     environment:
@@ -30,8 +29,7 @@ services:
       - ~/j.d/nginx.d/${SITE_NAME}:/var/www/html
       - ~/j.d/site_name/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - ~/j.d/site_name/conf.d/${SITE_NAME}.php-fpm.ini:/usr/local/etc/php-fpm.d/php-fpm.ini
-      - '~/j.d/log:/log:cached'
-      - '/etc/localtime:/etc/localtime:ro'
+      - ~/j.d/log:/log:cached
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
