@@ -31,8 +31,9 @@ function next-lf () {
 
 function site-data-export () {
     ## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
-    #  depend site-edit() site-type()
+    #  depend site-edit() site-type()したあとの_DATAデータが必要
     export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+    : ${SITE_NAME:?サイト名が存在しません。もう一度やり直してください} ; REF=0 ;
 }
 
 function site-type () {
@@ -46,9 +47,9 @@ function site-type () {
     echo "半角英数字のスペースなしでお願いします。"
     echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_のみです\n例)myblog-two 例)wp1 例)wp2"
     read -p "サイト名> " SITE_NAME
-    [[ -z "${SITE_NAME}" ]]               && echo -e "サイト名を入力してください\nもう一度お試しください" && REF=1 && return;
+    [[ -z "${SITE_NAME}" ]]              && echo -e "サイト名を入力してください\nもう一度お試しください" && REF=1 && return;
     SITE_NAME=${SITE_NAME,,}
-    [[ "${SITE_NAME}" == *" "* ]]         && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
+    [[ "${SITE_NAME}" == *" "* ]]        && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
     [[ "${SITE_NAME}" == *[!a-z0-9_]* ]] && echo -e "使用できる文字列a-z0-9_のみです\nもう一度入力をお願いします" && REF=1 && return;
     REF=0
     next-lf

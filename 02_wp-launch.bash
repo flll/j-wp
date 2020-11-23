@@ -11,8 +11,9 @@ REF=1; while [ $REF = 1 ] ;do
     site-type
     for i in {1..30};do echo -n "|";done;echo ""
 done
-site-data-export
-
+REF=1; while [ $REF = 1 ] ;do
+    site-data-export
+done
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
