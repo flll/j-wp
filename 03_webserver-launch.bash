@@ -5,7 +5,7 @@ cd `dirname $0`
 . init/func.bash
 
 # チケットセッション
-openssl rand 48 > ~/certbot/tls_session_ticket.key
+openssl rand 48 > ~/j.d/certbot/tls_session_ticket.key
 
 ## nginxを落とす
 down-nginx

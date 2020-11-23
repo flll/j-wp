@@ -29,14 +29,14 @@ done
 #  FWの設定を忘れずに 443 80
 #
 
-if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
+if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     echo "証明書を発行します"
     echo "nginxを終了させます。nginxを起動していた場合、後ほど起動し直してください"
     docker pull -q certbot/certbot
     down-nginx
     docker run -it --rm --name certbot \
-        -v ~/certbot/letsencrypt:/etc/letsencrypt:cached \
-        -v ~/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
+        -v ~/j.d/certbot/letsencrypt:/etc/letsencrypt:cached \
+        -v ~/j.d/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
         -p 80:80 \
             certbot/certbot certonly \
             --rsa-key-size 4096 \
@@ -49,9 +49,9 @@ if [ ! -f ~/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
                 || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
 fi
 
-sudo chown -hR 82:82 ~/certbot
-[[ ! -f ~/certbot/dhparam ]] && openssl dhparam -out ~/certbot/dhparam 2048
-chmod 770 -R ~/certbot/*
+sudo chown -hR 82:82 ~/j.d/certbot
+[[ ! -f ~/j.d/certbot/dhparam ]] && openssl dhparam -out ~/j.d/certbot/dhparam 2048
+chmod 770 -R ~/j.d/certbot/*
 
 ## クロン処理を行う.
 add-cron

@@ -1,7 +1,7 @@
 前提 https://github.com/flll/j-wp-terraform
 
 ```
-cat << 'EOF' > ~/jj.bash
+cat << 'EOF' > jj.bash
 #!/bin/bash
 [[ ! -d j-wp/ ]] && git clone https://github.com/flll/j-wp.git
 cd j-wp

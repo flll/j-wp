@@ -30,18 +30,18 @@ function next-lf () {
 }
 
 function site-data-export () {
-    ## ~/.site/${SITE_NAME}_DATA から読み取り、変数にする
+    ## ~/j.d/site_name/${SITE_NAME}_DATA から読み取り、変数にする
     #  depend site-edit() site-type()したあとの_DATAデータが必要
-    export `cat ~/.site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+    export `cat ~/j.d/site_name/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
     : ${SITE_NAME:?サイト名が存在しません。もう一度やり直してください} ; REF=0 ;
 }
 
 function site-type () {
     ## 既存のサイト名の表示
-    [[ ! -d ~/.site ]] && mkdir ~/.site
-    aiueo=`echo ~/.site/*_DATA`; [[ ! $aiueo == "~/.site/*_DATA" ]] \
+    [[ ! -d ~/j.d/site_name ]] && mkdir ~/j.d/site_name
+    aiueo=`echo ~/j.d/site_name/*_DATA`; [[ ! $aiueo == "~/j.d/site_name/*_DATA" ]] \
         && echo "現在存在するサイト:" \
-        && echo `ls ~/.site/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/.site\///'` \
+        && echo `ls ~/j.d/site_name/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/.site\///'` \
         && for i in {1..4};do echo "";done
     #############################################
     echo "半角英数字のスペースなしでお願いします。"
@@ -57,13 +57,13 @@ function site-type () {
 
 function site-edit () {
     ## サイトが存在する場合、”編集” サイトが存在しない場合、”新規作成”
-    [[ -f ~/.site/${SITE_NAME}_DATA ]] \
+    [[ -f ~/j.d/site_name/${SITE_NAME}_DATA ]] \
         && echo -e "=== \"${SITE_NAME}\" サイトが存在しました。編集を行います===\n" \
         && site-data-export
-    [[ ! -f ~/.site/${SITE_NAME}_DATA ]] \
+    [[ ! -f ~/j.d/site_name/${SITE_NAME}_DATA ]] \
         && echo -e "=== \"${SITE_NAME}\" サイトを新規作成します===\n"
 
-    ## ～入力項目～ ~/.site/${SITE_NAME}_DATAに、
+    ## ～入力項目～ ~/j.d/site_name/${SITE_NAME}_DATAに、
     #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
         echo "※入力をやり直したい場合ctrl+cで強制終了してください。"
         echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
@@ -83,8 +83,8 @@ function site-edit () {
         MAIL_SYNTAXERR_MESSAGE="!!! メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
         [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && REF=1 && return;
         #############################################
-        echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/.site/${SITE_NAME}_DATA
-        sudo chown 82:82 ~/.site && chmod 770 ~/.site
+        echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/j.d/site_name/${SITE_NAME}_DATA
+        sudo chown 82:82 ~/j.d/site_name && chmod 770 ~/j.d/site_name
         next-lf
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
         REF=0
