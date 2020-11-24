@@ -16,7 +16,8 @@ echo "サイト名とは、https://wp1.lll.fish や https://wp2.lll.fish など�
 echo "一つのサーバーで複数のドメイン、ウェブサイトを運営"
 echo "することができます。かならず一つ以上作成してください"
 ## site-type
-REF=1; while [ $REF = 1 ] ;do
+[[ $REF = 2 ]] || REF=1
+while [ $REF = 1 ] ;do
     site-type
 done
 
