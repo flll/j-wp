@@ -5,8 +5,6 @@ services:
     image: 'jbergstroem/mariadb-alpine'
     volumes:
       - ~/j.d/db.d/${SITE_NAME}:/var/lib/mysql:cached
-    networks: 
-      - wp-db-net-c
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -24,7 +22,6 @@ services:
     image: docker.io/wordpress:5.5-php7.4-alpine
     networks: 
     - web-net-c
-    - wp-db-net-c
     volumes:
       - ~/j.d/nginx.d/${SITE_NAME}:/var/www/html
       - ~/j.d/site_name/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
@@ -47,6 +44,3 @@ networks:
   web-net-c:
     external:
       name: web-net
-  wp-db-net-c:
-    external:
-      name: wp-db-net
