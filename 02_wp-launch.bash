@@ -7,12 +7,9 @@ cd `dirname $0`
 ##既存のサイト名の表示
 next-lf
 echo "＝＝＝ 02 ワードプレスとデータベースを起動します ＝＝＝"
-REF=1; while [ $REF = 1 ] ;do
+[[ $REF = 2 ]] || REF=1
+while [ $REF = 1 ] ;do
     site-type
-    for i in {1..30};do echo -n "|";done;echo ""
-done
-REF=1; while [ $REF = 1 ] ;do
-    site-data-export
 done
 
 ## ～コンフィグtemplate記述～
@@ -28,7 +25,9 @@ envsubst '${SITE_NAME}' \
 
 cat << 'EOF' > ~/j.d/site_name/conf.d/default.conf
 server {
-    
+    listen       80 default_server;
+    server_name  _;
+    return       444;
 }
 EOF
 
