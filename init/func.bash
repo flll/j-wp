@@ -41,7 +41,7 @@ function site-type () {
     [[ ! -d ~/j.d/site_name ]] && mkdir ~/j.d/site_name
     aiueo=`echo ~/j.d/site_name/*_DATA`; [[ ! $aiueo == "~/j.d/site_name/*_DATA" ]] \
         && echo "現在存在するサイト:" \
-        && echo `ls ~/j.d/site_name/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/.site\///'` \
+        && echo `ls ~/j.d/site_name/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/j\.d\/site_name\///'` \
         && for i in {1..4};do echo "";done
     #############################################
     echo "半角英数字のスペースなしでお願いします。"
