@@ -49,6 +49,6 @@ export ROOTPASSWD=`cat ~/j.d/site_name/sec/db_root_pass.txt`
 export DBPASSWD=`cat ~/j.d/site_name/sec/db_wp_pass.txt`
 
 down-nginx
-docker network create web-net || echo ""
-docker network create wp-db-net || echo ""
+docker network create web-net || :
+docker network create wp-db-net || :
 docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml up
