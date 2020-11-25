@@ -62,7 +62,6 @@ function site-edit () {
         && site-data-export
     [[ ! -f ~/j.d/site/${SITE_NAME}_DATA ]] \
         && echo -e "=== \"${SITE_NAME}\" サイトを新規作成します===\n"
-    [[ ${SITE_NAME} ]] || echo サイト名が空です サイト名を入力してください && exit 0;
 
     ## ～入力項目～ ~/j.d/site/${SITE_NAME}_DATAに、
     #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
