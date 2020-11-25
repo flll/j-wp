@@ -9,9 +9,9 @@ function add-cron () {
         && sudo mkdir -p /usr/local/bin/${USER} \
         && sudo chown `echo ${USER}` /usr/local/bin/${USER} \
         && chmod 755 /usr/local/bin/${USER}
-    ln -s ${PWD}/certbot-renew.bash /usr/local/bin/${USER}/renew.bash #リポジトリ内にあるcertbot-renew.bashをルートディレクトリにシンボリックする
+    envsubst '${USER}' < init/certbot-renew.bash > "/usr/local/bin/${USER}/renew.bash"
     ## ./crontabファイルを作成する ※TABインデントを変更しないこと
-	cat <<-EOF > ./crontab
+    cat <<-EOF > ./crontab
 	0 2 */3 * * /usr/local/bin/${USER}/renew.bash #深夜２時且つ３日ごとに更新を行う
 	EOF
     ## crontabにて./crontabファイルを認識させる
