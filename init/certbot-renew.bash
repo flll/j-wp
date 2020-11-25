@@ -1,9 +1,6 @@
-#!/bin/bash -e
-set -o pipefail
+#!/bin/bash
 
-## ~/j.d/site/${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ~/j.d/site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
-
+docker stop nginx
 docker run -it --rm --name certbot \
     -v ~/j.d/certbot/letsencrypt:/etc/letsencrypt \
     -v ~/j.d/certbot/lib/letsencrypt:/var/lib/letsencrypt \
@@ -13,6 +10,5 @@ docker run -it --rm --name certbot \
         --agree-tos \
         --keep \
         --standalone \
-        --staple-ocsp \
-        -d "${DOMAINNAME}" \
-        -m "${MAILADD}"
+        --staple-ocsp
+docker start nginx
