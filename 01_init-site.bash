@@ -37,8 +37,6 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     docker pull -q certbot/certbot
     docker stop nginx || :
     docker run -it --rm --name certbot \
-        -v ~/j.d/certbot/letsencrypt:/tmp/etc/letsencrypt:cached \
-        -v ~/j.d/certbot/lib/letsencrypt:/tmp/var/lib/letsencrypt:cached \
         -v /etc/passwd:/etc/passwd:ro \
         -v /etc/group:/etc/group:ro \
         -p 80:80 \
