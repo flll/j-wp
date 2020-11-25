@@ -36,7 +36,7 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     echo "証明書を発行します"
     echo "nginxを終了させます。nginxを起動していた場合、後ほど起動し直してください"
     docker pull -q certbot/certbot
-    down-nginx
+    docker stop nginx
     docker run -it --rm --name certbot \
         -v ~/j.d/certbot/letsencrypt:/etc/letsencrypt:cached \
         -v ~/j.d/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
@@ -53,6 +53,7 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
             -d "${DOMAINNAME}" \
             -m "${MAILADD}" \
                 || echo -e "証明書の発行は行われませんでした。\nポート開放が行われているかご確認ください。"
+    docker start nginx
 fi
 
 sudo chown -hR 82:82 ~/j.d/certbot
