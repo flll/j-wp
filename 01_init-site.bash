@@ -34,7 +34,6 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     [[ ! -d ~/j.d/certbot ]] && mkdir -p ~/j.d/certbot
     sudo chown `echo ${USER}`:www-data ~/j.d/certbot && chmod 770 -R ~/j.d/certbot
     echo "証明書を発行します"
-    echo "nginxを終了させます。nginxを起動していた場合、後ほど起動し直してください"
     docker pull -q certbot/certbot
     docker stop nginx || :
     docker run -it --rm --name certbot \
@@ -56,7 +55,6 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     docker start nginx || :
 fi
 
-sudo chown -hR 82:82 ~/j.d/certbot
 [[ ! -f ~/j.d/certbot/dhparam ]] && openssl dhparam -out ~/j.d/certbot/dhparam 2048
 chmod 770 -R ~/j.d/certbot/*
 
