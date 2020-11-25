@@ -40,6 +40,8 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     docker run -it --rm --name certbot \
         -v ~/j.d/certbot/letsencrypt:/etc/letsencrypt:cached \
         -v ~/j.d/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
+        -v /etc/passwd:/etc/passwd:ro \
+        -v /etc/group:/etc/group:ro \
         -p 80:80 \
         -u  `echo ${USER}`:www-data \
             certbot/certbot certonly \
