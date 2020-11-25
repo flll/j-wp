@@ -42,7 +42,7 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
         -v /etc/passwd:/etc/passwd:ro \
         -v /etc/group:/etc/group:ro \
         -p 80:80 \
-        -u  `echo ${USER}`:www-data \
+        -u  "$(id -u):$(id -u www-data)" \
             certbot/certbot certonly \
             --rsa-key-size 4096 \
             --agree-tos \
@@ -51,7 +51,7 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
             --staple-ocsp \
             -d "${DOMAINNAME}" \
             -m "${MAILADD}" \
-                || echo -e "証明書の発行は行われませんでした。\nポート開放が行われているかご確認ください。"
+                || (echo -e "証明書の発行は行われませんでした。\nポート開放が行われているかご確認ください。"; exit 0)
     docker start nginx || :
 fi
 
