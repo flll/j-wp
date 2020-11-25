@@ -31,7 +31,8 @@ done
 #
 
 if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
-    [[ ! -d ~/j.d/certbot ]] chown 
+    [[ ! -d ~/j.d/certbot ]] && mkdir -p ~/j.d/certbot
+    sudo chown `echo ${USER}`:www-data ~/j.d/certbot && chmod 770 -R ~/j.d/certbot
     echo "証明書を発行します"
     echo "nginxを終了させます。nginxを起動していた場合、後ほど起動し直してください"
     docker pull -q certbot/certbot
@@ -40,6 +41,7 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
         -v ~/j.d/certbot/letsencrypt:/etc/letsencrypt:cached \
         -v ~/j.d/certbot/lib/letsencrypt:/var/lib/letsencrypt:cached \
         -p 80:80 \
+        -u  `echo ${USER}`:www-data \
             certbot/certbot certonly \
             --rsa-key-size 4096 \
             --agree-tos \
