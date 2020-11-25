@@ -5,6 +5,7 @@ services:
     image: 'jbergstroem/mariadb-alpine'
     volumes:
       - ~/j.d/db.d/${SITE_NAME}:/var/lib/mysql:cached
+      - /etc/localtime:/etc/localtime
     environment:
       MYSQL_ROOT_PASSWORD: ${ROOTPASSWD}
       MYSQL_DATABASE: wp
@@ -27,6 +28,7 @@ services:
       - ~/j.d/site_name/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
       - ~/j.d/site_name/conf.d/${SITE_NAME}.php-fpm.ini:/usr/local/etc/php-fpm.d/php-fpm.ini
       - ~/j.d/log:/log:cached
+      - /etc/localtime:/etc/localtime
     environment:
       WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
