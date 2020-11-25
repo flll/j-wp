@@ -25,8 +25,8 @@ services:
     - web-net-c
     volumes:
       - ~/j.d/nginx.d/${SITE_NAME}:/var/www/html
-      - ~/j.d/site_name/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
-      - ~/j.d/site_name/conf.d/${SITE_NAME}.php-fpm.ini:/usr/local/etc/php-fpm.d/php-fpm.ini
+      - ~/j.d/site/conf.d/${SITE_NAME}.php.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+      - ~/j.d/site/conf.d/${SITE_NAME}.php-fpm.ini:/usr/local/etc/php-fpm.d/php-fpm.ini
       - ~/j.d/log:/log:cached
       - /etc/localtime:/etc/localtime
     environment:

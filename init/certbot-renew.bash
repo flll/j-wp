@@ -1,8 +1,8 @@
 #!/bin/bash -e
 set -o pipefail
 
-## ~/j.d/site_name/${SITE_NAME}_DATA から読み取り、変数にする
-export `cat ~/j.d/site_name/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
+## ~/j.d/site/${SITE_NAME}_DATA から読み取り、変数にする
+export `cat ~/j.d/site/${SITE_NAME}_DATA | (read aaaa bbbb cccc; echo "SITE_NAME=${aaaa} DOMAINNAME=${bbbb} MAILADD=${cccc}")`
 
 docker run -it --rm --name certbot \
     -v ~/j.d/certbot/letsencrypt:/etc/letsencrypt \

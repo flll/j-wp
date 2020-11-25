@@ -14,16 +14,16 @@ done
 
 ## ～コンフィグtemplate記述～
 #  nginx conf
-[[ ! -d ~/j.d/site_name/conf.d ]] && mkdir -p ~/j.d/site_name/conf.d && chmod 770 ~/j.d/site_name/conf.d
+[[ ! -d ~/j.d/site/conf.d ]] && mkdir -p ~/j.d/site/conf.d && chmod 770 ~/j.d/site/conf.d
 envsubst '${SITE_NAME} ${DOMAINNAME}' \
-        < ./store/02_template-wp-block.conf > ~/j.d/site_name/conf.d/block_${SITE_NAME}.conf
+        < ./store/02_template-wp-block.conf > ~/j.d/site/conf.d/block_${SITE_NAME}.conf
 envsubst '${SITE_NAME}' \
-        < ./store/php.ini > ~/j.d/site_name/conf.d/${SITE_NAME}.php.ini
+        < ./store/php.ini > ~/j.d/site/conf.d/${SITE_NAME}.php.ini
 envsubst '${SITE_NAME}' \
-        < ./store/php-fpm.ini > ~/j.d/site_name/conf.d/${SITE_NAME}.php-fpm.ini
+        < ./store/php-fpm.ini > ~/j.d/site/conf.d/${SITE_NAME}.php-fpm.ini
 
 
-cat << 'EOF' > ~/j.d/site_name/conf.d/default.conf
+cat << 'EOF' > ~/j.d/site/conf.d/default.conf
 server {
     listen       80 default_server;
     server_name  _;
@@ -42,11 +42,11 @@ EOF
     && sudo chown -hR 82:82 ~/j.d/nginx.d
 
 [[ ! -d ~/j.d/nginx.d ]] && mkdir ~/j.d/nginx.d && sudo chown -hR 82:82 ~/j.d/nginx.d
-[[ ! -d ~/j.d/site_name/sec ]] && mkdir ~/j.d/site_name/sec && chmod 770 ~/j.d/site_name/sec
-[[ ! -f ~/j.d/site_name/sec/db_root_pass.txt ]] && pgen > ~/j.d/site_name/sec/db_root_pass.txt
-[[ ! -f ~/j.d/site_name/sec/db_wp_pass.txt ]] && pgen > ~/j.d/site_name/sec/db_wp_pass.txt
-export ROOTPASSWD=`cat ~/j.d/site_name/sec/db_root_pass.txt`
-export DBPASSWD=`cat ~/j.d/site_name/sec/db_wp_pass.txt`
+[[ ! -d ~/j.d/site/sec ]] && mkdir ~/j.d/site/sec && chmod 770 ~/j.d/site/sec
+[[ ! -f ~/j.d/site/sec/db_root_pass.txt ]] && pgen > ~/j.d/site/sec/db_root_pass.txt
+[[ ! -f ~/j.d/site/sec/db_wp_pass.txt ]] && pgen > ~/j.d/site/sec/db_wp_pass.txt
+export ROOTPASSWD=`cat ~/j.d/site/sec/db_root_pass.txt`
+export DBPASSWD=`cat ~/j.d/site/sec/db_wp_pass.txt`
 
 down-nginx
 docker network create web-net || :
