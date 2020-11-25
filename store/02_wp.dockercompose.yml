@@ -1,7 +1,7 @@
 version: '3.8'
 services:
-  mariadb:
-    container_name: db_${SITE_NAME}
+  wp-db:
+    container_name: ${SITE_NAME}_wp-db
     image: 'jbergstroem/mariadb-alpine'
     volumes:
       - ~/j.d/db.d/${SITE_NAME}:/var/lib/mysql:cached
@@ -16,10 +16,10 @@ services:
       LANG: C.UTF-8
     restart: unless-stopped
 
-  wordpress:
-    container_name: wp_${SITE_NAME}
+  wp:
+    container_name: ${SITE_NAME}_wp
     depends_on:
-      - mariadb
+      - wp-db
     image: docker.io/wordpress:php7.4-fpm-alpine
     networks: 
     - web-net-c
@@ -30,7 +30,7 @@ services:
       - ~/j.d/log:/log:cached
       - /etc/localtime:/etc/localtime
     environment:
-      WORDPRESS_DB_HOST: db_${SITE_NAME}:3306
+      WORDPRESS_DB_HOST: ${SITE_NAME}_wp-db:3306
       WORDPRESS_DB_PASSWORD: ${DBPASSWD}
       WORDPRESS_DB_NAME: wp
       WORDPRESS_DB_USER: wp_user
