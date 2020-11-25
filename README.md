@@ -8,8 +8,8 @@
 &&   ( cd ${jjbash_repo_url}; git fetch && git reset --hard origin/main; chmod 755 -R . ) \
 &&   ln -sb "${jjbash_repo_url}/jj.bash" ./jj.bash \
 &&   chmod +x ./jj.bash \
-&&   ./jj.bash <param>
+&&   ./jj.bash [param]
 ```
-一番最初に起動する場合、<param>の部分を 1 2 3 に置き換えて起動することをおすすめします。
+一番最初に起動する場合、[param]の部分を 1 2 3 に置き換えて起動することをおすすめします。
 
 ACME 利用規約に同意します
