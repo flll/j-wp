@@ -53,8 +53,8 @@ if [ ! -f ~/j.d/lego/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
 fi
 
 [[ ! -f ~/j.d/lego/dhparam ]] && openssl dhparam -out ~/j.d/lego/dhparam 2048
-chown "$(id -u ${USER}):$(id -u www-data)" ~/j.d/lego/*
-chmod 770 -R ~/j.d/lego/*
+sudo chown -R "$(id -u ${USER}):$(id -u www-data)" ~/j.d/lego/*
+sudo chmod 770 -R ~/j.d/lego/*
 
 ## クロン処理を行う.
 add-cron
