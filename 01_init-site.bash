@@ -30,36 +30,31 @@ done
 #  FWの設定を忘れずに 443 80
 #
 
-if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
-    [[ ! -d ~/j.d/certbot ]] && mkdir -p ~/j.d/certbot
-    sudo chown $(id -u ${USER}):$(id -u www-data) ~/j.d/certbot && sudo chmod 777 -R ~/j.d/certbot
+if [ ! -f ~/j.d/lego/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
+    [[ ! -d ~/j.d/lego ]] && mkdir -p ~/j.d/lego
     echo "証明書を発行します"
-    docker pull -q certbot/certbot
+    docker pull -q goacme/lego
     docker stop nginx || :
-    docker run -it --rm --name certbot \
-        -v ~/j.d/certbot/letsencrypt:/tmp/etc/letsencrypt:cached \
-        -v ~/j.d/certbot/lib/letsencrypt:/tmp/var/lib/letsencrypt:cached \
+    docker run -it --rm --name lego \
+        -v ~/j.d/lego:/lego:cached \
         -v /etc/passwd:/etc/passwd:ro \
         -v /etc/group:/etc/group:ro \
-        -p 80:80 \
+        -p 443:443 \
         -u  "$(id -u ${USER}):$(id -u www-data)" \
-            certbot/certbot certonly \
-            --work-dir /tmp/lib/letsencrypt \
-            --logs-dir /tmp/var/log/letsencrypt \
-            --config-dir /tmp/etc/letsencrypt \
-            --rsa-key-size 4096 \
-            --agree-tos \
-            --keep \
-            --standalone \
-            --staple-ocsp \
-            -d "${DOMAINNAME}" \
-            -m "${MAILADD}" \
-                || (echo -e "証明書の発行は行われませんでした。\nポート開放が行われているかご確認ください。"; exit 0)
+            goacme/lego \
+            --path /lego \
+            --key-type ec384 \
+            --accept-tos \
+            --domains "${DOMAINNAME}" \
+            --email "${MAILADD}" \
+            --tls \
+                run \
+                --staple-ocsp
     docker start nginx || :
 fi
 
-[[ ! -f ~/j.d/certbot/dhparam ]] && openssl dhparam -out ~/j.d/certbot/dhparam 2048
-chmod 770 -R ~/j.d/certbot/*
+[[ ! -f ~/j.d/lego/dhparam ]] && openssl dhparam -out ~/j.d/lego/dhparam 2048
+chmod 770 -R ~/j.d/lego/*
 
 ## クロン処理を行う.
 add-cron
