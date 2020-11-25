@@ -13,15 +13,11 @@ while [ $REF = 1 ] ;do
     site-type
 done
 
+docker stop `docker ps -q` || :
 
-rm -f ~/j.d/site/${SITE_NAME}_DATA
-
+# サイト名
+rm  ~/j.d/site/${SITE_NAME}_DATA
+# アプリ
 rm -rf ~/j.d/nginx.d/${SITE_NAME}
-
-rm -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
-
-
-サイトの削除
-サイトに基づいてblockを削除する
-dockerをリロードする
-一度サイトを削除するとサイト名はもう使えないようにする(?)
+# nginx.conf
+rm  ~/j.d/site/conf.d/block_${SITE_NAME}.conf
