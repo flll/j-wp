@@ -3,7 +3,6 @@
 
 ## ～cronしょり～
 function add-cron () {
-    if [ ! -f ./crontab ]; then #./crontabが存在しない場合、作成とcrontabの認識をさせる
     echo -n "add-cron..."
     [[ ! -d /usr/local/bin/${USER} ]] \
         && sudo mkdir -p /usr/local/bin/${USER} \
@@ -17,7 +16,6 @@ function add-cron () {
     ## crontabにて./crontabファイルを認識させる
         crontab -u ${USER} ./crontab
     echo "DONE"
-    fi
 }
 
 function pgen () {
