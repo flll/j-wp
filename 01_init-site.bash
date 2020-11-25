@@ -32,7 +32,7 @@ done
 
 if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
     [[ ! -d ~/j.d/certbot ]] && mkdir -p ~/j.d/certbot
-    sudo chown $(id -u ${USER}):$(id -u www-data) ~/j.d/certbot && sudo chmod 770 -R ~/j.d/certbot
+    sudo chown $(id -u ${USER}):$(id -u www-data) ~/j.d/certbot && sudo chmod 777 -R ~/j.d/certbot
     echo "証明書を発行します"
     docker pull -q certbot/certbot
     docker stop nginx || :
