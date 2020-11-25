@@ -40,7 +40,6 @@ if [ ! -f ~/j.d/lego/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
         -v /etc/passwd:/etc/passwd:ro \
         -v /etc/group:/etc/group:ro \
         -p 443:443 \
-        -u  "$(id -u ${USER}):$(id -u www-data)" \
             goacme/lego \
             --path /lego \
             --key-type ec384 \
@@ -54,6 +53,7 @@ if [ ! -f ~/j.d/lego/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
 fi
 
 [[ ! -f ~/j.d/lego/dhparam ]] && openssl dhparam -out ~/j.d/lego/dhparam 2048
+chown "$(id -u ${USER}):$(id -u www-data)" ~/j.d/lego/*
 chmod 770 -R ~/j.d/lego/*
 
 ## クロン処理を行う.
