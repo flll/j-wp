@@ -2,7 +2,7 @@ version: '3.8'
 services:
   nginx:
     image: nginx:1.19.4-alpine
-    container_name: nginx
+    container_name: web-nginx
     ports:
       - "80:80"
       - "443:443"
