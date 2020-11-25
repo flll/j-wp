@@ -66,14 +66,17 @@ function site-edit () {
     #  "[サイト名] [domain] [メアド]"という順番の文字列で保存される
         echo "※入力をやり直したい場合ctrl+cで強制終了してください。"
         echo "ドメイン名 を入力してください 例)yahoo.jp 例)www.yahoo.co.jp"
+
             
+        #############################################
             [[ ! -z ${DOMAINNAME} ]]        && echo -e "!!! 現在のドメイン名: ${DOMAINNAME} \n☆☆☆ 情報を変更しない場合は、そのまま ”エンターキー” を入力してください。"
         read -p "ドメイン名> " DOMAINNAME_BUFF
             [[ ! -z ${DOMAINNAME_BUFF} ]]   && DOMAINNAME=${DOMAINNAME_BUFF}
             [[ -z "${DOMAINNAME}" ]]        && echo -e "!!! ドメイン名を入力してください\nもう一度やり直してください。" && REF=1 && return;
             [[ "${DOMAINNAME}" == *" "* ]]  && echo -e "!!! スペースを含めないでください\nドット、アンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
-        #############################################
 
+
+        #############################################
             [[ ! -z ${MAILADD} ]]           && echo -e "現在のメールアドレス: ${MAILADD} \n☆☆☆ 情報を変更しない場合は、そのまま ”エンターキー” を入力してください。"
         read -p "メールアドレスを入力してください > " MAILADD_BUFF
             [[ ! -z ${MAILADD_BUFF} ]]      && MAILADD=${MAILADD_BUFF}
@@ -82,7 +85,7 @@ function site-edit () {
             regex="^[a-z0-9!#\$%&'*+/=?^_\`{|}~-]+(\.[a-z0-9!#$%&'*+/=?^_\`{|}~-]+)*@([a-z0-9]([a-z0-9-]*[a-z0-9])?\.)+[a-z0-9]([a-z0-9-]*[a-z0-9])?\$"
             MAIL_SYNTAXERR_MESSAGE="!!! メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
             [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && REF=1 && return;
-        #############################################
+
 
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/j.d/site/${SITE_NAME}_DATA
         next-lf
