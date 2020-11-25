@@ -49,7 +49,7 @@ if [ ! -f ~/j.d/lego/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
             --email "${MAILADD}" \
             --tls \
                 run \
-                --staple-ocsp
+                --must-staple
     docker start nginx || :
 fi
 
