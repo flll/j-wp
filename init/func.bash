@@ -86,7 +86,7 @@ function site-edit () {
             MAIL_SYNTAXERR_MESSAGE="!!! メールアドレスの構文が間違っています。\nドメイン名とメールアドレスが逆になっていないか、もしくはメールアドレスをお確かめください"
             [[ ! ${MAILADD} =~ $regex ]]    && echo -e ${MAIL_SYNTAXERR_MESSAGE} && REF=1 && return;
 
-
+        [[ ! -d ~/j.d/site ]] && mkdir -p ~/j.d/site
         echo -n "${SITE_NAME} ${DOMAINNAME} ${MAILADD}" > ~/j.d/site/${SITE_NAME}_DATA
         next-lf
         echo "サイト名: ${SITE_NAME} の情報を保存しました"
