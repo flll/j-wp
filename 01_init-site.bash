@@ -31,6 +31,7 @@ done
 #
 
 if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
+    [[ ! -d ~/j.d/certbot ]] chown 
     echo "証明書を発行します"
     echo "nginxを終了させます。nginxを起動していた場合、後ほど起動し直してください"
     docker pull -q certbot/certbot
@@ -47,7 +48,7 @@ if [ ! -f ~/j.d/certbot/letsencrypt/live/${DOMAINNAME}/fullchain.pem ]; then
             --staple-ocsp \
             -d "${DOMAINNAME}" \
             -m "${MAILADD}" \
-                || echo -e "証明書の発行は行われませんでした。\n証明書が新しいか、ポート開放がおこわなれていないか。ご確認ください。"
+                || echo -e "証明書の発行は行われませんでした。\nポート開放が行われているかご確認ください。"
 fi
 
 sudo chown -hR 82:82 ~/j.d/certbot
