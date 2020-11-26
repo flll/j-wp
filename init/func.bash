@@ -18,6 +18,30 @@ function add-cron () {
     echo "DONE"
 }
 
+## jj.bashのみ使用
+function add-cmdcmdcmd () {
+    [[ $cmdcmdcmd ]] && cmdcmdcmd+="; " # ←cmd変数が定義されている場合末端に; をつける
+    cmdcmdcmd+="j-wp/$1 " 
+}
+function helphelphelp () {
+    cat <<- __EOF__
+	    Usage $0 [options]
+	    Options:
+	    1       + サイト名を作成します
+	            
+	    2       + アプリケーションをプロビジョニング
+	            ※事前にサイト名を作成してください
+	    3       + ウェブサーバーをデプロイ
+	            ※事前にアプリケーションをプロビジョニングしてください
+	    9       + サイト名の削除
+	            ※サイト名に基づいたlog/、htmlなども削除します
+	    -s [サイト名]    サイト名を一つ指定でき、サイト名の入力を省くことができます
+	                    サブオプションと併用することができます
+                        例) $0 -s [サイト名] 1 2 3 
+	__EOF__
+    exit 0;
+}
+
 function pgen () {
     cat /dev/urandom | tr -dc [A-Za-z0-9@%+] | fold -w 200 | head -n 1
 }
