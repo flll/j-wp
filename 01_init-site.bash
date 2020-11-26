@@ -1,5 +1,6 @@
 #!/bin/bash
 cd `dirname $0`
+. j-wp/init/func.bash
 
 ## 
 #  サイト名とは複数のwebページを同じインスタンス、IPアドレスで、

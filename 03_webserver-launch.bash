@@ -1,5 +1,6 @@
 #!/bin/bash
 cd `dirname $0`
+. j-wp/init/func.bash
 
 # チケットセッション
 openssl rand 48 > ~/j.d/certbot/tls_session_ticket.key
