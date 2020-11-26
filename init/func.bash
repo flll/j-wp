@@ -20,7 +20,7 @@ function add-cron () {
 
 ## jj.bashのみ使用
 function add-cmdcmdcmd () {
-    [[ $cmdcmdcmd ]] && cmdcmdcmd+="; " # ←cmd変数が定義されている場合末端に; をつける
+    [[ $cmdcmdcmd ]] && cmdcmdcmd+=";. " # ←cmd変数が定義されている場合末端に;. をつける
     cmdcmdcmd+="j-wp/$1 " 
 }
 function helphelphelp () {
