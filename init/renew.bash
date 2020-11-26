@@ -13,6 +13,7 @@ docker stop nginx ||:
             --domains "${DOMAINNAME}" \
             --email "${MAILADD}" \
             --tls \
-                run \
-                --must-staple
+                renew \
+                --must-staple \
+                --days 75
 docker start nginx ||:
