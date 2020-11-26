@@ -1,6 +1,6 @@
 #!/bin/bash
 cd `dirname $0`
-. j-wp/init/func.bash
+. init/func.bash
 
 ##既存のサイト名の表示
 next-lf

@@ -1,5 +1,5 @@
 #!/bin/bash
-. j-wp/init/func.bash
+. init/func.bash
 
 echo "サイト名を削除します。"
 echo "事前にバックアップを取得してください。"
