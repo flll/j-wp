@@ -10,6 +10,8 @@ while [ $REF = 1 ] ;do
     site-type
 done
 
+[[ "${DOMAINNAME}" == "" ]] && site-data-export
+
 ## ～コンフィグtemplate記述～
 #  nginx conf
 [[ ! -d ~/j.d/site/conf.d ]] && mkdir -p ~/j.d/site/conf.d && chmod 770 ~/j.d/site/conf.d
