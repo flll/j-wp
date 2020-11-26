@@ -4,7 +4,7 @@
 ```
      jjbash_repo_url=561bb0e91a08fd55847acb40ec9ad765 \
 &&   [[ ! -d ./${jjbash_repo_url} ]] \
-&&   git clone "https://gist.github.com/${jjbash_repo_url}.git" \
+&&   git clone "https://gist.github.com/${jjbash_repo_url}.git"
      ( cd ${jjbash_repo_url}; git fetch && git reset --hard origin/main; chmod 755 -R . ) \
 &&   ln -sb "${jjbash_repo_url}/jj.bash" ./jj.bash \
 &&   chmod +x ./jj.bash \
