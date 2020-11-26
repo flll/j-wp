@@ -30,7 +30,7 @@ done
 #  FWの設定を忘れずに 443 80
 #
 
-if [ ! -f ~j.d/lego/certificates/${DOMAINNAME}.crt ]; then
+if [ ! -f ~/j.d/lego/certificates/${DOMAINNAME}.crt ]; then
     [[ ! -d ~/j.d/lego ]] && mkdir -p ~/j.d/lego
     echo "証明書を発行します"
     docker pull -q goacme/lego
