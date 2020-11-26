@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/bin/bash -e
+set -o pipefail
 . init/func.bash
 
 echo "サイト名を削除します。"
