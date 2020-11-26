@@ -49,9 +49,9 @@ if [ ! -f ~/j.d/lego/certificates/${DOMAINNAME}.crt ]; then
     docker start nginx || :
 fi
 
-sudo chown -R "$(id -u ${USER}):$(id -u www-data)" ~/j.d/lego/*
-sudo chmod 770 -R ~/j.d/lego/*
-[[ ! -f ~/j.d/lego/dhparam ]] && openssl dhparam -out ~/j.d/lego/dhparam 2048; chmod 774 ~/j.d/lego/dhparam
+[[ ! -f ~/j.d/lego/dhparam ]] && openssl dhparam -out ~/j.d/lego/dhparam 2048
+sudo chown -R "$(id -u ${USER}):$(id -u www-data)" ~/j.d/lego/
+sudo chmod 740 -R ~/j.d/lego/
 
 ## クロン処理を行う.
 add-cron
