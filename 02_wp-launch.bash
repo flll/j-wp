@@ -1,8 +1,5 @@
-#!/bin/bash -e
-set -o pipefail
+#!/bin/bash
 cd `dirname $0`
-
-. init/func.bash
 
 ##既存のサイト名の表示
 next-lf

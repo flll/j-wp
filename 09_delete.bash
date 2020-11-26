@@ -1,7 +1,5 @@
 #!/bin/bash
 
-. init/func.bash
-
 echo "サイト名を削除します。"
 echo "事前にバックアップを取得してください。"
 echo "サイト名、基づいたlog情報、が削除されます"

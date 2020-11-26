@@ -1,8 +1,5 @@
-#!/bin/bash -e
-set -o pipefail
+#!/bin/bash
 cd `dirname $0`
-
-. init/func.bash
 
 ## 
 #  サイト名とは複数のwebページを同じインスタンス、IPアドレスで、
