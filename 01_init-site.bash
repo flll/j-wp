@@ -8,8 +8,6 @@ cd `dirname $0`
 #  別々のwebサイトを表示させる”任意機能”です
 ##
 
-
-next-lf
 echo "＝＝＝ 01 サイト名と証明書を発行します ＝＝＝"
 echo "サイト名とは、https://wp1.lll.fish や https://wp2.lll.fish などの"
 echo "一つのサーバーで複数のドメイン、ウェブサイトを運営"

@@ -4,7 +4,6 @@ cd `dirname $0`
 . init/func.bash
 
 ##既存のサイト名の表示
-next-lf
 echo "＝＝＝ 02 ワードプレスとデータベースを起動します ＝＝＝"
 [[ $REF = 2 ]] || REF=1
 while [ $REF = 1 ] ;do
