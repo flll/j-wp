@@ -12,7 +12,7 @@ services:
       LANG: C.UTF-8
     volumes:
       - '~/j.d/nginx.d:/nginx.d:cached'
-      - '~/j.d/certbot:/certbot:cached'
+      - '~/j.d/lego/certificates:/lego/certificates:cached'
       - '~/j.d/site/conf.d:/etc/nginx/conf.d:cached'
       - './nginx.conf:/etc/nginx/nginx.conf:cached'
       - '~/j.d/log:/log:cached'
