@@ -5,7 +5,7 @@
     jjbash_repo_url=561bb0e91a08fd55847acb40ec9ad765 ;\
     rm -rf ./561bb0e91a08fd55847acb40ec9ad765 ;\
     git clone "https://gist.github.com/${jjbash_repo_url}.git" \
-&&  ln -sb "${jjbash_repo_url}/jj.bash" ./jj.bash \
+&&  ln -s "${jjbash_repo_url}/jj.bash" ./jj.bash \
 &&  chmod +x ./jj.bash \
 &&  ./jj.bash [param]
 ```
