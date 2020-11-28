@@ -4,23 +4,20 @@
 ## ～cronしょり～
 function add-cron () {
     echo -n "add-cron..."
-    [[ ! -d /usr/local/bin/${USER} ]] \
-        && sudo mkdir -p /usr/local/bin/${USER} \
-        && sudo chown `echo ${USER}` /usr/local/bin/${USER} \
-        && chmod 755 /usr/local/bin/${USER}
-    envsubst '${USER}' < init/renew.bash > "/usr/local/bin/${USER}/renew.bash"
-    ## ./crontabファイルを作成する ※TABインデントを変更しないこと
-    cat <<-EOF > ./crontab
-	0 2 */3 * * /usr/local/bin/${USER}/renew.bash #深夜２時且つ３日ごとに更新を行う
-	EOF
+    mkdir -p ~/j.d/crontab.d 
+    envsubst '${DOMAINNAME}' < init/renew.bash > "~/j.d/crontab.d/${DOMAINNAME}.renew"
+    ## ./crontabファイルを作成する
+        cat <<-EOF > ~/j.d/crontab.d/${DOMAINNAME}.crontab
+		0 2 */3 * * ~/j.d/crontab.d/${DOMAINNAME}.renew #深夜２時且つ３日ごとに更新を行う
+		EOF
     ## crontabにて./crontabファイルを認識させる
-        crontab -u ${USER} ./crontab
+        crontab -u ${USER} ~/j.d/crontab.d/${DOMAINNAME}.crontab
     echo "DONE"
 }
 
 ## jj.bashのみ使用
 function add-cmdcmdcmd () {
-    [[ $cmdcmdcmd ]] && cmdcmdcmd+="&& " # ←cmd変数が定義されている場合末端に&& をつける ☆3
+    [[ $cmdcmdcmd ]] && cmdcmdcmd+="&& " # ←add-cmdが二回以上実行されると&& をつける. ☆3
     [[ $cmdcmdcmd ]] || cmdcmdcmd="bash " #☆1
     cmdcmdcmd+="j-wp/$1 " # ☆2 の順番に、追記される [bash コマンド &&]
 }
@@ -38,7 +35,7 @@ function helphelphelp () {
 	            ※サイト名に基づいたlog/、htmlなども削除します
 	    -s [サイト名]    サイト名を一つ指定でき、サイト名の入力を省くことができます
 	                    サブオプションと併用することができます
-                        例) $0 -s [サイト名] 1 2 3 
+	                    例) $0 -s [サイト名] 1 2 3 
 	__EOF__
     exit 0;
 }
@@ -62,15 +59,18 @@ function site-data-export () {
 function site-type () {
     ## 既存のサイト名の表示
     [[ ! -d ~/j.d/site ]] && mkdir ~/j.d/site
-    aiueo=`echo ~/j.d/site/*_DATA`; [[ ! $aiueo == "~/j.d/site/*_DATA" ]] \
-        && echo "現在存在するサイト:" \
-        && echo `ls ~/j.d/site/*_DATA | sed -e 's/_DATA//' -e 's/^.*\/j\.d\/site\///'` \
-        && for i in {1..4};do echo "";done
+
+    echo "現在存在するサイト:"; \
+    for files in $(ls ~/j.d/site/*_DATA); do
+        echo "  $files"
+    done | sed -e 's/_DATA//' -e 's>^.*/site/>>'
+    echo ""
+
     #############################################
     echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_のみです\n例)myblog-two 例)wp1 例)wp2"
     read -p "サイト名> " SITE_NAME
         [[ -z "${SITE_NAME}" ]]              && echo -e "サイト名を入力してください\nもう一度お試しください" && REF=1 && return;
-        SITE_NAME=${SITE_NAME,,}
+        : ${SITE_NAME,,}
         [[ "${SITE_NAME}" == *" "* ]]        && echo -e "スペースは利用不可です\nアンダーバー、ハイフンなどを代わりにご使用ください" && REF=1 && return;
         [[ "${SITE_NAME}" == *[!a-z0-9_]* ]] && echo -e "使用できる文字列a-z0-9_のみです\nもう一度入力をお願いします" && REF=1 && return;
     REF=0

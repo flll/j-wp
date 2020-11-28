@@ -10,9 +10,8 @@ docker stop nginx ||:
             --path /lego \
             --key-type ec384 \
             --accept-tos \
-            --domains "${DOMAINNAME}" \
-            --email "${MAILADD}" \
             --tls \
+            --domains "${DOMAINNAME}" \
                 renew \
                 --must-staple \
                 --days 75
