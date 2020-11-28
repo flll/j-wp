@@ -14,6 +14,7 @@ services:
       - '~/j.d/nginx.d:/nginx.d:cached'
       - '~/j.d/lego/certificates:/lego/certificates:cached'
       - '~/j.d/lego/dhparam:/lego/dhparam:cached'
+      - '~/j.d/lego/tls_session_ticket.key:/lego/tls_session_ticket.key:cached'
       - '~/j.d/site/conf.d:/etc/nginx/conf.d:cached'
       - './nginx.conf:/etc/nginx/nginx.conf:cached'
       - '~/j.d/log:/log:cached'
