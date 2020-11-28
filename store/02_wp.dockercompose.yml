@@ -41,6 +41,7 @@ services:
         define('DB_CHARSET',       'utf8');
         define('DB_COLLATE',       'utf8_general_ci');
         define('FORCE_SSL_ADMIN',   true);
+        define('CONCATENATE_SCRIPTS', false );
       LANG: C.UTF-8
     restart: unless-stopped
 
