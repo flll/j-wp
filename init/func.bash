@@ -5,7 +5,7 @@
 function add-cron () {
     echo -n "add-cron..."
     mkdir -p ~/j.d/crontab.d 
-    envsubst '${DOMAINNAME}' < init/renew.bash > "~/j.d/crontab.d/${DOMAINNAME}.renew"
+    envsubst '${DOMAINNAME}' < init/renew.bash > ~/j.d/crontab.d/${DOMAINNAME}.renew
     ## ./crontabファイルを作成する
         cat <<-EOF > ~/j.d/crontab.d/${DOMAINNAME}.crontab
 		0 2 */3 * * ~/j.d/crontab.d/${DOMAINNAME}.renew #深夜２時且つ３日ごとに更新を行う
