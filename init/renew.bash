@@ -12,6 +12,7 @@ docker stop nginx ||:
             --accept-tos \
             --tls \
             --domains "${DOMAINNAME}" \
+            --email "${MAILADD}" \
                 renew \
                 --must-staple \
                 --days 75
