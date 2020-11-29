@@ -4,17 +4,21 @@
 ## ～cronしょり～
 function add-cron () {
     echo -n "add-cron..."
-    mkdir -p ~/j.d/crontab.d 
-    envsubst '${DOMAINNAME}' < init/renew.bash > ~/j.d/crontab.d/${DOMAINNAME}.renew
+    crontab_FOLDER=~/j.d/crontab.d
+    mkdir -p ${crontab_FOLDER}
+    envsubst '${DOMAINNAME}${MAILADD}' < init/renew.bash > ${crontab_FOLDER}/${DOMAINNAME}.renew
+    chmod 744 ${crontab_FOLDER}/*.renew
     ## ./crontabファイルを作成する
-        cat <<-EOF > ~/j.d/crontab.d/${DOMAINNAME}.crontab
-		0 2 */3 * * ~/j.d/crontab.d/${DOMAINNAME}.renew #深夜２時且つ３日ごとに更新を行う
-		EOF
     ## crontabにて./crontabファイルを認識させる
-        crontab -u ${USER} ~/j.d/crontab.d/${DOMAINNAME}.crontab
+    crontab -u ${USER} <( cat <<-EOF
+		0 2 */3 * * \
+		for files in ${crontab_FOLDER}/*.renew ; do \
+		eval \${files}; \
+		done
+	EOF
+    )
     echo "DONE"
 }
-
 ## jj.bashのみ使用
 function add-cmdcmdcmd () {
     [[ $cmdcmdcmd ]] && cmdcmdcmd+="&& " # ←add-cmdが二回以上実行されると&& をつける. ☆3
