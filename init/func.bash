@@ -10,13 +10,13 @@ function add-cron () {
     chmod 744 ${crontab_FOLDER}/*.renew
     ## ./crontabファイルを作成する
     ## crontabにて./crontabファイルを認識させる
-    crontab -u ${USER} <( cat <<-EOF
+    cat <<-EOF > ${crontab_FOLDER}/crontab
 		0 2 */3 * * \
 		for files in ${crontab_FOLDER}/*.renew ; do \
 		eval \${files}; \
 		done
 	EOF
-    )
+    crontab -u ${USER} ${crontab_FOLDER}/crontab
     unset crontab_FOLDER
     echo "DONE"
 }
