@@ -6,7 +6,7 @@
     rm -rf ./561bb0e91a08fd55847acb40ec9ad765 ;\
     git clone "https://gist.github.com/${jjbash_repo_url}.git" \
 &&  ln -s "${jjbash_repo_url}/jj.bash" ./jj.bash \
-&&  chmod +x ./jj.bash \
+&&  chmod +x ${jjbash_repo_url}/jj.bash \
 &&  ./jj.bash [param]
 ```
 一番最初に起動する場合、[param]の部分を 1 2 3 に置き換えて起動することをおすすめします。
