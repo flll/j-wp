@@ -4,7 +4,7 @@
 ## ～cronしょり～
 function add-cron () {
     echo -n "add-cron..."
-    crontab_FOLDER=~/j.d/crontab.d
+    export crontab_FOLDER=~/j.d/crontab.d
     mkdir -p ${crontab_FOLDER}
     envsubst '${DOMAINNAME} ${MAILADD}' < init/renew.bash > ${crontab_FOLDER}/${DOMAINNAME}.renew
     chmod 744 ${crontab_FOLDER}/*.renew
@@ -17,6 +17,7 @@ function add-cron () {
 		done
 	EOF
     )
+    unset crontab_FOLDER
     echo "DONE"
 }
 ## jj.bashのみ使用
