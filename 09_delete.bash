@@ -21,3 +21,5 @@ rm  -f ~/j.d/site/${SITE_NAME}_DATA
 rm -rf ~/j.d/nginx.d/${SITE_NAME}
 # nginx.conf
 rm  -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
+# crontab.d のサイト名に基づいた削除を行う
+-rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
