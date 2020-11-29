@@ -6,7 +6,7 @@ function add-cron () {
     echo -n "add-cron..."
     crontab_FOLDER=~/j.d/crontab.d
     mkdir -p ${crontab_FOLDER}
-    envsubst '${DOMAINNAME}${MAILADD}' < init/renew.bash > ${crontab_FOLDER}/${DOMAINNAME}.renew
+    envsubst '${DOMAINNAME} ${MAILADD}' < init/renew.bash > ${crontab_FOLDER}/${DOMAINNAME}.renew
     chmod 744 ${crontab_FOLDER}/*.renew
     ## ./crontabファイルを作成する
     ## crontabにて./crontabファイルを認識させる
