@@ -19,7 +19,7 @@ if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]
     [[ $kyodaku != [Yy] ]] && return; # Y以外を入力すると単一デプロイに移行
     echo "作成されているサイト名すべてにデプロイします"
 
-    for files in ${crontab_FOLDER}/*.renew ; do \
+    for files in ~/j.d/site/*_DATA ; do
         SITE_NAME=`echo $files | sed -e 's/_DATA//' -e 's>^.*/site/>>'`
         site-data-export    # *で渡されたサイトファイルに基づいてサイトの中身をexportする
         init-wp-function
@@ -28,7 +28,9 @@ if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]
         docker stop nginx   # nginxという名前のコンテナを停止させます
         wp-deploy           # docker-composeを起動させる
         docker start nginx  # 停止させたのをもう一度起動し直します
+        echo "${SITE_NAME} にWordpressをデプロイしました"
 	done
+    echo "すべてのサイト名が完了しました。次にnginx(03) を起動してください"
     exit 0
 fi
 
@@ -47,6 +49,7 @@ init-wp-function
 docker stop nginx   # nginxという名前のコンテナを停止させます
 wp-deploy           # docker-composeを起動させる
 docker start nginx  # 停止させたのをもう一度起動し直す
+echo "${SITE_NAME} にWordpressをデプロイしました。"
 
 
 #######################################################
@@ -105,10 +108,8 @@ function init-nginx-conf () {
 
 function wp-deploy () {
     # wpコンテナ(${SITE_NAME}_wp)が存在する場合、return を返す
-    [[ $(docker ps -f name=${SITE_NAME}_wp -q ) ]] \
-        && echo "!!! ${SITE_NAME}_wpは実行されています。続行しますか？[Y/n]" \
-        && read -p "\"Y\"を入力すると無視します > " kyodaku \
-        && [[ $kyodaku != [Yy] ]] && return;
+    [[ `docker ps -f name=${SITE_NAME}_wp -q` ]] \
+        && docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml down -d
     [[ `docker network ls -q -f name=web-net` ]]   || docker network create web-net
     [[ `docker network ls -q -f name=wp-db-net` ]] || docker network create wp-db-net
     docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml up -d
