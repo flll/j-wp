@@ -5,15 +5,19 @@ cd `dirname $0`
 
 ##既存のサイト名の表示
 echo "＝＝＝ 02 ワードプレスとデータベースを起動します ＝＝＝"
+echo "サイト名に基づいて専用のWordpressを作成します。"
+echo ""
 
 ## サイト名が存在しない場合は02を実行させない
 #  サイト名が複数存在する場合はそのサイト名すべてをwpアプリでデプロイさせるかを確認させる
 [[ $(ls ~/j.d/site/*_DATA | head | wc -l) ]] && echo "サイト名が存在しません./jj.bash 1 にてサイト名を作成してください。" && exit 0;
 ## サイト名が複数存在する場合、loopを使って複数のサイトを作成します
 if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]
-    echo "サイト名が複数存在します。ほか全てのサイト名をワードプレスで起動しますか？[Y/n]"
-    read -p "\"Y\"以外を入力すると、単一での起動となります。" kyodaku
-    [[ $kyodaku != [Yy] ]] && return;
+    echo "!!! サイト名が複数存在しました。ほか全てのサイト名をワードプレスで起動しますか？[Y/n]"
+    echo "Y以外を入力しても後ほど別のサイト名追加でWordpressを起動することができます"
+    read -p "\"Y\"以外を入力すると、単一サイト名での起動となります。" kyodaku
+    [[ $kyodaku != [Yy] ]] && return; # Y以外を入力すると単一デプロイに移行
+    echo "作成されているサイト名すべてにデプロイします"
 
     for files in ${crontab_FOLDER}/*.renew ; do \
         SITE_NAME=`echo $files | sed -e 's/_DATA//' -e 's>^.*/site/>>'`
@@ -21,11 +25,14 @@ if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]
         init-wp-function
         ## default.confが存在すれば init-nginx-conf を実行させない
         [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
+        docker stop nginx   # nginxという名前のコンテナを停止させます
         wp-deploy           # docker-composeを起動させる
+        docker start nginx  # 停止させたのをもう一度起動し直します
 	done
     exit 0
 fi
 
+echo "Y以外が入力されました。一つのサイト名で起動します"
 [[ $REF = 2 ]] || REF=1
 while [ $REF = 1 ] ;do
     site-type
@@ -37,8 +44,9 @@ site-data-export    # *で渡されたサイトファイルに基づいてサイ
 init-wp-function
 ## default.confが存在すれば init-nginx-conf を実行させない
 [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
+docker stop nginx   # nginxという名前のコンテナを停止させます
 wp-deploy           # docker-composeを起動させる
-
+docker start nginx  # 停止させたのをもう一度起動し直す
 
 
 #######################################################
@@ -101,9 +109,7 @@ function wp-deploy () {
         && echo "!!! ${SITE_NAME}_wpは実行されています。続行しますか？[Y/n]" \
         && read -p "\"Y\"を入力すると無視します > " kyodaku \
         && [[ $kyodaku != [Yy] ]] && return;
-    docker stop nginx
     [[ `docker network ls -q -f name=web-net` ]]   || docker network create web-net
     [[ `docker network ls -q -f name=wp-db-net` ]] || docker network create wp-db-net
     docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml up -d
-    docker start nginx
 }
