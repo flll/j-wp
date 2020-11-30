@@ -2,9 +2,10 @@
 set -o pipefail
 . init/func.bash
 
-echo "サイト名を削除します。"
+echo "!!!  サイト名を削除します  !!!"
 echo "事前にバックアップを取得してください。"
-echo "サイト名、基づいたlog情報、が削除されます"
+echo "サイト名に基づいたlog情報、が削除されます"
+echo "※02 03にてデプロイされたサービスは一度全停止します。後ほど起動し直してください"
 read -p "続ける場合は y を入力してください > " accept
 [[ ! $accept = [Yy] ]] && exit 0;
 
@@ -15,11 +16,14 @@ done
 
 docker stop `docker ps -q` || :
 
-# サイト名
-rm  -f ~/j.d/site/${SITE_NAME}_DATA
-# アプリ
+# アプリによって作成されたデータを削除
 rm -rf ~/j.d/nginx.d/${SITE_NAME}
 # nginx.conf
 rm  -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
-# crontab.d のサイト名に基づいた削除を行う
--rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
+# crontab.d につかうrenewシェルファイル
+rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
+# データベース削除
+rm -rf j.d/db.d/${SITE_NAME}
+
+# 最後にサイト名のファイルを削除する
+rm -rf j.d/site/${SITE_NAME}_DATA
