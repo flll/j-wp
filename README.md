@@ -1,4 +1,7 @@
 前提 https://github.com/flll/j-wp-terraform
+```
+sudo apt install docker-ce ca-certificates cron jq git gettext-base -y
+```
 
 下のgistのURL: https://gist.github.com/flll/561bb0e91a08fd55847acb40ec9ad765
 
