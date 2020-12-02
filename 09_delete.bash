@@ -21,7 +21,7 @@ docker-compose -p ${SITE_NAME} -f ./03_webserver.dockercompose.yml down --remove
 #  プロジェクト名: web nginxをダウンさせます。
 #  数秒後に
 #  nginxがされていた場合sleepを使って再度起動し直します
-[[ ! `docker-compose -p web -f ./store/03_webserver.dockercompose.yml down --remove-orphans` ]] \
+[[ `docker-compose -p web -f ./store/03_webserver.dockercompose.yml down --remove-orphans` ]] \
     && echo "!!! nginxが起動しています。いちど、nginxを再起動します" \
     && echo "!!! サイト名が削除されたのち、nginxが起動します" \
     && ( ( # 並列処理 sleep5したあとnginxを起動する
@@ -30,13 +30,13 @@ docker-compose -p ${SITE_NAME} -f ./03_webserver.dockercompose.yml down --remove
     )& )  
 
 # アプリによって作成されたデータを削除
-rm -rf ~/j.d/nginx.d/${SITE_NAME}
+sudo rm -rf ~/j.d/nginx.d/${SITE_NAME}
 # nginx.conf
-rm  -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
+sudo rm  -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
 # crontab.d につかうrenewシェルファイル
-rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
+sudo rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
 # データベース削除
-rm -rf ~/j.d/db.d/${SITE_NAME}
+sudo rm -rf ~/j.d/db.d/${SITE_NAME}
 
 # 最後にサイト名のファイルを削除する
-rm -rf j.d/site/${SITE_NAME}_DATA
+sudo rm -rf j.d/site/${SITE_NAME}_DATA
