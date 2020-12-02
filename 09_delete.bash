@@ -36,9 +36,11 @@ sudo rm -rf ~/j.d/nginx.d/${SITE_NAME}
 # nginx.conf
 sudo rm  -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
 # crontab.d につかうrenewシェルファイル
-sudo rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
+sudo rm  -f ~/j.d/crontab.d/${SITE_NAME}.renew
 # データベース削除
 sudo rm -rf ~/j.d/db.d/${SITE_NAME}
 
 # 最後にサイト名のファイルを削除する
 sudo rm -rf ~/j.d/site/${SITE_NAME}_DATA
+
+echo "サイト名${SITE_NAME}の削除が完了しました"
