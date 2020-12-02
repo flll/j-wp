@@ -1,5 +1,6 @@
 #!/bin/bash -e
 set -o pipefail
+cd `dirname $0`
 . init/func.bash
 
 echo "!!!  サイト名を削除します  !!!"
