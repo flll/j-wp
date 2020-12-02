@@ -23,12 +23,6 @@ function add-cron () {
     unset crontab_FOLDER
     echo "DONE"
 }
-## jj.bashのみ使用
-function add-cmdcmdcmd () {
-    [[ $cmdcmdcmd ]] && cmdcmdcmd+="&& " # ←add-cmdが二回以上実行されると&& をつける. ☆3
-    [[ $cmdcmdcmd ]] || cmdcmdcmd="bash " #☆1
-    cmdcmdcmd+="j-wp/$1 " # ☆2 の順番に、追記される [bash コマンド &&]
-}
 
 function pgen () {
     cat /dev/urandom | tr -dc [A-Za-z0-9@%+] | fold -w 200 | head -n 1
