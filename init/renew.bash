@@ -10,6 +10,9 @@ sleep 10
 #####################################
 docker-compose -p web -f ./03_webserver.dockercompose.yml down --remove-orphans
 
+#チケットセッション
+openssl rand 48 > ~/j.d/lego/tls_session_ticket.key
+
     docker run -it --rm --name lego \
         -v ~/j.d/lego:/lego:cached \
         -v /etc/passwd:/etc/passwd:ro \
