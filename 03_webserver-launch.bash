@@ -11,4 +11,5 @@ down-nginx
 
 docker network create web-net || :
 
-docker-compose -p web --file store/03_webserver.dockercompose.yml up
+docker-compose -p web --file store/03_webserver.dockercompose.yml up \
+    || echo -e "nginxが起動できませんでした。\n02が成功しているか確認してください。"

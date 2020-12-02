@@ -25,9 +25,10 @@ docker-compose -p ${SITE_NAME} -f ./03_webserver.dockercompose.yml down --remove
     && echo "!!! nginxが起動しています。いちど、nginxを再起動します" \
     && echo "!!! サイト名が削除されたのち、nginxが起動します" \
     && ( ( # 並列処理 sleep5したあとnginxを起動する
-        sleep 5; docker-compose -p web -f ./store/03_webserver.dockercompose.yml up --remove-orphans
+        sleep 5; docker-compose -p web -f ./store/03_webserver.dockercompose.yml up --remove-orphans \
+        || echo -e "!!!! nginxが起動できませんでした。\n!!!! 02が成功しているか確認してください。";
         echo nginxが起動しました
-    )& )  
+    )& )
 
 # アプリによって作成されたデータを削除
 sudo rm -rf ~/j.d/nginx.d/${SITE_NAME}
