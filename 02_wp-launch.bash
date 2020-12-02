@@ -85,17 +85,17 @@ if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]; then
     [[ $kyodaku != [Yy] ]] && return; # Y以外を入力すると単一デプロイに移行
     echo "作成されているサイト名すべてにデプロイします"
 
+    restart-nginx           # nginxという名前のコンテナを停止させます
     for files in ~/j.d/site/*_DATA ; do
         SITE_NAME=`echo $files | sed -e 's/_DATA//' -e 's>^.*/site/>>'`
         site-data-export    # *で渡されたサイトファイルに基づいてサイトの中身をexportする
         init-wp-function
         ## default.confが存在すれば init-nginx-conf を実行させない
         [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
-        restart-nginx       # nginxという名前のコンテナを停止させます
         wp-deploy           # docker-composeを起動させる
         echo "${SITE_NAME} にWordpressをデプロイしました"
 	done
-    echo "すべてのサイト名が完了しました。次にnginx(03) を起動してください"
+    echo "すべてのサイト名が完了しました。"
     exit 0
 fi
 
