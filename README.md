@@ -1,6 +1,8 @@
 前提 https://github.com/flll/j-wp-terraform
 
 下のgistのURL: https://gist.github.com/flll/561bb0e91a08fd55847acb40ec9ad765
+
+～ダウンロード～
 ```
     jjbash_repo_url=561bb0e91a08fd55847acb40ec9ad765 ;\
     rm -rf ./561bb0e91a08fd55847acb40ec9ad765 ./jj.bash ;\
