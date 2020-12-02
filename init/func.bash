@@ -14,7 +14,7 @@ function add-cron () {
     ## ./crontabファイルを作成する
     ## crontabにて./crontabファイルを認識させる
     cat <<-EOF > ${crontab_FOLDER}/crontab
-		0 2 */3 * * \
+		0 2 */1 * * \
 		for files in ${crontab_FOLDER}/*.renew ; do \
 		eval \${files}; \
 		done
