@@ -25,9 +25,8 @@ if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]
         init-wp-function
         ## default.confが存在すれば init-nginx-conf を実行させない
         [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
-        docker stop nginx   # nginxという名前のコンテナを停止させます
+        restart-nginx       # nginxという名前のコンテナを停止させます
         wp-deploy           # docker-composeを起動させる
-        docker start nginx  # 停止させたのをもう一度起動し直します
         echo "${SITE_NAME} にWordpressをデプロイしました"
 	done
     echo "すべてのサイト名が完了しました。次にnginx(03) を起動してください"
@@ -46,9 +45,8 @@ site-data-export    # *で渡されたサイトファイルに基づいてサイ
 init-wp-function
 ## default.confが存在すれば init-nginx-conf を実行させない
 [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
-docker stop nginx   # nginxという名前のコンテナを停止させます
+restart-nginx       # nginxという名前のコンテナを停止させます
 wp-deploy           # docker-composeを起動させる
-docker start nginx  # 停止させたのをもう一度起動し直す
 echo "${SITE_NAME} にWordpressをデプロイしました。"
 
 

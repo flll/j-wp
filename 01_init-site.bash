@@ -31,7 +31,7 @@ if [ ! -f ~/j.d/lego/certificates/${DOMAINNAME}.crt ]; then
     [[ ! -d ~/j.d/lego ]] && mkdir -p ~/j.d/lego
     echo "証明書を発行します"
     docker pull -q goacme/lego
-    docker stop nginx || :
+    restart-nginx
     docker run -it --rm --name lego \
         -v ~/j.d/lego:/lego:cached \
         -v /etc/passwd:/etc/passwd:ro \
@@ -46,7 +46,6 @@ if [ ! -f ~/j.d/lego/certificates/${DOMAINNAME}.crt ]; then
             --tls \
                 run \
                 --must-staple
-    docker start nginx || :
 fi
 
 [[ ! -f ~/j.d/lego/dhparam ]] && openssl dhparam -out ~/j.d/lego/dhparam 2048
