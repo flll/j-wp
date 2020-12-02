@@ -1,6 +1,14 @@
 #!/bin/bash
 
-docker stop nginx ||:
+cd `dirname $0`
+
+# nginxが起動していないと証明書の更新を行われない
+[[ `docker ps -f name=/web-nginx$ -f status=running -q` ]] \
+        || exit 1
+
+#####################################
+docker-compose -p web -f ./03_webserver.dockercompose.yml down --remove-orphans
+
     docker run -it --rm --name lego \
         -v ~/j.d/lego:/lego:cached \
         -v /etc/passwd:/etc/passwd:ro \
@@ -16,4 +24,5 @@ docker stop nginx ||:
                 renew \
                 --must-staple \
                 --days 75
-docker start nginx ||:
+
+docker-compose -p web -f ./03_webserver.dockercompose.yml up -d
