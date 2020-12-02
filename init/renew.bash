@@ -8,6 +8,8 @@ sleep 10
         || exit 1
 
 #####################################
+# シンボリックにて用意されたymlを使用します
+# storeで指定しないでください
 docker-compose -p web -f ./03_webserver.dockercompose.yml down --remove-orphans
 
 #チケットセッション
