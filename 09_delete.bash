@@ -15,7 +15,7 @@ while [ $REF = 1 ] ;do
     site-type
 done
 
-docker stop `docker ps -q` || :
+docker stop `docker ps -q ||:` ||:
 
 # アプリによって作成されたデータを削除
 rm -rf ~/j.d/nginx.d/${SITE_NAME}
