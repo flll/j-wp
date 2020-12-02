@@ -74,35 +74,43 @@ echo "＝＝＝ 02 ワードプレスとデータベースを起動します ＝
 echo "サイト名に基づいて専用のWordpressを作成します。"
 echo ""
 
+#
+# 跡地
+#
 ## サイト名が存在しない場合は02を実行させない
-#  サイト名が複数存在する場合はそのサイト名すべてをwpアプリでデプロイさせるかを確認させる
-[[ $(ls ~/j.d/site/*_DATA | head | wc -l) = 0 ]] && echo "サイト名が存在しません./jj.bash 1 にてサイト名を作成してください。" && exit 0;
-## サイト名が複数存在する場合、loopを使って複数のサイトを作成します
-if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]; then
-    echo "!!! サイト名が複数存在しました。ほか全てのサイト名をワードプレスで起動しますか？[Y/n]"
-    echo ""
-    ls ~/j.d/site/*_DATA | sed -e 's/_DATA//' -e 's>^.*/site/>>'
-    echo ""
-    echo "個別のサイト名でWordpressを起動したい場合は\"Y\"以外を入力してください"
-    read -p "\"Y\"以外を入力すると、単一サイト名での起動となります > " kyodaku
-    [[ $kyodaku != [Yy] ]] && break; # Y以外を入力すると単一デプロイに移行
+##  サイト名が複数存在する場合はそのサイト名すべてをwpアプリでデプロイさせるかを確認させる
+#[[ $(ls ~/j.d/site/*_DATA | head | wc -l) = 0 ]] && echo "サイト名が存在しません./jj.bash 1 にてサイト名を作成してください。" && exit 0;
+### サイト名が複数存在する場合、loopを使って複数のサイトを作成します
+#if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]; then
+#    echo "!!! サイト名が複数存在しました。ほか全てのサイト名をワードプレスで起動しますか？[Y/n]"
+#    echo ""
+#    ls ~/j.d/site/*_DATA | sed -e 's/_DATA//' -e 's>^.*/site/>>'
+#    echo ""
+#    echo "個別のサイト名でWordpressを起動したい場合は\"Y\"以外を入力してください"
+#    read -p "\"Y\"以外を入力すると、単一サイト名での起動となります > " kyodaku
+#    [[ $kyodaku != [Yy] ]] && break; # Y以外を入力すると単一デプロイに移行
+#
+#    echo "作成されているサイト名すべてにデプロイします"
+#    restart-nginx           # nginxという名前のコンテナを停止させます
+#    for files in ~/j.d/site/*_DATA ; do
+#        SITE_NAME=`echo $files | sed -e 's/_DATA//' -e 's>^.*/site/>>'`
+#        site-data-export    # *で渡されたサイトファイルに基づいてサイトの中身をexportする
+#
+#
+#
+#
+#        init-wp-function
+#        ## default.confが存在すれば init-nginx-conf を実行させない
+#        [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
+#        wp-deploy           # docker-composeを起動させる
+#        echo "${SITE_NAME} にWordpressをデプロイしました"
+#	done
+#    echo "すべてのサイト名が完了しました。"
+#    exit 0
+#fi
+#
+#
 
-    echo "作成されているサイト名すべてにデプロイします"
-    restart-nginx           # nginxという名前のコンテナを停止させます
-    for files in ~/j.d/site/*_DATA ; do
-        SITE_NAME=`echo $files | sed -e 's/_DATA//' -e 's>^.*/site/>>'`
-        site-data-export    # *で渡されたサイトファイルに基づいてサイトの中身をexportする
-        init-wp-function
-        ## default.confが存在すれば init-nginx-conf を実行させない
-        [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
-        wp-deploy           # docker-composeを起動させる
-        echo "${SITE_NAME} にWordpressをデプロイしました"
-	done
-    echo "すべてのサイト名が完了しました。"
-    exit 0
-fi
-
-echo "Y以外が入力されました。一つのサイト名で起動します"
 [[ $REF = 2 ]] || REF=1
 while [ $REF = 1 ] ;do
     site-type
