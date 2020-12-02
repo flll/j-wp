@@ -41,4 +41,4 @@ sudo rm -f ~/j.d/crontab.d/${SITE_NAME}.renew
 sudo rm -rf ~/j.d/db.d/${SITE_NAME}
 
 # 最後にサイト名のファイルを削除する
-sudo rm -rf j.d/site/${SITE_NAME}_DATA
+sudo rm -rf ~/j.d/site/${SITE_NAME}_DATA
