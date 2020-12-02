@@ -7,9 +7,9 @@ function add-cron () {
     export crontab_FOLDER=~/j.d/crontab.d
     mkdir -p ${crontab_FOLDER}
     envsubst '${DOMAINNAME} ${MAILADD}' < init/renew.bash > ${crontab_FOLDER}/${DOMAINNAME}.renew
-    ln -s store/03_webserver.dockercompose.yml ${crontab_FOLDER}/03_webserver.dockercompose.yml
+    ln -s "${crontab_FOLDER}/03_webserver.dockercompose.yml" "${PWD}/store/03_webserver.dockercompose.yml"
     #  apt-updateのコピー
-    cp -f apt-update.renew ${crontab_FOLDER}/apt-update.renew
+    cp -f apt_update.renew "${crontab_FOLDER}/apt_update.renew"
     chmod 744 ${crontab_FOLDER}/*.renew
     ## ./crontabファイルを作成する
     ## crontabにて./crontabファイルを認識させる
