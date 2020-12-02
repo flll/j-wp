@@ -16,7 +16,7 @@ sudo apt install docker-ce ca-certificates cron jq git gettext-base -y
 
 ～起動～
 ```
-./jj.bash q [param]
+./jj.bash [param]
 ```
 ※一番最初に起動する場合、[param]の部分を` 1 2 3 `で起動することをおすすめします。
 
