@@ -2,6 +2,7 @@
 
 cd `dirname $0`
 
+sleep 10
 # nginxが起動していないと証明書の更新を行われない
 [[ `docker ps -f name=/web-nginx$ -f status=running -q` ]] \
         || exit 1
