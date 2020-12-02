@@ -80,6 +80,9 @@ echo ""
 ## サイト名が複数存在する場合、loopを使って複数のサイトを作成します
 if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]; then
     echo "!!! サイト名が複数存在しました。ほか全てのサイト名をワードプレスで起動しますか？[Y/n]"
+    echo ""
+    ls ~/j.d/site/*_DATA | sed -e 's/_DATA//' -e 's>^.*/site/>>'
+    echo ""
     echo "個別のサイト名でWordpressを起動したい場合は\"Y\"以外を入力してください"
     read -p "\"Y\"以外を入力すると、単一サイト名での起動となります > " kyodaku
     [[ $kyodaku != [Yy] ]] && return; # Y以外を入力すると単一デプロイに移行
