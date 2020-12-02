@@ -43,11 +43,11 @@ function site-data-export () {
 function site-type () {
     ## 既存のサイト名の表示
     echo "現在存在するサイト:"; \
-    for files in $(ls ~/j.d/site/*_DATA); do
+    for files in $(ls ~/j.d/site/*_DATA ); do
         echo "  $files"
     done | sed -e 's/_DATA//' -e 's>^.*/site/>>'
     echo ""
-    [[ ! -d ~/j.d/site ]] && mkdir ~/j.d/site
+    [[ ! -d ~/j.d/site ]] && mkdir -p ~/j.d/site || :
 
     #############################################
     echo -e "サイト名 を入力してください\n使用できる文字列は[a-z][0-9]_のみです\n例)myblog-two 例)wp1 例)wp2"
