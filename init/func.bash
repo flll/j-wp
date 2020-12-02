@@ -127,7 +127,7 @@ function restart-nginx () {
         && echo "!!! nginxが起動しています。いちど、nginxを再起動します" \
         && echo "!!! サイト名が削除されたのち、nginxが起動します" \
         && ( # 並列処理 sleepしたあとnginxを起動する
-            sleep 7; docker-compose -p web -f ./store/03_webserver.dockercompose.yml up -d \
+            sleep 10; docker-compose -p web -f ./store/03_webserver.dockercompose.yml up -d \
             || echo -e "nginxが起動できませんでした。\n02が成功しているか確認してください。";
             echo nginxが起動しました
         )&
