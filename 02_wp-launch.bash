@@ -85,7 +85,7 @@ if [ ! 1 = $(ls ~/j.d/site/*_DATA | head | wc -l) ]; then
     echo ""
     echo "個別のサイト名でWordpressを起動したい場合は\"Y\"以外を入力してください"
     read -p "\"Y\"以外を入力すると、単一サイト名での起動となります > " kyodaku
-    [[ $kyodaku != [Yy] ]] && return; # Y以外を入力すると単一デプロイに移行
+    [[ $kyodaku != [Yy] ]] && return 0; # Y以外を入力すると単一デプロイに移行
     echo "作成されているサイト名すべてにデプロイします"
 
     restart-nginx           # nginxという名前のコンテナを停止させます
