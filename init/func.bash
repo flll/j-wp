@@ -7,6 +7,7 @@ function add-cron () {
     export crontab_FOLDER=~/j.d/crontab.d
     mkdir -p ${crontab_FOLDER}
     envsubst '${DOMAINNAME} ${MAILADD}' < init/renew.bash > ${crontab_FOLDER}/${DOMAINNAME}.renew
+    # このシンボリック及び元,を削除すると処理が停止するようにする
     ln -s "./store/03_webserver.dockercompose.yml" "`pwd`/03_webserver.dockercompose.yml"
     #  apt-updateのコピー
     cp -f init/apt_update.renew "${crontab_FOLDER}/apt_update.renew"
