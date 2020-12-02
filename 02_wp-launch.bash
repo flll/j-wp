@@ -18,7 +18,7 @@ cd `dirname $0`
 #  nginx conf
 function init-wp-function() {
     #  confディレクトリを作成
-    [[ ! -d ~/j.d/site/conf.d ]] && mkdir -p ~/j.d/site/conf.d && chmod 770 ~/j.d/site/conf.d
+    [[ ! -d ~/j.d/site/conf.d ]] && mkdir -p ~/j.d/site/conf.d && chmod 776 ~/j.d/site/conf.d
     #  conf.d ディレクトリにブロック.confを追加
     envsubst '${SITE_NAME} ${DOMAINNAME}' \
             < ./store/02_template-wp-block.conf > ~/j.d/site/conf.d/block_${SITE_NAME}.conf
@@ -112,6 +112,7 @@ done
 
 site-data-export    # *で渡されたサイトファイルに基づいてサイトの中身をexportする
 init-wp-function
+exit 
 ## default.confが存在すれば init-nginx-conf を実行させない
 [[ ! -f ~/j.d/site/conf.d/default.conf ]] && init-nginx-conf
 restart-nginx       # nginxという名前のコンテナを停止させます
