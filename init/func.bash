@@ -128,11 +128,13 @@ function restart-nginx () {
     #  nginxが起動されていた場合sleepを使って再度起動し直します
     [[ `docker ps -f name=/web-nginx$ -q` ]] \
         && echo "!!! nginxが起動しています。いちど、nginxを再起動します" \
-        && ( # 並列処理 sleepしたあとnginxを起動する
+        && docker-compose -p web -f ./store/03_webserver.dockercompose.yml down --remove-orphans
+        && ( # !並列処理! sleepしたあとnginxを起動する
             sleep 16; docker-compose -p web -f ./store/03_webserver.dockercompose.yml up -d \
             || echo -e "nginxが起動できませんでした。\n02が成功しているか確認してください。";
             echo nginxが起動しました
         )&
-    sleep 8
+
+    sleep 2
 }
 
