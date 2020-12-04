@@ -8,7 +8,7 @@ sudo apt install docker-ce ca-certificates cron jq git gettext-base -y
 ～ダウンロード～
 ```
     jjbash_repo_url=561bb0e91a08fd55847acb40ec9ad765 ;\
-    rm -rf ./561bb0e91a08fd55847acb40ec9ad765 ./jj.bash ;\
+    rm -rf ./${jjbash_repo_url} ./jj.bash ;\
     git clone "https://gist.github.com/${jjbash_repo_url}.git" \
 &&  ln -s "${jjbash_repo_url}/jj.bash" ./jj.bash \
 &&  chmod +x ${jjbash_repo_url}/jj.bash
