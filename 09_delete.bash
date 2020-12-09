@@ -18,9 +18,8 @@ while [ $REF = 1 ] ;do
 done
 
 
-docker-compose -p ${SITE_NAME} -f ./03_webserver.dockercompose.yml down --remove-orphans || :
-
-restart-nginx
+docker-compose -p ${SITE_NAME} -f ./store/03_webserver.dockercompose.yml down --remove-orphans || :
+docker-compose -p ${SITE_NAME} -f ./store/02_wp.dockercompose.yml down --remove-orphans || :
 
 # アプリによって作成されたデータを削除
 sudo rm -rf ~/j.d/nginx.d/${SITE_NAME}
