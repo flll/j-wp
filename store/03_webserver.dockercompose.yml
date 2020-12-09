@@ -11,14 +11,12 @@ services:
     environment:
       LANG: C.UTF-8
     volumes:
-      - '~/j.d/nginx.d:/nginx.d:cached'
+      - '~/j.d/nginx.d:/nginx.d'
       - '~/j.d/lego:/lego:cached'
       - '~/j.d/site/conf.d:/etc/nginx/conf.d:cached'
       - './nginx.conf:/etc/nginx/nginx.conf:cached'
       - '~/j.d/log:/log:cached'
       - '/etc/localtime:/etc/localtime:ro'
-      - /etc/passwd:/etc/passwd:ro
-      - /etc/group:/etc/group:ro
     restart: on-failure
 
 networks:
