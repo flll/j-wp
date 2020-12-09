@@ -65,9 +65,6 @@ function init-nginx-conf () {
 }
 
 function wp-deploy () {
-    # wpコンテナ(${SITE_NAME}_wp)が存在する場合、return を返す
-    [[ `docker ps -f name=${SITE_NAME}_wp -q` ]] \
-        && docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml down -d
     [[ `docker network ls -q -f name=web-net` ]]   || docker network create web-net
     [[ `docker network ls -q -f name=wp-db-net` ]] || docker network create wp-db-net
     docker-compose -p ${SITE_NAME} --file store/02_wp.dockercompose.yml up -d
