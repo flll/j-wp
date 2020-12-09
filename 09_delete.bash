@@ -6,8 +6,9 @@ cd `dirname $0`
 echo "!!!  サイト名を削除します  !!!"
 echo "事前にバックアップを取得してください。"
 echo "サイト名に基づいたデータが削除されます。"
-echo "※wordpressサービスは一度全停止します。"
-echo "削除後./jj.bash 2と./jj.bash 3を再度行ってください。"
+echo "wordpressの記事なども削除されます！"
+echo "※削除処理を行いますのでwordpressサービスは全停止します。"
+echo "削除後./jj.bash -s [サイト名] 2 と./jj.bash 3を再度行ってください。"
 read -p "続ける場合は y を入力してください > " accept
 [[ ! $accept = [Yy] ]] && exit 0; # Y以外入力時、終了
 
