@@ -51,6 +51,13 @@ function init-nginx-conf () {
     cat <<-'EOF' > ~/j.d/site/conf.d/default.conf
     server {
         listen       80 default_server;
+        listen  [::]:80 default_server;
+        server_name  _;
+        return       444;
+	}
+    server {
+        listen       443 default_server;
+        listen  [::]:443 default_server;
         server_name  _;
         return       444;
 	}
