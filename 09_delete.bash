@@ -18,7 +18,7 @@ while [ $REF = 1 ] ;do
 done
 
 
-docker-compose -p ${SITE_NAME} -f ./store/03_webserver.dockercompose.yml down --remove-orphans || :
+restart-nginx
 docker-compose -p ${SITE_NAME} -f ./store/02_wp.dockercompose.yml down --remove-orphans || :
 
 # アプリによって作成されたデータを削除
@@ -29,6 +29,8 @@ sudo rm  -f ~/j.d/site/conf.d/block_${SITE_NAME}.conf
 sudo rm  -f ~/j.d/crontab.d/${SITE_NAME}.renew
 # データベース削除
 sudo rm -rf ~/j.d/db.d/${SITE_NAME}
+# 証明書削除
+sudo rm -rf ~/j.d/lego/certificates/${SITE_NAME}.*
 
 # 最後にサイト名のファイルを削除する
 sudo rm -rf ~/j.d/site/${SITE_NAME}_DATA
