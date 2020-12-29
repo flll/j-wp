@@ -18,7 +18,7 @@ function add-cron () {
 		0 2 */1 * * \
 		for files in ${crontab_FOLDER}/*.renew ; do \
 		eval \${files}; \
-		done; > ~/myjob.log 2>&1
+		done; > ~/j.d/cron.log 2>&1
 	EOF
     crontab -u ${USER} ${crontab_FOLDER}/crontab
     unset crontab_FOLDER
